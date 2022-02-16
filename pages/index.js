@@ -1,12 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import { Button, Checkbox } from "@mantine/core";
+// import styles from "../styles/Home.module.css";
+import { MantineProvider, Button, Checkbox } from "@mantine/core";
 import Layout from "../components/layout.js";
 
 export default function Home() {
     return (
-        <div className={styles.container}>
+        <div>
             <Head>
                 <title>Create Next App</title>
                 <meta
@@ -15,7 +15,9 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Layout />
+            <MantineProvider theme={{ colorScheme: "dark" }}>
+                <Layout />
+            </MantineProvider>
         </div>
     );
 }
