@@ -1,4 +1,4 @@
-import { AppShell, Navbar, Header, Title } from "@mantine/core";
+import { AppShell, Navbar, Header, Title, Text } from "@mantine/core";
 
 let Layout = () => {
     let names = ["Nash", "Skylar", "Sasha"];
@@ -10,9 +10,9 @@ let Layout = () => {
                 <Navbar width={{ base: 300 }} padding="md">
                     <div>
                         {names.map((n, i) => (
-                            <Title order={4} key={i} my={20}>
+                            <Text color="white" key={i} my={20}>
                                 {n}
-                            </Title>
+                            </Text>
                         ))}
                     </div>
                 </Navbar>
