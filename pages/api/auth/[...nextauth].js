@@ -1,12 +1,11 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 
-
 export default NextAuth({
   providers: [
     GoogleProvider({
-        clientId: '62085095108-ouvg85njo4i1g5oafoadd5c7fkucu5ur.apps.googleusercontent.com',
-        clientSecret: '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',
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         authorization: {
           params: {
             prompt: "consent",
@@ -25,7 +24,7 @@ export default NextAuth({
       if (account.provider === "google") {
         return profile.email_verified && profile.email.endsWith("@example.com")
       }
-      return true // Do different verification for other providers that don't have `email_verified`
+      return true
     },
   }
 });
