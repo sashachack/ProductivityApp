@@ -1,13 +1,13 @@
 import Head from "next/head";
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { getSession } from "next-auth/react"
 import Image from "next/image";
-// import styles from "../styles/Home.module.css";
 import { MantineProvider, Button, Checkbox } from "@mantine/core";
 import Layout from "../components/layout.js";
 
 export default function Home() {
     const { data: session } = useSession()
-    console.log(process.env.GOOGLE_ID)
+
     return (
         <div>
             <Head>
@@ -30,11 +30,12 @@ export default function Home() {
             )}
             
             {session && <> 
-                <h4>You are logged as: {session.user.name}</h4>
-                <button className={styles.primaryButton} onClick={() => signOut()}>
+                <h4>You are logged in as: {session.user.name}</h4>
+                <button onClick={() => signOut()}>
                     Sign Out
                 </button>
             </>}
         </div>
     );
 }
+  
