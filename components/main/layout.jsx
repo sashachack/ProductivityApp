@@ -1,20 +1,14 @@
-import { AppShell, Navbar, Header, Title, Text } from "@mantine/core";
+import { AppShell, Navbar, Header, Title, Text, Space } from "@mantine/core";
+import MainNavbar from "./main_navbar";
+import MainContent from "./main_content";
 
 let Layout = () => {
-    let names = ["Nash", "Skylar", "Sasha"];
-
     return (
         <AppShell
             padding="xl"
             navbar={
                 <Navbar width={{ base: 300 }} padding="md">
-                    <div>
-                        {names.map((n, i) => (
-                            <Text color="white" key={i} my={20}>
-                                {n}
-                            </Text>
-                        ))}
-                    </div>
+                    <MainNavbar />
                 </Navbar>
             }
             styles={(theme) => ({
@@ -27,6 +21,8 @@ let Layout = () => {
             })}
         >
             <Title order={1}>Tasks</Title>
+            <Space h="sm" />
+            <MainContent />
         </AppShell>
     );
 };
