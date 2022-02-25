@@ -10,7 +10,9 @@ const TableCard = ({ taskName, label, dueDate, status }) => {
                         {taskName}
                     </Text>
                     <Text size="sm">{label}</Text>
-                    <Text size="sm">{dueDate}</Text>
+                    <Text size="sm">
+                        {dueDate.month + "-" + dueDate.day + "-" + dueDate.year}
+                    </Text>
                     <Text size="sm">{status}</Text>
                 </SimpleGrid>
                 {/* </div> */}

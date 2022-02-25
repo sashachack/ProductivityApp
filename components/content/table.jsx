@@ -1,4 +1,4 @@
-import TableCard from "../table_card";
+import TableCard from "../elements/table_card";
 import {
     Space,
     SimpleGrid,
@@ -27,7 +27,7 @@ let Table = ({ content }) => {
     return (
         <div>
             <Card
-                style={{ backgroundColor: "#444455" }}
+                style={{ backgroundColor: "#44445522" }}
                 sx={() => {
                     backgroundColor: theme.colors.blue[8];
                 }}
