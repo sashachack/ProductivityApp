@@ -1,6 +1,12 @@
 import { Card, Text } from "@mantine/core";
+import { months } from "../../constants/months";
 
 const BoardCard = ({ taskName, label, dueDate, id, click }) => {
+    // console.log(months);
+    let printDate = (date) => {
+        return months[date.month - 1] + " " + date.day + ", " + date.year;
+    };
+
     return (
         <div>
             <Card
@@ -11,9 +17,7 @@ const BoardCard = ({ taskName, label, dueDate, id, click }) => {
                     {taskName}
                 </Text>
                 <Text size="sm">{label}</Text>
-                <Text size="sm">
-                    {dueDate.month + "-" + dueDate.day + "-" + dueDate.year}
-                </Text>
+                <Text size="sm">{printDate(dueDate)}</Text>
             </Card>
         </div>
     );

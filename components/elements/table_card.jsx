@@ -1,6 +1,11 @@
 import { Card, Text, SimpleGrid } from "@mantine/core";
+import { months } from "../../constants/months";
 
 const TableCard = ({ taskName, label, dueDate, status }) => {
+    let printDate = (date) => {
+        return months[date.month - 1] + " " + date.day + ", " + date.year;
+    };
+
     return (
         <div>
             <Card>
@@ -10,9 +15,7 @@ const TableCard = ({ taskName, label, dueDate, status }) => {
                         {taskName}
                     </Text>
                     <Text size="sm">{label}</Text>
-                    <Text size="sm">
-                        {dueDate.month + "-" + dueDate.day + "-" + dueDate.year}
-                    </Text>
+                    <Text size="sm">{printDate(dueDate)}</Text>
                     <Text size="sm">{status}</Text>
                 </SimpleGrid>
                 {/* </div> */}
