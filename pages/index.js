@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { Button, Checkbox } from "@mantine/core";
 import Layout from "../components/layout.js";
+import NashComponent from "../components/NashComponent.js";
 
 export default function Home() {
     return (
@@ -15,6 +16,7 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <NashComponent></NashComponent>
             <Layout />
         </div>
     );
