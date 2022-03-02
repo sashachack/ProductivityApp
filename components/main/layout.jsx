@@ -5,15 +5,16 @@ import { useEffect } from "react";
 
 let Layout = () => {
     useEffect(async () => {
-    let res = await fetch("http://localhost:3000/api/get_tasks", {
-    method: "POST",
-    body: JSON.stringify({
-        user_id: 1,
-      }),
-    });
-    let tasks = await res.json();
-    console.log(tasks)
-    },[])
+        let res = await fetch("http://localhost:3000/api/get_tasks", {
+            method: "POST",
+            body: JSON.stringify({
+                user_id: 1,
+            }),
+        });
+        // let res = await fetch('http://localhost:3000/api/get_tasks')
+        let tasks = await res.json();
+        console.log(tasks);
+    }, []);
 
     return (
         <AppShell

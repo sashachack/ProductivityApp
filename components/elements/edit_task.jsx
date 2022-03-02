@@ -13,7 +13,7 @@ import { useState } from "react";
 
 const EditTask = ({ content, opened, setOpened }) => {
     // const [opened, setOpened] = useState(false);
-    console.log(content);
+    // console.log(content);
 
     return (
         <>

@@ -13,12 +13,14 @@ const MainContent = () => {
         { label: "Table", value: "table" },
         { label: "Calendar", value: "calendar" },
     ];
+    console.log(content);
 
     const [value, setValue] = useState(pages[0].value);
     const [modalOpened, setModalOpened] = useState(false);
     const [selectedID, setSelectedID] = useState(0);
 
     let clickCard = (id) => {
+        console.log(id);
         setSelectedID(id);
         setModalOpened(true);
     };
@@ -41,7 +43,7 @@ const MainContent = () => {
             )}
             {value == "calendar" && <Calendar content={content} />}
             <EditTask
-                content={content.find((c) => c.id == selectedID)}
+                content={content.find((c) => c["_id"] == selectedID)}
                 opened={modalOpened}
                 setOpened={setModalOpened}
             />
