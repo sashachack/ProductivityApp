@@ -6,28 +6,36 @@ export default NextAuth({
     GoogleProvider({
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        // authorization: {
-        //   params: {
-        //     prompt: "consent",
-        //     access_type: "offline",
-        //     response_type: "code"
-        //   }
-        // }
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        },
+        profile(profile) {
+          return {
+            id: profile.sub,
+            name: profile.name,
+            email: profile.email,
+            image: profile.picture,
+          }
+        },
       })
   ],
   database: process.env.MONGODB_URI,
-  // jwt: {
-  //     encryption: true,
-  // },
-  // secret: process.env.secret,
+  jwt: {
+      encryption: true,
+  },
+  secret: process.env.TOKEN_SECRET,
   // callbacks: {
-  //   async jwt(token, account) {
+  //   async jwt(token, account) { 
+  //     console.log("token: ", token);
+  //     console.log("account: ", account);
   //     if (account?.accessToken) {
   //       token.accessToken = account.accessToken;
   //     }
   //     return token;
   //   },
-  //   redirect: async (url, _baseUrl) => {
+  //   redirect: async (url, _baseUrl) => { 
   //     if (url === '/profile') {
   //       return Promise.resolve('/');
   //     }

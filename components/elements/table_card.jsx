@@ -1,14 +1,17 @@
 import { Card, Text, SimpleGrid } from "@mantine/core";
 import { months } from "../../constants/months";
 
-const TableCard = ({ taskName, label, dueDate, status }) => {
+const TableCard = ({ taskName, label, dueDate, status, id, click }) => {
     let printDate = (date) => {
         return months[date.month - 1] + " " + date.day + ", " + date.year;
     };
 
     return (
         <div>
-            <Card>
+            <Card
+                onClick={() => click(id)}
+                style={{ "&:hover": { backgroundColor: "#333333" } }}
+            >
                 {/* <div> */}
                 <SimpleGrid cols={4}>
                     <Text weight="500" size="lg" color="white">

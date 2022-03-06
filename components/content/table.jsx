@@ -8,7 +8,7 @@ import {
     useMantineTheme,
 } from "@mantine/core";
 
-let Table = ({ content }) => {
+let Table = ({ content, clickCard }) => {
     let cards = content.map((c, i) => (
         <div key={i}>
             <TableCard
@@ -16,6 +16,8 @@ let Table = ({ content }) => {
                 label={c.label}
                 dueDate={c.dueDate}
                 status={c.status}
+                id={c["_id"]}
+                click={(id) => clickCard(id)}
             />
             <Space h="md" />
         </div>

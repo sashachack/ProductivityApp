@@ -2,6 +2,7 @@ import BoardCard from "../elements/board_card";
 import { Space, SimpleGrid, Title } from "@mantine/core";
 
 let Board = ({ content, clickCard }) => {
+    // console.log(content);
     let statuses = ["To Do", "Doing", "Done"];
     let items = {};
     for (let status of statuses) {
@@ -31,7 +32,7 @@ let Board = ({ content, clickCard }) => {
                                     taskName={c.title}
                                     label={c.label}
                                     dueDate={c.dueDate}
-                                    id={c.id}
+                                    id={c["_id"]}
                                     click={(id) => clickCard(id)}
                                 />
                                 <Space h="md" />

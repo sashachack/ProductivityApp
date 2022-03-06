@@ -6,7 +6,10 @@ import { MantineProvider, Button, Checkbox } from "@mantine/core";
 import Layout from "../components/main/layout";
 
 export default function Home() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
+    console.log("-----------");
+    console.log(session);
+    console.log(status);
 
     return (
         <div>
