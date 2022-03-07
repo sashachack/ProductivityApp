@@ -9,12 +9,32 @@ import { SegmentedControl, Divider, Space } from "@mantine/core";
 import { empty_content } from "../../constants/new_task";
 import { useEffect } from "react";
 
+// TODO - the DOM only updates with new tasks
+// TODO - if there's already one there; otherwise you need to refresh
+// TODO - FIX THIS
+
 const MainContent = () => {
     const [existingContent, setExistingContent] = useState([]);
-    console.log(empty_content);
+    // const [newContent, setNewContent] = useState
+    // console.log(empty_content);
     const [newContent, setNewContent] = useState(empty_content);
 
-    let user_id = 3; // * THIS NEEDS TO CHANGE
+    let user_id = 7; // * THIS NEEDS TO CHANGE
+
+    const pages = [
+        // { label: "Board", value: "board" },
+        { label: "Table", value: "table" },
+        // { label: "Calendar", value: "calendar" },
+    ];
+    // console.log(content);
+    // * This declares what page we're on (Board/Table/Calendar)
+    const [value, setValue] = useState(pages[0].value);
+    // * This defines if editing an existing task modal is open
+    const [modalOpened, setModalOpened] = useState(false);
+    // * This is the ID of the currently selected existing task
+    const [selectedID, setSelectedID] = useState(-1);
+
+    const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
 
     useEffect(async () => {
         let res = await fetch("http://localhost:3000/api/get_tasks", {
@@ -28,23 +48,7 @@ const MainContent = () => {
         let tasks = json.data;
         setExistingContent(tasks);
         console.log(tasks);
-    }, [setExistingContent]);
-
-    const pages = [
-        // { label: "Board", value: "board" },
-        { label: "Table", value: "table" },
-        // { label: "Calendar", value: "calendar" },
-    ];
-    // console.log(content);
-
-    // * This declares what page we're on (Board/Table/Calendar)
-    const [value, setValue] = useState(pages[0].value);
-    // * This defines if editing an existing task modal is open
-    const [modalOpened, setModalOpened] = useState(false);
-    // * This is the ID of the currently selected existing task
-    const [selectedID, setSelectedID] = useState(-1);
-
-    const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
+    }, [setExistingContent, newTaskModalOpened, setNewTaskModalOpened]);
 
     let clickCard = (id) => {
         console.log(id);
@@ -79,7 +83,7 @@ const MainContent = () => {
             )}
             {/* {value == "calendar" && <Calendar content={content} />} */}
             {/* // * This is our `EditTask` for editing existing tasks */}
-            {existingContent.length > 0 && (
+            {/* {existingContent.length > 0 && (
                 <EditTask
                     content={
                         existingContent.length > 0 &&
@@ -89,13 +93,15 @@ const MainContent = () => {
                               )
                             : existingContent[0])
                     }
+                    editContent={setExistingContent} // ! This will probably not work
                     opened={modalOpened}
                     setOpened={setModalOpened}
                 />
-            )}
+            )} */}
             {/* // * This is our `EditTask` for editing a newly created task */}
             <EditTask
-                content={empty_content}
+                content={newContent}
+                editContent={setNewContent}
                 opened={newTaskModalOpened}
                 setOpened={setNewTaskModalOpened}
             ></EditTask>
