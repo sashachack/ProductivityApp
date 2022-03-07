@@ -4,6 +4,7 @@ import Board from "../content/board";
 import Table from "../content/table";
 import Calendar from "../content/calendar";
 import EditTask from "../elements/edit_task";
+import NewTask from "../elements/new_task";
 import { SegmentedControl, Divider, Space } from "@mantine/core";
 // import { content } from "../../constants/items_constants";
 import { empty_content } from "../../constants/new_task";
@@ -19,7 +20,7 @@ const MainContent = () => {
     const [existingContent, setExistingContent] = useState([]);
     // const [newContent, setNewContent] = useState
     // console.log(empty_content);
-    const [newContent, setNewContent] = useState(empty_content);
+    // const [newContent, setNewContent] = useState(empty_content);
 
     //let user_id = 7; // * THIS NEEDS TO CHANGE
 
@@ -45,7 +46,7 @@ const MainContent = () => {
                 email: session.user.email, //grab the tasks by email
             }),
         });
-       
+
         let json = await res.json();
         let tasks = json.data;
         setExistingContent(tasks);
@@ -60,7 +61,7 @@ const MainContent = () => {
 
     let addCard = () => {
         setNewTaskModalOpened(true);
-        console.log("add a new task");
+        // console.log("add a new task");
     };
 
     return (
@@ -101,13 +102,12 @@ const MainContent = () => {
                 />
             )} */}
             {/* // * This is our `EditTask` for editing a newly created task */}
-            <EditTask
-                content={newContent}
-                editContent={setNewContent}
+            <NewTask
+                // content={newContent}
+                // editContent={setNewContent}
                 opened={newTaskModalOpened}
                 setOpened={setNewTaskModalOpened}
-            ></EditTask>
-            
+            ></NewTask>
         </div>
     );
 };
