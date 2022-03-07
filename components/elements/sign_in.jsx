@@ -1,7 +1,29 @@
 import { Modal, Button, Center, Space, Title } from "@mantine/core";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const SignIn = ({ opened, setOpened }) => {
+    const { data: session, status } = useSession();
+    useEffect(() => {
+        
+        
+        
+        let post_user = async() => await fetch("http://localhost:3000/api/post_task", {
+            method: "POST",
+            body: JSON.stringify({
+                
+                email:session.user.email,
+                hello: hello,
+            }),
+        });
+
+        {session && post_user(); }
+        
+       
+        
+        
+    }, [session])
+
     return (
         // <div></div>
         <>
@@ -31,7 +53,8 @@ const SignIn = ({ opened, setOpened }) => {
                     <Button
                         variant="gradient"
                         gradient={{ from: "teal", to: "blue", deg: 60 }}
-                        onClick={() => signIn()}
+                        onClick={() => { signIn()}}
+                        // onClick={() => storeInfo(session)}
                     >
                         Sign In
                     </Button>

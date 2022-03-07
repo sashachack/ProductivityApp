@@ -5,15 +5,11 @@ import { useEffect } from "react";
 
 let Layout = () => {
     useEffect(async () => {
-        let res = await fetch("http://localhost:3000/api/post_tasks", {
+        let res = await fetch("http://localhost:3000/api/get_tasks", {
             method: "POST",
             body: JSON.stringify({
                 
-                user_id: 3,
-                label: "HW",
-                title: 'assignment',
-                status: "Doing",
-                dueDate: {year: 2022, month: 3, day: 20}
+                user_id: 3
             }),
         });
         // let res = await fetch('http://localhost:3000/api/get_tasks')

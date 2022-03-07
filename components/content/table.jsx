@@ -54,6 +54,7 @@ let Table = ({ content, clickCard }) => {
                 // style={{
                 //     backgroundColor: { hovered ? "#44445522" : "#44445522" },
                 // }}
+                
                 sx={(theme) => ({
                     backgroundColor: "#44445522",
                     "&:hover": {

@@ -41,7 +41,7 @@ export default function Home() {
                     <button onClick={() => signIn()}>Sign in</button>
                 </>
             )}
-
+ 
             {session && (
                 <>
                     <h4>Hello, {session.user.name}</h4>
