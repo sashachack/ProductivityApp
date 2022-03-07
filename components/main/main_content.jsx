@@ -42,10 +42,10 @@ const MainContent = () => {
         let res = await fetch("http://localhost:3000/api/get_tasks", {
             method: "POST",
             body: JSON.stringify({
-                email: session.user.email,
+                email: session.user.email, //grab the tasks by email
             }),
         });
-        // let res = await fetch('http://localhost:3000/api/get_tasks')
+       
         let json = await res.json();
         let tasks = json.data;
         setExistingContent(tasks);

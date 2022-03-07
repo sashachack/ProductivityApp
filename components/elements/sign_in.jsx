@@ -3,28 +3,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const SignIn = ({ opened, setOpened }) => {
-    const { data: session, status } = useSession();
-
-    // const {}
-    
-    useEffect(() => {
-      
-        let post_user = async() => {
-                console.log(session.user)
-            
-                await fetch("http://localhost:3000/api/post_user", {
-                method: "POST",
-                body: JSON.stringify({
-                    
-                    
-                    hello: 'hello',
-                }),
-            })
-        };
-
-        {session && post_user()}; 
-       
-    }, [session])
+    // const { data: session, status } = useSession();
 
     return (
         // <div></div>

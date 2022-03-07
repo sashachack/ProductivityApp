@@ -35,7 +35,7 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
             
             localContent["user_id"] = user_id;
             localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
-            localContent['email'] = session.user.email
+            localContent['email'] = session.user.email //need to pass in the email to link to the account
 
             await fetch("http://localhost:3000/api/post_tasks", {
                 method: "POST",
