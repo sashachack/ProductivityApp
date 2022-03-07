@@ -3,7 +3,7 @@ import { months } from "../../constants/months";
 
 const TableCard = ({ taskName, label, dueDate, status, id, click }) => {
     let printDate = (date) => {
-        return months[date.month - 1] + " " + date.day + ", " + date.year;
+        return months[date.month] + " " + date.day + ", " + date.year;
     };
 
     return (

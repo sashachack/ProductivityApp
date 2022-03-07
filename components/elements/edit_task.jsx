@@ -32,10 +32,10 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
 
         let sendNewTask = async () => {
             let data = localContent;
-            
+
             //localContent["user_id"] = user_id;
-            localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
-            localContent['email'] = session.user.email //need to pass in the email to link to the account
+            // localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
+            localContent["email"] = session.user.email; //need to pass in the email to link to the account
 
             await fetch("http://localhost:3000/api/post_tasks", {
                 method: "POST",
@@ -114,17 +114,22 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
                     <DatePicker
                         placeholder="Pick date"
                         label="Event date"
-                        onChange = {(e) => {
-                            console.log((typeof(e.getMonth())))
+                        onChange={(e) => {
+                            // console.log(e);
+                            // console.log(typeof e.getMonth());
                             const c_copy = JSON.parse(
                                 JSON.stringify(localContent)
                             );
-                            c_copy.dueDate.year = e.getFullYear();
-                            c_copy.dueDate.month = e.getMonth();
-                            c_copy.dueDate.month = c_copy.dueDate.month - 1;
-                            c_copy.dueDate.day = e.getDay();
+                            // c_copy.dueDate.year = e.getFullYear();
+                            // c_copy.dueDate.month = e.getMonth();
+                            // c_copy.dueDate.day = e.getDay();
+                            let date = {
+                                year: e.getFullYear(),
+                                month: e.getMonth(),
+                                day: e.getDate(),
+                            };
+                            c_copy["dueDate"] = date;
                             setLocalContent(c_copy);
-
                         }}
                         // value={
                         //     new Date(
