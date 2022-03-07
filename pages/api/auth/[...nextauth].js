@@ -26,20 +26,4 @@ export default NextAuth({
       encryption: true,
   },
   secret: process.env.TOKEN_SECRET,
-  // callbacks: {
-  //   async jwt(token, account) { 
-  //     console.log("token: ", token);
-  //     console.log("account: ", account);
-  //     if (account?.accessToken) {
-  //       token.accessToken = account.accessToken;
-  //     }
-  //     return token;
-  //   },
-  //   redirect: async (url, _baseUrl) => { 
-  //     if (url === '/profile') {
-  //       return Promise.resolve('/');
-  //     }
-  //     return Promise.resolve('/');
-  //   },
-  // }
 });

@@ -2,7 +2,7 @@ import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { getSession } from "next-auth/react";
 import Image from "next/image";
-import { MantineProvider, Button, Checkbox } from "@mantine/core";
+import { MantineProvider, Button, Checkbox, Avatar, Text } from "@mantine/core";
 import Layout from "../components/main/layout";
 import SignIn from "../components/elements/sign_in";
 import { useState } from "react";
@@ -33,21 +33,13 @@ export default function Home() {
                         setOpened={() => setAuthModalOpened(false)}
                     ></SignIn>
                 )}
+                {session && (
+                    <div>
+                        <Text>Welcome {session.user.name}! </Text>
+                        <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} onClick={() => signOut()}>Sign Out</Button>
+                    </div>
+                )}
             </MantineProvider>
-
-            {!session && (
-                <>
-                    Not signed in <br />
-                    <button onClick={() => signIn()}>Sign in</button>
-                </>
-            )}
- 
-            {session && (
-                <>
-                    <h4>Hello, {session.user.name}</h4>
-                    <button onClick={() => signOut()}>Sign Out</button>
-                </>
-            )}
         </div>
     );
 }

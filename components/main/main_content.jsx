@@ -107,6 +107,7 @@ const MainContent = () => {
                 opened={newTaskModalOpened}
                 setOpened={setNewTaskModalOpened}
             ></EditTask>
+            
         </div>
     );
 };
