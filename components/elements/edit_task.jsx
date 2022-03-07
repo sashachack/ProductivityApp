@@ -14,10 +14,10 @@ import { useState } from "react";
 
 const EditTask = ({ content, opened, setOpened }) => {
     // const [opened, setOpened] = useState(false);
-    console.log(content);
-    console.log(JSON.stringify(content));
-    console.log(Object.keys(content));
-    console.log(JSON.stringify(content["dueDate"]));
+    // console.log(content);
+    // console.log(JSON.stringify(content));
+    // console.log(Object.keys(content));
+    // console.log(JSON.stringify(content["dueDate"]));
 
     return (
         <>
@@ -51,7 +51,7 @@ const EditTask = ({ content, opened, setOpened }) => {
                         value={content.status}
                     ></Select>
                     <Space h="sm" />
-                    <Text size="sm" style={{ "font-weight": "bold" }}>
+                    <Text size="sm" style={{ fontWeight: "bold" }}>
                         Label
                     </Text>
                     <Input
@@ -69,8 +69,8 @@ const EditTask = ({ content, opened, setOpened }) => {
                         ]}
                         value={content.label}
                     ></Select> */}
-                    <Space h="sm" />
-                    <DatePicker
+                    {/* <Space h="sm" /> */}
+                    {/* <DatePicker
                         placeholder="Pick date"
                         label="Event date"
                         value={
@@ -80,7 +80,7 @@ const EditTask = ({ content, opened, setOpened }) => {
                                 content.dueDate.day
                             )
                         }
-                    ></DatePicker>
+                    ></DatePicker> */}
                     {/* <Text color="white">{JSON.stringify(content.dueDate)}</Text> */}
                     {/* <Space h="sm" /> */}
                     {/* <Textarea

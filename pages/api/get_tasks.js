@@ -11,5 +11,4 @@ export default async(req, res) => {
     const tasks = await db.collection("Tasks").find({ user_id: bodyObject.user_id }).toArray();
     res.json({ status: 200, data: tasks });
 
-
 }

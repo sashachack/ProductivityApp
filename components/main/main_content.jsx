@@ -6,23 +6,29 @@ import Calendar from "../content/calendar";
 import EditTask from "../elements/edit_task";
 import { SegmentedControl, Divider, Space } from "@mantine/core";
 // import { content } from "../../constants/items_constants";
+import { empty_content } from "../../constants/new_task";
 import { useEffect } from "react";
 
 const MainContent = () => {
-    const [content, setContent] = useState([]);
+    const [existingContent, setExistingContent] = useState([]);
+    console.log(empty_content);
+    const [newContent, setNewContent] = useState(empty_content);
+
+    let user_id = 3; // * THIS NEEDS TO CHANGE
+
     useEffect(async () => {
         let res = await fetch("http://localhost:3000/api/get_tasks", {
             method: "POST",
             body: JSON.stringify({
-                user_id: 3,
+                user_id: user_id,
             }),
         });
         // let res = await fetch('http://localhost:3000/api/get_tasks')
         let json = await res.json();
         let tasks = json.data;
-        setContent(tasks);
+        setExistingContent(tasks);
         console.log(tasks);
-    }, [setContent]);
+    }, [setExistingContent]);
 
     const pages = [
         // { label: "Board", value: "board" },
@@ -31,9 +37,14 @@ const MainContent = () => {
     ];
     // console.log(content);
 
+    // * This declares what page we're on (Board/Table/Calendar)
     const [value, setValue] = useState(pages[0].value);
+    // * This defines if editing an existing task modal is open
     const [modalOpened, setModalOpened] = useState(false);
+    // * This is the ID of the currently selected existing task
     const [selectedID, setSelectedID] = useState(-1);
+
+    const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
 
     let clickCard = (id) => {
         console.log(id);
@@ -42,7 +53,7 @@ const MainContent = () => {
     };
 
     let addCard = () => {
-        setModalOpened(true);
+        setNewTaskModalOpened(true);
         console.log("add a new task");
     };
 
@@ -61,24 +72,33 @@ const MainContent = () => {
             )} */}
             {value == "table" && (
                 <Table
-                    content={content}
+                    content={existingContent}
                     clickCard={(i) => clickCard(i)}
                     addCard={() => addCard()}
                 />
             )}
             {/* {value == "calendar" && <Calendar content={content} />} */}
-            {content.length > 0 && (
+            {/* // * This is our `EditTask` for editing existing tasks */}
+            {existingContent.length > 0 && (
                 <EditTask
                     content={
-                        content.length > 0 &&
+                        existingContent.length > 0 &&
                         (selectedID != -1
-                            ? content.find((c) => c["_id"] == selectedID)
-                            : content[0])
+                            ? existingContent.find(
+                                  (c) => c["_id"] == selectedID
+                              )
+                            : existingContent[0])
                     }
                     opened={modalOpened}
                     setOpened={setModalOpened}
                 />
             )}
+            {/* // * This is our `EditTask` for editing a newly created task */}
+            <EditTask
+                content={empty_content}
+                opened={newTaskModalOpened}
+                setOpened={setNewTaskModalOpened}
+            ></EditTask>
         </div>
     );
 };
