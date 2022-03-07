@@ -21,7 +21,7 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
     // console.log(Object.keys(content));
     // console.log(JSON.stringify(content["dueDate"]));
 
-    let user_id = 7; // ! CHANGE THIS
+    // let user_id = 7; // ! CHANGE THIS
 
     const [localContent, setLocalContent] = useState(content);
     // TODO - make sure to also edit global content
@@ -33,7 +33,7 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
         let sendNewTask = async () => {
             let data = localContent;
             
-            localContent["user_id"] = user_id;
+            //localContent["user_id"] = user_id;
             localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
             localContent['email'] = session.user.email //need to pass in the email to link to the account
 
@@ -111,17 +111,29 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
                         value={content.label}
                     ></Select> */}
                     {/* <Space h="sm" /> */}
-                    {/* <DatePicker
+                    <DatePicker
                         placeholder="Pick date"
                         label="Event date"
-                        value={
-                            new Date(
-                                content.dueDate.year,
-                                content.dueDate.month - 1,
-                                content.dueDate.day
-                            )
-                        }
-                    ></DatePicker> */}
+                        onChange = {(e) => {
+                            console.log((typeof(e.getMonth())))
+                            const c_copy = JSON.parse(
+                                JSON.stringify(localContent)
+                            );
+                            c_copy.dueDate.year = e.getFullYear();
+                            c_copy.dueDate.month = e.getMonth();
+                            c_copy.dueDate.month = c_copy.dueDate.month - 1;
+                            c_copy.dueDate.day = e.getDay();
+                            setLocalContent(c_copy);
+
+                        }}
+                        // value={
+                        //     new Date(
+                        //         content.dueDate.year,
+                        //         content.dueDate.month - 1,
+                        //         content.dueDate.day
+                        //     )
+                        // }
+                    ></DatePicker>
                     {/* <Text color="white">{JSON.stringify(content.dueDate)}</Text> */}
                     {/* <Space h="sm" /> */}
                     {/* <Textarea

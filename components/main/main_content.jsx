@@ -21,7 +21,7 @@ const MainContent = () => {
     // console.log(empty_content);
     const [newContent, setNewContent] = useState(empty_content);
 
-    let user_id = 7; // * THIS NEEDS TO CHANGE
+    //let user_id = 7; // * THIS NEEDS TO CHANGE
 
     const pages = [
         // { label: "Board", value: "board" },
