@@ -11,8 +11,10 @@ import {
 } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 const EditTask = ({ content, editContent, opened, setOpened }) => {
+    const { data: session, status } = useSession();
     // const [opened, setOpened] = useState(false);
     // console.log(content);
     // console.log(JSON.stringify(content));
@@ -30,8 +32,10 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
 
         let sendNewTask = async () => {
             let data = localContent;
+            
             localContent["user_id"] = user_id;
             localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
+            localContent['email'] = session.user.email
 
             await fetch("http://localhost:3000/api/post_tasks", {
                 method: "POST",

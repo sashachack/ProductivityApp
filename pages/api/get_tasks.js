@@ -9,7 +9,7 @@ export default async(req, res) => {
     let bodyObject = JSON.parse(req.body);
     // console.log(bodyObject)
 
-    const tasks = await db.collection("Tasks").find({ user_id: bodyObject.user_id }).toArray();
+    const tasks = await db.collection("Tasks").find({ email: bodyObject.email }).toArray();
     res.json({ status: 200, data: tasks });
 
 }

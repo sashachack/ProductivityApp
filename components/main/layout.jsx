@@ -1,8 +1,29 @@
 import { AppShell, Navbar, Header, Title, Text, Space } from "@mantine/core";
 import MainNavbar from "./main_navbar";
 import MainContent from "./main_content";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 let Layout = () => {
+    const { data: session, status } = useSession();
+
+    // useEffect(() => {
+      
+    //     let post_user = async() => {
+            
+    //             await fetch("http://localhost:3000/api/post_user", {
+    //             method: "POST",
+    //             body: JSON.stringify({
+                    
+                    
+    //                 hello: 'hello',
+    //             }),
+    //         })
+    //     };
+
+    //     post_user(); 
+       
+    // }, [])
     return (
         <AppShell
             padding="xl"
@@ -22,7 +43,7 @@ let Layout = () => {
         >
             <Title order={1}>Tasks</Title>
             <Space h="sm" />
-            <MainContent />
+            {session && <MainContent />}
         </AppShell>
     );
 };

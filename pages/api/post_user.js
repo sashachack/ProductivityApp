@@ -3,6 +3,7 @@ import clientPromise from "./mongodb";
 //API endpoint for adding user
 
 export default async(req, res) => {
+    console.log('here')
     const client = await clientPromise;
     const db = client.db("Task_Manager");
     let bodyObject = JSON.parse(req.body);

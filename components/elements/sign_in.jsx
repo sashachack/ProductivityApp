@@ -4,24 +4,26 @@ import { useEffect } from "react";
 
 const SignIn = ({ opened, setOpened }) => {
     const { data: session, status } = useSession();
-    useEffect(() => {
-        
-        
-        
-        let post_user = async() => await fetch("http://localhost:3000/api/post_task", {
-            method: "POST",
-            body: JSON.stringify({
-                
-                email:session.user.email,
-                hello: hello,
-            }),
-        });
 
-        {session && post_user(); }
-        
+    // const {}
+    
+    useEffect(() => {
+      
+        let post_user = async() => {
+                console.log(session.user)
+            
+                await fetch("http://localhost:3000/api/post_user", {
+                method: "POST",
+                body: JSON.stringify({
+                    
+                    
+                    hello: 'hello',
+                }),
+            })
+        };
+
+        {session && post_user()}; 
        
-        
-        
     }, [session])
 
     return (
@@ -53,7 +55,7 @@ const SignIn = ({ opened, setOpened }) => {
                     <Button
                         variant="gradient"
                         gradient={{ from: "teal", to: "blue", deg: 60 }}
-                        onClick={() => { signIn()}}
+                        onClick={() => { signIn(); }}
                         // onClick={() => storeInfo(session)}
                     >
                         Sign In

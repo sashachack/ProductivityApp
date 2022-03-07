@@ -8,12 +8,14 @@ import { SegmentedControl, Divider, Space } from "@mantine/core";
 // import { content } from "../../constants/items_constants";
 import { empty_content } from "../../constants/new_task";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 // TODO - the DOM only updates with new tasks
 // TODO - if there's already one there; otherwise you need to refresh
 // TODO - FIX THIS
 
 const MainContent = () => {
+    const { data: session, status } = useSession();
     const [existingContent, setExistingContent] = useState([]);
     // const [newContent, setNewContent] = useState
     // console.log(empty_content);
@@ -40,7 +42,7 @@ const MainContent = () => {
         let res = await fetch("http://localhost:3000/api/get_tasks", {
             method: "POST",
             body: JSON.stringify({
-                user_id: user_id,
+                email: session.user.email,
             }),
         });
         // let res = await fetch('http://localhost:3000/api/get_tasks')
