@@ -7,13 +7,17 @@ import {
     Space,
     Select,
     Textarea,
+    Text,
 } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useState } from "react";
 
 const EditTask = ({ content, opened, setOpened }) => {
     // const [opened, setOpened] = useState(false);
-    // console.log(content);
+    console.log(content);
+    console.log(JSON.stringify(content));
+    console.log(Object.keys(content));
+    console.log(JSON.stringify(content["dueDate"]));
 
     return (
         <>
@@ -47,7 +51,15 @@ const EditTask = ({ content, opened, setOpened }) => {
                         value={content.status}
                     ></Select>
                     <Space h="sm" />
-                    <Select
+                    <Text size="sm" style={{ "font-weight": "bold" }}>
+                        Label
+                    </Text>
+                    <Input
+                        placeholder="Untitled"
+                        value={content.label}
+                        onChange={() => console.log("Fix this later")}
+                    ></Input>
+                    {/* <Select
                         label="Label"
                         data={[
                             { value: "SEW", label: "SEW" },
@@ -56,7 +68,7 @@ const EditTask = ({ content, opened, setOpened }) => {
                             { value: "457", label: "457" },
                         ]}
                         value={content.label}
-                    ></Select>
+                    ></Select> */}
                     <Space h="sm" />
                     <DatePicker
                         placeholder="Pick date"
@@ -69,11 +81,12 @@ const EditTask = ({ content, opened, setOpened }) => {
                             )
                         }
                     ></DatePicker>
-                    <Space h="sm" />
-                    <Textarea
+                    {/* <Text color="white">{JSON.stringify(content.dueDate)}</Text> */}
+                    {/* <Space h="sm" /> */}
+                    {/* <Textarea
                         placeholder="Write some notes..."
                         label="Comments"
-                    />
+                    /> */}
                 </div>
             </Modal>
             {/* <Button onClick={() => setOpened(true)}></Button> */}
