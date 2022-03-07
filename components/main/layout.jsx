@@ -1,22 +1,8 @@
 import { AppShell, Navbar, Header, Title, Text, Space } from "@mantine/core";
 import MainNavbar from "./main_navbar";
 import MainContent from "./main_content";
-import { useEffect } from "react";
 
 let Layout = () => {
-    useEffect(async () => {
-        let res = await fetch("http://localhost:3000/api/get_tasks", {
-            method: "POST",
-            body: JSON.stringify({
-                
-                user_id: 3
-            }),
-        });
-        // let res = await fetch('http://localhost:3000/api/get_tasks')
-        let tasks = await res.json();
-        console.log(tasks);
-    }, []);
-
     return (
         <AppShell
             padding="xl"

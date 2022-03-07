@@ -9,20 +9,22 @@ import {
 } from "@mantine/core";
 // import { useHover } from "@mantine/hooks";
 
-let Table = ({ content, clickCard }) => {
-    let cards = content.map((c, i) => (
-        <div key={i}>
-            <TableCard
-                taskName={c.title}
-                label={c.label}
-                dueDate={c.dueDate}
-                status={c.status}
-                id={c["_id"]}
-                click={(id) => clickCard(id)}
-            />
-            <Space h="md" />
-        </div>
-    ));
+let Table = ({ content, clickCard, addCard }) => {
+    let cards =
+        content.length > 0 &&
+        content.map((c, i) => (
+            <div key={i}>
+                <TableCard
+                    taskName={c.title}
+                    label={c.label}
+                    dueDate={c.dueDate}
+                    status={c.status}
+                    id={c["_id"]}
+                    click={(id) => clickCard(id)}
+                />
+                <Space h="md" />
+            </div>
+        ));
     const theme = useMantineTheme();
 
     let sections = ["Title", "Label", "Due Date", "Status"];
@@ -62,6 +64,7 @@ let Table = ({ content, clickCard }) => {
                         cursor: "pointer",
                     },
                 })}
+                onClick={() => addCard()}
             >
                 + Add Task
             </Card>
