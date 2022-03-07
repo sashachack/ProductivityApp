@@ -7,6 +7,7 @@ import {
     Card,
     useMantineTheme,
 } from "@mantine/core";
+// import { useHover } from "@mantine/hooks";
 
 let Table = ({ content, clickCard }) => {
     let cards = content.map((c, i) => (
@@ -26,6 +27,10 @@ let Table = ({ content, clickCard }) => {
 
     let sections = ["Title", "Label", "Due Date", "Status"];
 
+    // const { hovered, ref } = useHover();
+
+    // let addTaskBg = ;
+
     return (
         <div>
             <Card
@@ -44,6 +49,21 @@ let Table = ({ content, clickCard }) => {
             </Card>
             <Space h="md" />
             {cards}
+            <Card
+                // ref={ref}
+                // style={{
+                //     backgroundColor: { hovered ? "#44445522" : "#44445522" },
+                // }}
+                sx={(theme) => ({
+                    backgroundColor: "#44445522",
+                    "&:hover": {
+                        backgroundColor: "#44445566",
+                        cursor: "pointer",
+                    },
+                })}
+            >
+                + Add Task
+            </Card>
         </div>
     );
 };
