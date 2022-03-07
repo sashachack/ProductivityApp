@@ -9,9 +9,9 @@ import { content } from "../../constants/items_constants";
 
 const MainContent = () => {
     const pages = [
-        { label: "Board", value: "board" },
+        // { label: "Board", value: "board" },
         { label: "Table", value: "table" },
-        { label: "Calendar", value: "calendar" },
+        // { label: "Calendar", value: "calendar" },
     ];
     console.log(content);
 
