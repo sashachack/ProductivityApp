@@ -16,7 +16,7 @@ export default function Home() {
     const [authModalOpened, setAuthModalOpened] = useState(true);
 
     return (
-        <div>
+        <div style={{ backgroundColor: "#141517", height: "100vh" }}>
             <Head>
                 <title>Create Next App</title>
                 <meta
@@ -26,7 +26,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <MantineProvider theme={{ colorScheme: "dark" }}>
-                <Layout />
+                {session && <Layout />}
                 {!session && (
                     <SignIn
                         opened={true}
@@ -34,9 +34,23 @@ export default function Home() {
                     ></SignIn>
                 )}
                 {session && (
-                    <div>
-                        <Text>Welcome {session.user.name}! </Text>
-                        <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} onClick={() => signOut()}>Sign Out</Button>
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: "0px",
+                            right: "0px",
+                        }}
+                    >
+                        {/* <Text color="white">Welcome {session.user.name}! </Text> */}
+                        <Button
+                            variant="gradient"
+                            gradient={{ from: "indigo", to: "cyan" }}
+                            onClick={() => signOut()}
+                            style={{ margin: "25px" }}
+                            // style={{ display: "inlineBlock" }}
+                        >
+                            Sign Out
+                        </Button>
                     </div>
                 )}
             </MantineProvider>
