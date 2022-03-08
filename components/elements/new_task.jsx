@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { empty_content } from "../../constants/new_task";
 
-const NewTask = ({ opened, setOpened }) => {
+const NewTask = ({ opened, setOpened, content, setContent }) => {
     const { data: session, status } = useSession();
     // const [opened, setOpened] = useState(false);
     // console.log(content);
@@ -30,28 +30,33 @@ const NewTask = ({ opened, setOpened }) => {
     let close = () => {
         // setLocalContent(localContent);
         console.log(localContent);
+        let data = JSON.parse(JSON.stringify(localContent));
+        if (JSON.stringify(data) == JSON.stringify(empty_content)) {
+            console.log("No data inputted as a new task");
+            return;
+        }
+        data.title = data.title.length > 0 ? data.title : "Untitled";
+        // data.dueDate = data.dueDate;
+
+        //localContent["user_id"] = user_id;
+        // localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
+        data["email"] = session.user.email; //need to pass in the email to link to the account
 
         let sendNewTask = async () => {
-            let data = JSON.parse(JSON.stringify(localContent));
-            if (JSON.stringify(data) == JSON.stringify(empty_content)) {
-                console.log("No data inputted as a new task");
-                return;
-            }
-            data.title = data.title.length > 0 ? data.title : "Untitled";
-            // data.dueDate = data.dueDate;
-
-            //localContent["user_id"] = user_id;
-            // localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
-            data["email"] = session.user.email; //need to pass in the email to link to the account
-
             await fetch("/api/post_tasks", {
                 method: "POST",
                 body: JSON.stringify({
                     data,
                 }),
             });
-            // setLocalContent(empty_content);
+            setLocalContent(empty_content);
         };
+        let temp = [];
+        for (let c of content) {
+            temp.push(JSON.parse(JSON.stringify(c)));
+        }
+        temp.push(data);
+        setContent(temp);
         sendNewTask();
         setOpened(false);
     };
