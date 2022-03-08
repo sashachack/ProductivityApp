@@ -14,7 +14,7 @@ const TableCard = ({ taskName, label, dueDate, status, id, click }) => {
         let delTask = async () => {
             // data["email"] = session.user.email; //need to pass in the email to link to the account
 
-            await fetch("pages/api/delete_task", {
+            await fetch("/api/delete_task", {
                 method: "POST",
                 body: JSON.stringify({
                     id: id,

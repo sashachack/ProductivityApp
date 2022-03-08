@@ -40,7 +40,7 @@ const MainContent = () => {
     const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
 
     useEffect(async () => {
-        let res = await fetch("pages/api/get_tasks", {
+        let res = await fetch("/api/get_tasks", {
             method: "POST",
             body: JSON.stringify({
                 email: session.user.email, //grab the tasks by email
