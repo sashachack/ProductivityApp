@@ -1,5 +1,7 @@
 import clientPromise from "./mongodb";
-import ObjectId from './mongodb'
+import mongodb from "mongodb"
+// gonna need so can convert string into MongoDB object
+const ObjectId = mongodb.ObjectID
 
 //API endpoint for deleting tasks
 
@@ -9,6 +11,6 @@ export default async(req, res) => {
     const db = client.db("Task_Manager");
     let bodyObject = JSON.parse(req.body);
     console.log(bodyObject.id)
-    await db.collection("Tasks").deleteOne({ '_id': bodyObject.id });
+    await db.collection("Tasks").deleteOne({ '_id': ObjectId(bodyObject.id) });
     // res.json(newTask.ops[0]);
 }
