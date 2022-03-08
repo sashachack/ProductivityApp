@@ -42,7 +42,7 @@ const NewTask = ({ opened, setOpened }) => {
 
             //localContent["user_id"] = user_id;
             // localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
-            localContent["email"] = session.user.email; //need to pass in the email to link to the account
+            data["email"] = session.user.email; //need to pass in the email to link to the account
 
             await fetch("http://localhost:3000/api/post_tasks", {
                 method: "POST",
@@ -50,10 +50,10 @@ const NewTask = ({ opened, setOpened }) => {
                     data,
                 }),
             });
+            // setLocalContent(empty_content);
         };
         sendNewTask();
         setOpened(false);
-        setLocalContent(empty_content);
     };
 
     return (
