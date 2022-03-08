@@ -33,13 +33,23 @@ const NewTask = ({ opened, setOpened, content, setContent }) => {
         let data = JSON.parse(JSON.stringify(localContent));
         if (JSON.stringify(data) == JSON.stringify(empty_content)) {
             console.log("No data inputted as a new task");
+            setOpened(false);
             return;
         }
         data.title = data.title.length > 0 ? data.title : "Untitled";
         // data.dueDate = data.dueDate;
 
         //localContent["user_id"] = user_id;
-        // localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
+        let today = new Date();
+
+        data.dueDate =
+            Object.keys(data.dueDate).length != 0
+                ? data.dueDate
+                : {
+                      year: today.getFullYear(),
+                      month: today.getMonth(),
+                      day: today.getDate(),
+                  };
         data["email"] = session.user.email; //need to pass in the email to link to the account
 
         let sendNewTask = async () => {
@@ -56,6 +66,7 @@ const NewTask = ({ opened, setOpened, content, setContent }) => {
             temp.push(JSON.parse(JSON.stringify(c)));
         }
         temp.push(data);
+        console.log(temp);
         setContent(temp);
         sendNewTask();
         setOpened(false);
@@ -97,6 +108,14 @@ const NewTask = ({ opened, setOpened, content, setContent }) => {
                             { value: "Done", label: "Done" },
                         ]}
                         value={localContent.status}
+                        onChange={(e) => {
+                            // console.log(e);
+                            const c_copy = JSON.parse(
+                                JSON.stringify(localContent)
+                            );
+                            c_copy.status = e;
+                            setLocalContent(c_copy);
+                        }}
                     ></Select>
                     <Space h="sm" />
                     <Text size="sm" style={{ fontWeight: "bold" }}>
