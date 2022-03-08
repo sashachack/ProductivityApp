@@ -9,6 +9,23 @@ const TableCard = ({ taskName, label, dueDate, status, id, click }) => {
         return months[date.month] + " " + date.day + ", " + date.year;
     };
 
+    let del = () => {
+        console.log("delete this task, id: " + id);
+        let delTask = async () => {
+            // data["email"] = session.user.email; //need to pass in the email to link to the account
+
+            await fetch("http://localhost:3000/api/delete_task", {
+                method: "POST",
+                body: JSON.stringify({
+                    id: id,
+                }),
+            });
+            // setLocalContent(empty_content);
+        };
+        delTask();
+        // setOpened(false);
+    };
+
     return (
         <div>
             <Card
@@ -16,7 +33,10 @@ const TableCard = ({ taskName, label, dueDate, status, id, click }) => {
                 style={{ "&:hover": { backgroundColor: "#333333" } }}
             >
                 {/* <div> */}
-                <ActionIcon style={{ position: "absolute", right: "15px" }}>
+                <ActionIcon
+                    style={{ position: "absolute", right: "15px" }}
+                    onClick={() => del()}
+                >
                     <FontAwesomeIcon
                         icon={faTrashCan}
                         style={{ fontSize: 20, color: "#aaaaaa" }}
