@@ -44,7 +44,7 @@ const NewTask = ({ opened, setOpened }) => {
             // localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
             data["email"] = session.user.email; //need to pass in the email to link to the account
 
-            await fetch("http://localhost:3000/api/post_tasks", {
+            await fetch("pages/api/post_tasks", {
                 method: "POST",
                 body: JSON.stringify({
                     data,
