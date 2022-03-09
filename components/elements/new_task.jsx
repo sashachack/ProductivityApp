@@ -27,6 +27,8 @@ const NewTask = ({ opened, setOpened, content, setContent }) => {
     const [localContent, setLocalContent] = useState(empty_content);
     // TODO - make sure to also edit global content
 
+    let today = new Date();
+
     let close = () => {
         // setLocalContent(localContent);
         console.log(localContent);
@@ -40,7 +42,7 @@ const NewTask = ({ opened, setOpened, content, setContent }) => {
         // data.dueDate = data.dueDate;
 
         //localContent["user_id"] = user_id;
-        let today = new Date();
+        // let today = new Date();
 
         data.dueDate =
             Object.keys(data.dueDate).length != 0
@@ -146,6 +148,17 @@ const NewTask = ({ opened, setOpened, content, setContent }) => {
                     <DatePicker
                         placeholder="Pick date"
                         label="Event date"
+                        firstDayOfWeek="sunday"
+                        dayStyle={(date) =>
+                            date.getDate() === today.getDate() &&
+                            date.getMonth() === today.getMonth() &&
+                            date.getFullYear() === today.getFullYear()
+                                ? {
+                                      backgroundColor: "#88bbff",
+                                      color: "#000000",
+                                  }
+                                : null
+                        }
                         onChange={(e) => {
                             // console.log(e);
                             // console.log(typeof e.getMonth());
