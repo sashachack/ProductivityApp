@@ -149,16 +149,27 @@ const NewTask = ({ opened, setOpened, content, setContent }) => {
                         placeholder="Pick date"
                         label="Event date"
                         firstDayOfWeek="sunday"
-                        dayStyle={(date) =>
-                            date.getDate() === today.getDate() &&
-                            date.getMonth() === today.getMonth() &&
-                            date.getFullYear() === today.getFullYear()
-                                ? {
-                                      backgroundColor: "#88bbff",
-                                      color: "#000000",
-                                  }
-                                : null
-                        }
+                        dayStyle={(date) => {
+                            if (
+                                date.getDate() === today.getDate() &&
+                                date.getMonth() === today.getMonth() &&
+                                date.getFullYear() === today.getFullYear()
+                            ) {
+                                return {
+                                    backgroundColor: "#88bbff",
+                                    color: "#000000",
+                                };
+                            } else if (
+                                date.getDay() === 0 ||
+                                date.getDay() === 6
+                            ) {
+                                return {
+                                    color: "#88bbff",
+                                };
+                            } else {
+                                null;
+                            }
+                        }}
                         onChange={(e) => {
                             // console.log(e);
                             // console.log(typeof e.getMonth());
