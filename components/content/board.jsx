@@ -1,7 +1,7 @@
 import BoardCard from "../elements/board_card";
-import { Space, SimpleGrid, Title } from "@mantine/core";
+import { Space, SimpleGrid, Title, Card } from "@mantine/core";
 
-let Board = ({ content, clickCard }) => {
+let Board = ({ content, setContent, clickCard, addCard }) => {
     // console.log(content);
     let statuses = ["To Do", "Doing", "Done"];
     let items = {};
@@ -13,16 +13,36 @@ let Board = ({ content, clickCard }) => {
     //     console.log(id);
     // };
 
+    let addCardButton = (label) => {
+        // console.log(`Status: ${label}`);
+        return (
+            <Card
+                sx={(theme) => ({
+                    backgroundColor: "#44445522",
+                    "&:hover": {
+                        backgroundColor: "#44445566",
+                        cursor: "pointer",
+                    },
+                })}
+                onClick={() => addCard(label)}
+            >
+                + Add Task
+            </Card>
+        );
+    };
+
     return (
         <div>
             <SimpleGrid cols={statuses.length}>
                 {statuses.map((s, i) => (
-                    <Title key={i} order={4}>
-                        {s}
-                    </Title>
+                    <Card style={{ backgroundColor: "#44445522" }}>
+                        <Title key={i} order={4}>
+                            {s}
+                        </Title>
+                    </Card>
                 ))}
             </SimpleGrid>
-            <Space h="sm"></Space>
+            <Space h="md"></Space>
             <SimpleGrid cols={statuses.length}>
                 {statuses.map((s, i) => (
                     <div key={i}>
@@ -38,6 +58,7 @@ let Board = ({ content, clickCard }) => {
                                 <Space h="md" />
                             </div>
                         ))}
+                        {addCardButton(s)}
                     </div>
                 ))}
             </SimpleGrid>

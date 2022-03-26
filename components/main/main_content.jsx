@@ -25,7 +25,7 @@ const MainContent = () => {
     //let user_id = 7; // * THIS NEEDS TO CHANGE
 
     const pages = [
-        // { label: "Board", value: "board" },
+        { label: "Board", value: "board" },
         { label: "Table", value: "table" },
         // { label: "Calendar", value: "calendar" },
     ];
@@ -36,9 +36,13 @@ const MainContent = () => {
     const [modalOpened, setModalOpened] = useState(false);
     // * This is the ID of the currently selected existing task
     const [selectedID, setSelectedID] = useState(-1);
-
+    // * This is the status of a new task, used for the board view when a new task
+    // * is added. Outside the board view, tasks are defaulted to "To Do"
+    const [newTaskStatus, setNewTaskStatus] = useState("To Do");
+    // * This decides whether the newTaskPopup is open
     const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
 
+    // * This is run to fetch the tasks from the API
     useEffect(async () => {
         let res = await fetch("/api/get_tasks", {
             method: "POST",
@@ -61,7 +65,11 @@ const MainContent = () => {
         setModalOpened(true);
     };
 
-    let addCard = () => {
+    let addCard = (status = "To Do") => {
+        // console.log(status);
+        console.log(`Add a card of type: ${status}`);
+        console.log(`Status!!!! : ${status}`);
+        setNewTaskStatus(status);
         setNewTaskModalOpened(true);
         // console.log("add a new task");
     };
@@ -76,9 +84,14 @@ const MainContent = () => {
             />
             <Space h="sm" />
             {/* <Divider /> */}
-            {/* {value == "board" && (
-                <Board content={content} clickCard={(i) => clickCard(i)} />
-            )} */}
+            {value == "board" && (
+                <Board
+                    content={existingContent}
+                    setContent={setExistingContent}
+                    clickCard={(i) => clickCard(i)}
+                    addCard={(l) => addCard(l)}
+                />
+            )}
             {value == "table" && (
                 <Table
                     content={existingContent}
@@ -112,6 +125,7 @@ const MainContent = () => {
                 setOpened={setNewTaskModalOpened}
                 content={existingContent}
                 setContent={setExistingContent}
+                taskStatus={newTaskStatus}
             ></NewTask>
         </div>
     );
