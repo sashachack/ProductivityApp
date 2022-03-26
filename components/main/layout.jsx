@@ -12,12 +12,12 @@ let Layout = () => {
     return (
         <AppShell
             padding="xl"
-            // navbar={
-            //     <Navbar width={{ base: 300 }} padding="md">
-            //         <MainNavbar />
-            //     </Navbar>
-            // }
-            // height="100%"
+            navbar={
+                <Navbar width={{ base: 300 }} padding="md">
+                    <MainNavbar />
+                </Navbar>
+            }
+            height="100%"
             styles={(theme) => ({
                 main: {
                     backgroundColor:

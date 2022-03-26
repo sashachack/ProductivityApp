@@ -50,7 +50,9 @@ const MainContent = () => {
         let json = await res.json();
         let tasks = json.data;
         setExistingContent(tasks);
-        console.log(tasks);
+        // console.log(tasks);
+
+
     }, [setExistingContent, newTaskModalOpened, setNewTaskModalOpened]);
 
     let clickCard = (id) => {
