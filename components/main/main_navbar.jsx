@@ -1,4 +1,4 @@
-import { AppShell, Navbar, Header, Title, Text, Card, Modal } from "@mantine/core";
+import { AppShell, Navbar, Header, Title, Text, Card, Modal, Input } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -8,12 +8,29 @@ const MainNavbar = () => {
     let [curCollections, setCurCollections] = useState([]);
     let [modalOpen, setModalOpen] = useState(false);
     const { data: session, status } = useSession();
+    let [localContent, setLocalContent] = useState({collection_name: ""})
+
+    
 
     // let [isMounted, setIsMounted] = useState(false);
 
     let close = () => {
+        
+        let data = JSON.parse(JSON.stringify(localContent));
+        console.log(data)
+        data['email'] = session.user.email;
+        console.log(data)
+        // let sendNewCollection = async () => {
+        //     await fetch("/api/post_collection", {
+        //         method: "POST",
+        //         body: JSON.stringify({
+        //             data,
+        //         }),
+        //     });
+        //     setLocalContent({collection_name: ""});
+        // };
+        // sendNewCollection();
         setModalOpen(false);
-
     }
 
     useEffect(async () => {
@@ -74,7 +91,22 @@ const MainNavbar = () => {
                 opened={modalOpen}
                 onClose={close}
                 hideCloseButton
-            ></Modal>
+            >
+            <Input
+                        size="xl"
+                        variant="unstyled"
+                        placeholder="Untitled"
+                        value={localContent.collection_name}
+                        onChange={(e) => {
+                            const c_copy = JSON.parse(
+                                JSON.stringify(localContent)
+                            );
+                            c_copy.collection_name = e.target.value;
+                            setLocalContent(c_copy);
+                        }}
+                    ></Input>
+                    
+                </Modal>
         </div>
     );
 };
