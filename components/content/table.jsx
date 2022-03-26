@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 // import { useHover } from "@mantine/hooks";
 
-let Table = ({ content, clickCard, addCard }) => {
+let Table = ({ content, setContent, clickCard, addCard }) => {
     let cards =
         content.length > 0 &&
         content.map((c, i) => (
@@ -21,6 +21,8 @@ let Table = ({ content, clickCard, addCard }) => {
                     status={c.status}
                     id={c["_id"]}
                     click={(id) => clickCard(id)}
+                    content={content}
+                    setContent={setContent}
                 />
                 <Space h="md" />
             </div>
@@ -56,7 +58,7 @@ let Table = ({ content, clickCard, addCard }) => {
                 // style={{
                 //     backgroundColor: { hovered ? "#44445522" : "#44445522" },
                 // }}
-                
+
                 sx={(theme) => ({
                     backgroundColor: "#44445522",
                     "&:hover": {

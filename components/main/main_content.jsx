@@ -80,6 +80,7 @@ const MainContent = () => {
             {value == "table" && (
                 <Table
                     content={existingContent}
+                    setContent={setExistingContent}
                     clickCard={(i) => clickCard(i)}
                     addCard={() => addCard()}
                 />
@@ -107,6 +108,8 @@ const MainContent = () => {
                 // editContent={setNewContent}
                 opened={newTaskModalOpened}
                 setOpened={setNewTaskModalOpened}
+                content={existingContent}
+                setContent={setExistingContent}
             ></NewTask>
         </div>
     );

@@ -4,13 +4,25 @@ import { ActionIcon } from "@mantine/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
-const TableCard = ({ taskName, label, dueDate, status, id, click }) => {
+const TableCard = ({
+    taskName,
+    label,
+    dueDate,
+    status,
+    id,
+    click,
+    content,
+    setContent,
+}) => {
+    // console.log(content);
+
     let printDate = (date) => {
         return months[date.month] + " " + date.day + ", " + date.year;
     };
 
     let del = () => {
         console.log("delete this task, id: " + id);
+        console.log("hey");
         let delTask = async () => {
             // data["email"] = session.user.email; //need to pass in the email to link to the account
 
@@ -20,9 +32,12 @@ const TableCard = ({ taskName, label, dueDate, status, id, click }) => {
                     id: id,
                 }),
             });
+
             // setLocalContent(empty_content);
         };
         delTask();
+        let filteredContent = content.filter((c) => c["_id"] != id);
+        setContent(filteredContent);
         // setOpened(false);
     };
 
