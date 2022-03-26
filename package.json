@@ -21,6 +21,7 @@
     "next": "12.0.10",
     "next-auth": "^4.2.1",
     "react": "17.0.2",
+    "react-beautiful-dnd": "^13.1.0",
     "react-dom": "17.0.2",
     "react-native-web": "^0.17.7",
     "realm": "^10.13.0"
