@@ -9,9 +9,9 @@ import { useState } from "react";
 
 export default function Home() {
     const { data: session, status } = useSession();
-    console.log("-----------");
-    console.log(session);
-    console.log(status);
+    // console.log("-----------");
+    // console.log(session);
+    // console.log(status);
 
     const [authModalOpened, setAuthModalOpened] = useState(true);
 
