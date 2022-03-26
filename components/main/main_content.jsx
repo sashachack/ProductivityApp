@@ -59,7 +59,9 @@ const MainContent = () => {
         setModalOpened(true);
     };
 
-    let addCard = () => {
+    let addCard = (status = "To Do") => {
+        console.log(status);
+        console.log(`Add a card of type: ${status}`);
         setNewTaskModalOpened(true);
         // console.log("add a new task");
     };
@@ -79,7 +81,7 @@ const MainContent = () => {
                     content={existingContent}
                     setContent={setExistingContent}
                     clickCard={(i) => clickCard(i)}
-                    addCard={() => addCard()}
+                    addCard={(l) => addCard(l)}
                 />
             )}
             {value == "table" && (

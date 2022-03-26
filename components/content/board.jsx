@@ -14,7 +14,7 @@ let Board = ({ content, setContent, clickCard, addCard }) => {
     // };
 
     let addCardButton = (label) => {
-        console.log(`Label: ${label}`);
+        // console.log(`Status: ${label}`);
         return (
             <Card
                 sx={(theme) => ({
@@ -24,7 +24,7 @@ let Board = ({ content, setContent, clickCard, addCard }) => {
                         cursor: "pointer",
                     },
                 })}
-                onClick={() => addCard()}
+                onClick={() => addCard(label)}
             >
                 + Add Task
             </Card>
