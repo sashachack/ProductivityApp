@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { empty_content } from "../../constants/new_task";
 
-const NewTask = ({ opened, setOpened, content, setContent }) => {
+export default function NewTask({ opened, setOpened, content, setContent }) {
     const { data: session, status } = useSession();
     // const [opened, setOpened] = useState(false);
     // console.log(content);
@@ -63,13 +63,13 @@ const NewTask = ({ opened, setOpened, content, setContent }) => {
             });
             setLocalContent(empty_content);
         };
-        let temp = [];
-        for (let c of content) {
-            temp.push(JSON.parse(JSON.stringify(c)));
-        }
-        temp.push(data);
-        console.log(temp);
-        setContent(temp);
+        // let temp = [];
+        // for (let c of content) {
+        //     temp.push(JSON.parse(JSON.stringify(c)));
+        // }
+        // temp.push(data);
+        // console.log(temp);
+        // setContent(temp);
         sendNewTask();
         setOpened(false);
     };
@@ -206,6 +206,4 @@ const NewTask = ({ opened, setOpened, content, setContent }) => {
             {/* <Button onClick={() => setOpened(true)}></Button> */}
         </>
     );
-};
-
-export default NewTask;
+}

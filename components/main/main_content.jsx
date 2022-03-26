@@ -25,7 +25,7 @@ const MainContent = () => {
     //let user_id = 7; // * THIS NEEDS TO CHANGE
 
     const pages = [
-        // { label: "Board", value: "board" },
+        { label: "Board", value: "board" },
         { label: "Table", value: "table" },
         // { label: "Calendar", value: "calendar" },
     ];
@@ -74,9 +74,14 @@ const MainContent = () => {
             />
             <Space h="sm" />
             {/* <Divider /> */}
-            {/* {value == "board" && (
-                <Board content={content} clickCard={(i) => clickCard(i)} />
-            )} */}
+            {value == "board" && (
+                <Board
+                    content={existingContent}
+                    setContent={setExistingContent}
+                    clickCard={(i) => clickCard(i)}
+                    addCard={() => addCard()}
+                />
+            )}
             {value == "table" && (
                 <Table
                     content={existingContent}
