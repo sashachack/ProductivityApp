@@ -7,12 +7,13 @@ import {
     Card,
     Modal,
     Menu,
+    Space,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 
-const MainNavbar = () => {
+const MainNavbar = ({ collection }) => {
     // let names = ["Nash", "Skylar", "Sasha"];
     let [curCollections, setCurCollections] = useState([]);
     let [modalOpen, setModalOpen] = useState(false);
@@ -79,9 +80,33 @@ const MainNavbar = () => {
         >
             <div>
                 {curCollections.map((n, i) => (
-                    <Text color="white" key={i} my={20}>
-                        {n.collection}
-                    </Text>
+                    <>
+                        {n.collection == collection ? (
+                            <Card
+                                sx={(theme) => ({
+                                    backgroundColor: "#aaaaff77",
+                                    fontWeight: "bold",
+                                })}
+                                // onClick={() => addCollection()}
+                            >
+                                {n.collection}
+                            </Card>
+                        ) : (
+                            <Card
+                                sx={(theme) => ({
+                                    backgroundColor: "#66668822",
+                                    "&:hover": {
+                                        backgroundColor: "#44445566",
+                                        cursor: "pointer",
+                                    },
+                                })}
+                                // onClick={() => addCollection()}
+                            >
+                                {n.collection}
+                            </Card>
+                        )}
+                        <Space h="sm" />
+                    </>
                 ))}
                 <Card
                     sx={(theme) => ({

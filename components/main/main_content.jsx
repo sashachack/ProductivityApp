@@ -15,9 +15,8 @@ import { useSession } from "next-auth/react";
 // TODO - if there's already one there; otherwise you need to refresh
 // TODO - FIX THIS
 
-const MainContent = () => {
+const MainContent = ({ collection }) => {
     const { data: session, status } = useSession();
-    const [existingContent, setExistingContent] = useState([]);
     // const [newContent, setNewContent] = useState
     // console.log(empty_content);
     // const [newContent, setNewContent] = useState(empty_content);
@@ -30,6 +29,9 @@ const MainContent = () => {
         // { label: "Calendar", value: "calendar" },
     ];
     // console.log(content);
+
+    // * This is our content, to be displayed throughout the app
+    const [existingContent, setExistingContent] = useState([]);
     // * This declares what page we're on (Board/Table/Calendar)
     const [value, setValue] = useState(pages[0].value);
     // * This defines if editing an existing task modal is open
@@ -55,9 +57,12 @@ const MainContent = () => {
         let tasks = json.data;
         setExistingContent(tasks);
         // console.log(tasks);
-
-
-    }, [setExistingContent, newTaskModalOpened, setNewTaskModalOpened]);
+    }, [
+        existingContent,
+        setExistingContent,
+        newTaskModalOpened,
+        setNewTaskModalOpened,
+    ]);
 
     let clickCard = (id) => {
         console.log(id);
