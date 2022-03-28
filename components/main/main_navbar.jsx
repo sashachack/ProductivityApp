@@ -22,11 +22,10 @@ const MainNavbar = () => {
     // let [isMounted, setIsMounted] = useState(false);
 
     let close = () => {
-        
-        let data = JSON.parse(JSON.stringify(localContent));
-        console.log(data)
-        data['email'] = session.user.email;
-        console.log(data)
+        // let data = JSON.parse(JSON.stringify(localContent));
+        // console.log(data)
+        // data['email'] = session.user.email;
+        // console.log(data)
         // let sendNewCollection = async () => {
         //     await fetch("/api/post_collection", {
         //         method: "POST",
@@ -131,6 +130,7 @@ const MainNavbar = () => {
                         >
                             <Image
                                 src={session.user.image}
+                                alt="User Image"
                                 width="60px"
                                 height="60px"
                                 layout="fixed"
