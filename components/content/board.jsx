@@ -35,7 +35,7 @@ let Board = ({ content, setContent, clickCard, addCard }) => {
         <div>
             <SimpleGrid cols={statuses.length}>
                 {statuses.map((s, i) => (
-                    <Card style={{ backgroundColor: "#44445522" }}>
+                    <Card key={i} style={{ backgroundColor: "#44445522" }}>
                         <Title key={i} order={4}>
                             {s}
                         </Title>
