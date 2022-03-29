@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 
-const MainNavbar = ({ collection }) => {
+const MainNavbar = ({ collection, setCollection }) => {
     // let names = ["Nash", "Skylar", "Sasha"];
     let [curCollections, setCurCollections] = useState([]);
     let [modalOpen, setModalOpen] = useState(false);
@@ -68,6 +68,10 @@ const MainNavbar = ({ collection }) => {
         setModalOpen(true);
     };
 
+    let clickCollection = (col) => {
+        setCollection(col);
+    };
+
     return (
         <div
             className="cont"
@@ -84,12 +88,27 @@ const MainNavbar = ({ collection }) => {
                         {n.collection == collection ? (
                             <Card
                                 sx={(theme) => ({
-                                    backgroundColor: "#aaaaff77",
+                                    backgroundColor: "#00bbff77",
                                     fontWeight: "bold",
+                                    boxShadow: "0px 0px 5px rgba(0,0,0, 0.5)",
+                                    overflow: "visible",
                                 })}
+                                key={i}
                                 // onClick={() => addCollection()}
                             >
                                 {n.collection}
+                                <div
+                                    style={{
+                                        backgroundColor: "white",
+                                        width: "4px",
+                                        height: "90%",
+                                        borderRadius: "20px",
+                                        position: "absolute",
+                                        left: "-8px",
+                                        top: "50%",
+                                        transform: "translateY(-50%)",
+                                    }}
+                                ></div>
                             </Card>
                         ) : (
                             <Card
@@ -100,7 +119,8 @@ const MainNavbar = ({ collection }) => {
                                         cursor: "pointer",
                                     },
                                 })}
-                                // onClick={() => addCollection()}
+                                key={i}
+                                onClick={() => clickCollection(n.collection)}
                             >
                                 {n.collection}
                             </Card>
@@ -149,18 +169,33 @@ const MainNavbar = ({ collection }) => {
                             style={{
                                 borderRadius: "100px",
                                 overflow: "hidden",
-                                width: "60px",
-                                height: "60px",
+                                width: "68px",
+                                height: "68px",
+                                backgroundColor: "#dddddd",
+                                position: "relative",
                             }}
                         >
-                            <Image
-                                src={session.user.image}
-                                alt="User Image"
-                                width="60px"
-                                height="60px"
-                                layout="fixed"
-                                objectFit="cover"
-                            ></Image>
+                            <div
+                                style={{
+                                    borderRadius: "100px",
+                                    overflow: "hidden",
+                                    position: "relative",
+                                    width: "60px",
+                                    height: "60px",
+                                    top: "50%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                }}
+                            >
+                                <Image
+                                    src={session.user.image}
+                                    alt="User Image"
+                                    width="60px"
+                                    height="60px"
+                                    layout="fixed"
+                                    objectFit="cover"
+                                ></Image>
+                            </div>
                         </div>
                         <span
                             style={{ marginLeft: "15px", fontWeight: "bold" }}

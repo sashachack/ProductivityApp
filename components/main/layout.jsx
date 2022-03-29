@@ -17,7 +17,10 @@ let Layout = () => {
             padding="xl"
             navbar={
                 <Navbar width={{ base: 300 }} padding="md">
-                    <MainNavbar collection={curCollection} />
+                    <MainNavbar
+                        collection={curCollection}
+                        setCollection={setCurCollection}
+                    />
                 </Navbar>
             }
             height="100%"
