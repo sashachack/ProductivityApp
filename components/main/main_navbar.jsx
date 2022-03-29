@@ -169,8 +169,8 @@ const MainNavbar = ({ collection, setCollection }) => {
                             style={{
                                 borderRadius: "100px",
                                 overflow: "hidden",
-                                width: "68px",
-                                height: "68px",
+                                width: "70px",
+                                height: "70px",
                                 backgroundColor: "#dddddd",
                                 position: "relative",
                             }}
