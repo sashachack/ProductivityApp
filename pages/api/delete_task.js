@@ -5,7 +5,7 @@ const ObjectId = mongodb.ObjectID
 
 //API endpoint for deleting tasks
 
-export default async(req, res) => {
+const deleteTask = async(req, res) => {
     console.log('Delete a task')
     const client = await clientPromise;
     const db = client.db("Task_Manager");
@@ -14,3 +14,5 @@ export default async(req, res) => {
     await db.collection("Tasks").deleteOne({ '_id': ObjectId(bodyObject.id) });
     // res.json(newTask.ops[0]);
 }
+
+export default deleteTask;

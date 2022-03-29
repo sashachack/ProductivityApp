@@ -15,9 +15,8 @@ import { useSession } from "next-auth/react";
 // TODO - if there's already one there; otherwise you need to refresh
 // TODO - FIX THIS
 
-const MainContent = () => {
+const MainContent = ({ collection }) => {
     const { data: session, status } = useSession();
-    const [existingContent, setExistingContent] = useState([]);
     // const [newContent, setNewContent] = useState
     // console.log(empty_content);
     // const [newContent, setNewContent] = useState(empty_content);
@@ -30,15 +29,22 @@ const MainContent = () => {
         // { label: "Calendar", value: "calendar" },
     ];
     // console.log(content);
+
+    // * This is our content, to be displayed throughout the app
+    const [existingContent, setExistingContent] = useState([]);
     // * This declares what page we're on (Board/Table/Calendar)
     const [value, setValue] = useState(pages[0].value);
     // * This defines if editing an existing task modal is open
     const [modalOpened, setModalOpened] = useState(false);
     // * This is the ID of the currently selected existing task
     const [selectedID, setSelectedID] = useState(-1);
-
+    // * This is the status of a new task, used for the board view when a new task
+    // * is added. Outside the board view, tasks are defaulted to "To Do"
+    const [newTaskStatus, setNewTaskStatus] = useState("To Do");
+    // * This decides whether the newTaskPopup is open
     const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
 
+    // * This is run to fetch the tasks from the API
     useEffect(async () => {
         let res = await fetch("/api/get_tasks", {
             method: "POST",
@@ -50,8 +56,13 @@ const MainContent = () => {
         let json = await res.json();
         let tasks = json.data;
         setExistingContent(tasks);
-        console.log(tasks);
-    }, [setExistingContent, newTaskModalOpened, setNewTaskModalOpened]);
+        // console.log(tasks);
+    }, [
+        existingContent,
+        setExistingContent,
+        newTaskModalOpened,
+        setNewTaskModalOpened,
+    ]);
 
     let clickCard = (id) => {
         console.log(id);
@@ -60,8 +71,10 @@ const MainContent = () => {
     };
 
     let addCard = (status = "To Do") => {
-        console.log(status);
+        // console.log(status);
         console.log(`Add a card of type: ${status}`);
+        console.log(`Status!!!! : ${status}`);
+        setNewTaskStatus(status);
         setNewTaskModalOpened(true);
         // console.log("add a new task");
     };
@@ -117,6 +130,7 @@ const MainContent = () => {
                 setOpened={setNewTaskModalOpened}
                 content={existingContent}
                 setContent={setExistingContent}
+                taskStatus={newTaskStatus}
             ></NewTask>
         </div>
     );

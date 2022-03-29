@@ -12,37 +12,49 @@ import {
 import { DatePicker } from "@mantine/dates";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { empty_content } from "../../constants/new_task";
+// import { empty_content } from "../../constants/new_task";
 
-export default function NewTask({ opened, setOpened, content, setContent }) {
+const empty_content = (s = "To Do") => {
+    const obj = {
+        title: "",
+        label: "",
+        status: s,
+        dueDate: {},
+    };
+    console.log("RIGHT HERE");
+    console.log(obj);
+    return obj;
+};
+
+export default function NewTask({
+    opened,
+    setOpened,
+    content,
+    setContent,
+    taskStatus,
+}) {
     const { data: session, status } = useSession();
-    // const [opened, setOpened] = useState(false);
-    // console.log(content);
-    // console.log(JSON.stringify(content));
-    // console.log(Object.keys(content));
-    // console.log(JSON.stringify(content["dueDate"]));
 
-    // let user_id = 7; // ! CHANGE THIS
-
-    const [localContent, setLocalContent] = useState(empty_content);
-    // TODO - make sure to also edit global content
+    // * This represents the temporary task, not yet sent to the back-end
+    // console.log(empty_content(taskStatus));
+    const [localContent, setLocalContent] = useState(empty_content(taskStatus));
+    useEffect(() => {
+        setLocalContent(empty_content(taskStatus));
+    }, [taskStatus]);
 
     let today = new Date();
 
+    // * This method will be run upon the closing of the `new task` element, and
+    // * will send the data to the backend and reset the `new task` element
     let close = () => {
-        // setLocalContent(localContent);
-        console.log(localContent);
         let data = JSON.parse(JSON.stringify(localContent));
-        if (JSON.stringify(data) == JSON.stringify(empty_content)) {
+        console.log(data);
+        if (localContent.label === "" && localContent.title === "") {
             console.log("No data inputted as a new task");
             setOpened(false);
             return;
         }
         data.title = data.title.length > 0 ? data.title : "Untitled";
-        // data.dueDate = data.dueDate;
-
-        //localContent["user_id"] = user_id;
-        // let today = new Date();
 
         data.dueDate =
             Object.keys(data.dueDate).length != 0
@@ -61,15 +73,8 @@ export default function NewTask({ opened, setOpened, content, setContent }) {
                     data,
                 }),
             });
-            setLocalContent(empty_content);
+            setLocalContent(empty_content(taskStatus));
         };
-        // let temp = [];
-        // for (let c of content) {
-        //     temp.push(JSON.parse(JSON.stringify(c)));
-        // }
-        // temp.push(data);
-        // console.log(temp);
-        // setContent(temp);
         sendNewTask();
         setOpened(false);
     };
@@ -80,14 +85,10 @@ export default function NewTask({ opened, setOpened, content, setContent }) {
                 centered
                 transition="fade"
                 transitionDuration={600}
-                // transitionTimingFunction="ease"
                 opened={opened}
                 onClose={close}
                 hideCloseButton
             >
-                {/* <Input variant="unstyled" placeholder="Untitled">
-                    Task Name
-                </Input> */}
                 <div>
                     <Input
                         size="xl"
@@ -123,6 +124,7 @@ export default function NewTask({ opened, setOpened, content, setContent }) {
                     <Text size="sm" style={{ fontWeight: "bold" }}>
                         Label
                     </Text>
+                    <Space h="5px" />
                     <Input
                         placeholder="Untitled"
                         value={localContent.label}
@@ -171,14 +173,9 @@ export default function NewTask({ opened, setOpened, content, setContent }) {
                             }
                         }}
                         onChange={(e) => {
-                            // console.log(e);
-                            // console.log(typeof e.getMonth());
                             const c_copy = JSON.parse(
                                 JSON.stringify(localContent)
                             );
-                            // c_copy.dueDate.year = e.getFullYear();
-                            // c_copy.dueDate.month = e.getMonth();
-                            // c_copy.dueDate.day = e.getDay();
                             let date = {
                                 year: e.getFullYear(),
                                 month: e.getMonth(),
@@ -187,23 +184,9 @@ export default function NewTask({ opened, setOpened, content, setContent }) {
                             c_copy["dueDate"] = date;
                             setLocalContent(c_copy);
                         }}
-                        // value={
-                        //     new Date(
-                        //         content.dueDate.year,
-                        //         content.dueDate.month - 1,
-                        //         content.dueDate.day
-                        //     )
-                        // }
                     ></DatePicker>
-                    {/* <Text color="white">{JSON.stringify(content.dueDate)}</Text> */}
-                    {/* <Space h="sm" /> */}
-                    {/* <Textarea
-                        placeholder="Write some notes..."
-                        label="Comments"
-                    /> */}
                 </div>
             </Modal>
-            {/* <Button onClick={() => setOpened(true)}></Button> */}
         </>
     );
 }

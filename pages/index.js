@@ -9,9 +9,9 @@ import { useState } from "react";
 
 export default function Home() {
     const { data: session, status } = useSession();
-    console.log("-----------");
-    console.log(session);
-    console.log(status);
+    // console.log("-----------");
+    // console.log(session);
+    // console.log(status);
 
     const [authModalOpened, setAuthModalOpened] = useState(true);
 
@@ -33,27 +33,28 @@ export default function Home() {
                         setOpened={() => setAuthModalOpened(false)}
                     ></SignIn>
                 )}
-                {session && (
-                    <div
-                        style={{
-                            position: "absolute",
-                            top: "0px",
-                            right: "0px",
-                        }}
-                    >
-                        {/* <Text color="white">Welcome {session.user.name}! </Text> */}
-                        <Button
-                            variant="gradient"
-                            gradient={{ from: "indigo", to: "cyan" }}
-                            onClick={() => signOut()}
-                            style={{ margin: "25px" }}
-                            // style={{ display: "inlineBlock" }}
-                        >
-                            Sign Out
-                        </Button>
-                    </div>
-                )}
             </MantineProvider>
         </div>
     );
 }
+
+// {session && (
+//     <div
+//         style={{
+//             position: "absolute",
+//             top: "0px",
+//             right: "0px",
+//         }}
+//     >
+//         {/* <Text color="white">Welcome {session.user.name}! </Text> */}
+//         <Button
+//             variant="gradient"
+//             gradient={{ from: "indigo", to: "cyan" }}
+//             onClick={() => signOut()}
+//             style={{ margin: "25px" }}
+//             // style={{ display: "inlineBlock" }}
+//         >
+//             Sign Out
+//         </Button>
+//     </div>
+// )}
