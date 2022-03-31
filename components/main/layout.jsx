@@ -11,6 +11,25 @@ let Layout = () => {
 
     // * A state to manage our current collection
     const [curCollection, setCurCollection] = useState("Tasks");
+    const [curCollectionID, setCurCollectionID] = useState(0);
+
+    useEffect(async () => {
+        let res = await fetch("/api/get_collection_id", {
+            method: "POST",
+            body: JSON.stringify({
+                email: session.user.email, //grab the tasks by email
+                collection_name: curCollection,
+            }),
+        });
+
+        let json = await res.json();
+        console.log(json)
+        setCurCollectionID(json.data[0]._id)
+        console.log(curCollectionID)
+        // console.log(tasks);
+    }, [
+        curCollection
+    ]);
 
     return (
         <AppShell
@@ -36,7 +55,7 @@ let Layout = () => {
         >
             <Title order={1}>{curCollection}</Title>
             <Space h="sm" />
-            {session && <MainContent collection={curCollection} />}
+            {session && <MainContent collection={curCollection} collectionID = {curCollectionID} />}
         </AppShell>
     );
 };

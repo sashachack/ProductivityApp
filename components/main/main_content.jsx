@@ -15,7 +15,7 @@ import { useSession } from "next-auth/react";
 // TODO - if there's already one there; otherwise you need to refresh
 // TODO - FIX THIS
 
-const MainContent = ({ collection }) => {
+const MainContent = ({ collection, collectionID }) => {
     const { data: session, status } = useSession();
     // const [newContent, setNewContent] = useState
     // console.log(empty_content);
@@ -43,6 +43,7 @@ const MainContent = ({ collection }) => {
     const [newTaskStatus, setNewTaskStatus] = useState("To Do");
     // * This decides whether the newTaskPopup is open
     const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
+    const [newTaskinDB, setNewTaskinDB] = useState(false);
 
     // * This is run to fetch the tasks from the API
     useEffect(async () => {
@@ -50,6 +51,7 @@ const MainContent = ({ collection }) => {
             method: "POST",
             body: JSON.stringify({
                 email: session.user.email, //grab the tasks by email
+                collectionID: collectionID
             }),
         });
 
@@ -58,10 +60,12 @@ const MainContent = ({ collection }) => {
         setExistingContent(tasks);
         // console.log(tasks);
     }, [
-        existingContent,
-        setExistingContent,
+        // existingContent,
         newTaskModalOpened,
         setNewTaskModalOpened,
+        newTaskinDB,
+        collectionID
+        
     ]);
 
     let clickCard = (id) => {
@@ -131,6 +135,8 @@ const MainContent = ({ collection }) => {
                 content={existingContent}
                 setContent={setExistingContent}
                 taskStatus={newTaskStatus}
+                collectionID = {collectionID}
+                setNewTaskinDB = {setNewTaskinDB}
             ></NewTask>
         </div>
     );
