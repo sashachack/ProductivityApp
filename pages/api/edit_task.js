@@ -12,10 +12,10 @@ export default async(req, res) => {
     const client = await clientPromise;
     const db = client.db("Task_Manager");
     let bodyObject = JSON.parse(req.body);
-    console.log(bodyObject);
+    console.log(bodyObject)
     await db.collection("Tasks").update({ '_id': ObjectId(bodyObject.id) }, { $set: bodyObject.update });
 
     // // console.log(bodyObject.data)
     // let newTask = await db.collection("Tasks").insertOne(bodyObject.data);
-    // res.json(newTask.ops[0]);
+    res.json(bodyObject);
 }
