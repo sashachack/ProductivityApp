@@ -59,6 +59,7 @@ const MainContent = ({ collection, collectionID }) => {
 
         let json = await res.json();
         let tasks = json.data;
+        console.log("UPDATE EVERYTHING");
         setExistingContent(tasks);
         // console.log(tasks);
     }, [
@@ -66,7 +67,7 @@ const MainContent = ({ collection, collectionID }) => {
         newTaskModalOpened,
         setNewTaskModalOpened,
         collectionID,
-        dragItem,
+        // dragItem,
     ]);
 
     let clickCard = (id) => {
