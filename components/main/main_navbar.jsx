@@ -169,33 +169,23 @@ const MainNavbar = ({ collection, setCollection }) => {
                             style={{
                                 borderRadius: "100px",
                                 overflow: "hidden",
-                                width: "70px",
-                                height: "70px",
-                                backgroundColor: "#dddddd",
                                 position: "relative",
+                                width: "60px",
+                                height: "60px",
+                                boxShadow: "0 0 5px rgba(0,0,0,0.4)",
+                                // top: "50%",
+                                // left: "50%",
+                                // transform: "translate(-50%, -50%)",
                             }}
                         >
-                            <div
-                                style={{
-                                    borderRadius: "100px",
-                                    overflow: "hidden",
-                                    position: "relative",
-                                    width: "60px",
-                                    height: "60px",
-                                    top: "50%",
-                                    left: "50%",
-                                    transform: "translate(-50%, -50%)",
-                                }}
-                            >
-                                <Image
-                                    src={session.user.image}
-                                    alt="User Image"
-                                    width="60px"
-                                    height="60px"
-                                    layout="fixed"
-                                    objectFit="cover"
-                                ></Image>
-                            </div>
+                            <Image
+                                src={session.user.image}
+                                alt="User Image"
+                                width="60px"
+                                height="60px"
+                                layout="fixed"
+                                objectFit="cover"
+                            ></Image>
                         </div>
                         <span
                             style={{ marginLeft: "15px", fontWeight: "bold" }}
