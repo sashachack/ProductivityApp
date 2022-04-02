@@ -27,6 +27,7 @@ let Board = ({ content, setContent, clickCard, addCard }) => {
             <Card
                 sx={(theme) => ({
                     backgroundColor: "#44445522",
+                    "z-index": "1",
                     "&:hover": {
                         backgroundColor: "#44445566",
                         cursor: "pointer",
@@ -55,8 +56,8 @@ let Board = ({ content, setContent, clickCard, addCard }) => {
     // };
 
     const onDragEnd = (result) => {
-        console.log("RESULT");
-        console.log(result);
+        // console.log("RESULT");
+        // console.log(result);
         if (!result.destination) {
             return;
         }
@@ -76,19 +77,20 @@ let Board = ({ content, setContent, clickCard, addCard }) => {
         };
         editTask().then(() => {
             console.log("Edited task");
+
             // setDragItem(null);
         });
-
         let c = JSON.parse(JSON.stringify(content));
         // console.log(c);
         for (let i = 0; i < c.length; i++) {
-            if (c[i].id == result.draggableId) {
+            if (c[i]["_id"] == result.draggableId) {
                 c[i].status = result.destination.droppableId;
                 break;
             }
         }
-        setContent(c);
+        console.log(c);
 
+        setContent(c);
         // console.log("DRAGGED");
         // console.log("tasks list", items);
 
@@ -136,23 +138,36 @@ let Board = ({ content, setContent, clickCard, addCard }) => {
                             {(provided, snapshot) => ( 
                                 <div key={i} {...provided.droppableProps} ref={provided.innerRef}>
                                     {items[s].map((c, j) => (
-                                        <Draggable key={c["_id"]} draggableId={c["_id"]} index={j}>
-                                        {(provided) => (
-                                            <div ref={provided.innerRef} snapshot={snapshot} {...provided.dragHandleProps} {...provided.draggableProps} >
-                                                <BoardCard
-                                                    taskName={c.title}
-                                                    label={c.label}
-                                                    dueDate={c.dueDate}
-                                                    id={c["_id"]}
-                                                    click={(id) => clickCard(id)}
-                                                />
-                                                <Space h="md" />
-                                            </div>
-                                        )}
-                                        </Draggable>
-                                    ))} 
-                                {addCardButton(s)}
-                                {provided.placeholder}
+                                        <>
+                                            <Draggable
+                                                key={c["_id"]}
+                                                draggableId={c["_id"]}
+                                                index={j}
+                                            >
+                                                {(provided) => (
+                                                    <div
+                                                        ref={provided.innerRef}
+                                                        snapshot={snapshot}
+                                                        {...provided.dragHandleProps}
+                                                        {...provided.draggableProps}
+                                                    >
+                                                        <BoardCard
+                                                            taskName={c.title}
+                                                            label={c.label}
+                                                            dueDate={c.dueDate}
+                                                            id={c["_id"]}
+                                                            click={(id) =>
+                                                                clickCard(id)
+                                                            }
+                                                        />
+                                                        <Space h="md" />
+                                                    </div>
+                                                )}
+                                            </Draggable>
+                                        </>
+                                    ))}
+                                    {addCardButton(s)}
+                                    {provided.placeholder}
                                 </div>
                             )}
                         </Droppable>  

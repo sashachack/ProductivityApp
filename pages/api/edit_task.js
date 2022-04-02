@@ -14,6 +14,7 @@ export default async(req, res) => {
     let bodyObject = JSON.parse(req.body);
     console.log(bodyObject)
     await db.collection("Tasks").update({ '_id': ObjectId(bodyObject.id) }, { $set: bodyObject.update });
+    res.json(newTask.ops[0]);
 
     // // console.log(bodyObject.data)
     // let newTask = await db.collection("Tasks").insertOne(bodyObject.data);

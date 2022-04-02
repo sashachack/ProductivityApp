@@ -48,7 +48,7 @@ const MainContent = ({ collection, collectionID }) => {
 
     // * This is run to fetch the tasks from the API
     useEffect(async () => {
-        console.log("pulling tasks")
+        console.log("pulling tasks");
         let res = await fetch("/api/get_tasks", {
             method: "POST",
             body: JSON.stringify({
@@ -67,6 +67,7 @@ const MainContent = ({ collection, collectionID }) => {
         newTaskModalOpened,
         setNewTaskModalOpened,
         collectionID,
+        // existingContent,
         // dragItem,
     ]);
 
