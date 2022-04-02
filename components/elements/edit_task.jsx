@@ -30,6 +30,8 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
         // setLocalContent(localContent);
         console.log(localContent);
 
+        
+
         let sendNewTask = async () => {
             let data = localContent;
 
@@ -47,6 +49,8 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
         sendNewTask();
         setOpened(false);
     };
+
+    let today = new Date();
 
     return (
         <>
@@ -114,6 +118,28 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
                     <DatePicker
                         placeholder="Pick date"
                         label="Event date"
+                        firstDayOfWeek="sunday"
+                        dayStyle={(date) => {
+                            if (
+                                date.getDate() === today.getDate() &&
+                                date.getMonth() === today.getMonth() &&
+                                date.getFullYear() === today.getFullYear()
+                            ) {
+                                return {
+                                    backgroundColor: "#88bbff",
+                                    color: "#000000",
+                                };
+                            } else if (
+                                date.getDay() === 0 ||
+                                date.getDay() === 6
+                            ) {
+                                return {
+                                    color: "#88bbff",
+                                };
+                            } else {
+                                null;
+                            }
+                        }}
                         onChange={(e) => {
                             // console.log(e);
                             // console.log(typeof e.getMonth());

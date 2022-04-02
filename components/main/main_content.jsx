@@ -48,6 +48,7 @@ const MainContent = ({ collection, collectionID }) => {
 
     // * This is run to fetch the tasks from the API
     useEffect(async () => {
+        console.log("pulling tasks")
         let res = await fetch("/api/get_tasks", {
             method: "POST",
             body: JSON.stringify({
@@ -114,7 +115,7 @@ const MainContent = ({ collection, collectionID }) => {
             )}
             {/* {value == "calendar" && <Calendar content={content} />} */}
             {/* // * This is our `EditTask` for editing existing tasks */}
-            {/* {existingContent.length > 0 && (
+            {existingContent.length > 0 && (
                 <EditTask
                     content={
                         existingContent.length > 0 &&
@@ -128,7 +129,7 @@ const MainContent = ({ collection, collectionID }) => {
                     opened={modalOpened}
                     setOpened={setModalOpened}
                 />
-            )} */}
+            )}
             {/* // * This is our `EditTask` for editing a newly created task */}
             <NewTask
                 // content={newContent}
