@@ -43,7 +43,8 @@ const MainContent = ({ collection, collectionID }) => {
     const [newTaskStatus, setNewTaskStatus] = useState("To Do");
     // * This decides whether the newTaskPopup is open
     const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
-    const [newTaskinDB, setNewTaskinDB] = useState(false);
+    // * This is for when an item is dragged and dropped
+    const [dragItem, setDragItem] = useState(null);
 
     // * This is run to fetch the tasks from the API
     useEffect(async () => {
@@ -52,7 +53,7 @@ const MainContent = ({ collection, collectionID }) => {
             method: "POST",
             body: JSON.stringify({
                 email: session.user.email, //grab the tasks by email
-                collectionID: collectionID
+                collectionID: collectionID,
             }),
         });
 
@@ -64,13 +65,13 @@ const MainContent = ({ collection, collectionID }) => {
         // existingContent,
         newTaskModalOpened,
         setNewTaskModalOpened,
-        newTaskinDB,
-        collectionID
-        
+        collectionID,
+        dragItem,
     ]);
 
     let clickCard = (id) => {
-        console.log(id);
+        // console.log()
+        console.log(`Click card of ID ${id}`);
         setSelectedID(id);
         setModalOpened(true);
     };
@@ -100,6 +101,7 @@ const MainContent = ({ collection, collectionID }) => {
                     setContent={setExistingContent}
                     clickCard={(i) => clickCard(i)}
                     addCard={(l) => addCard(l)}
+                    setDragItem={(d) => setDragItem(d)}
                 />
             )}
             {value == "table" && (
@@ -136,8 +138,7 @@ const MainContent = ({ collection, collectionID }) => {
                 content={existingContent}
                 setContent={setExistingContent}
                 taskStatus={newTaskStatus}
-                collectionID = {collectionID}
-                setNewTaskinDB = {setNewTaskinDB}
+                collectionID={collectionID}
             ></NewTask>
         </div>
     );
