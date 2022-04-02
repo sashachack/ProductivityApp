@@ -20,10 +20,10 @@ const empty_content = (s = "To Do") => {
         label: "",
         status: s,
         dueDate: {},
-        collectionID: ""
+        collectionID: "",
     };
-    console.log("RIGHT HERE");
-    console.log(obj);
+    // console.log("RIGHT HERE");
+    // console.log(obj);
     return obj;
 };
 
@@ -34,7 +34,7 @@ export default function NewTask({
     setContent,
     taskStatus,
     collectionID,
-    setNewTaskinDB
+    setNewTaskinDB,
 }) {
     const { data: session, status } = useSession();
 
@@ -68,8 +68,8 @@ export default function NewTask({
                       day: today.getDate(),
                   };
         data["email"] = session.user.email; //need to pass in the email to link to the account
-        data['collection_id'] = collectionID;
-        console.log(data)
+        data["collection_id"] = collectionID;
+        console.log(data);
         let sendNewTask = async () => {
             await fetch("/api/post_tasks", {
                 method: "POST",
@@ -79,11 +79,12 @@ export default function NewTask({
             });
             setLocalContent(empty_content(taskStatus));
         };
-        sendNewTask().then(setOpened(false)).then(() =>{
-            console.log("got here")
-        });
+        sendNewTask()
+            .then(setOpened(false))
+            .then(() => {
+                console.log("got here");
+            });
         // setOpened(false);
-
     };
 
     return (
