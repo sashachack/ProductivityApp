@@ -15,7 +15,7 @@ let Board = ({ content, setContent, clickCard, addCard, setDragItem }) => {
     for (let status of statuses) {
         items[status] = content.filter((c) => c.status == status);
     }
-    const [tasks, updateTasks] = useState(items);
+    // const [tasks, updateTasks] = useState(items);
     // console.log("ITEMS INITIAL", items);
     // console.log("TASKS INITIAL", tasks);
     // useEffect(() => {
@@ -43,21 +43,21 @@ let Board = ({ content, setContent, clickCard, addCard, setDragItem }) => {
             </Card>
         );
     };
-    const removeFromList = (items, index) => {
-        const result = Array.from(items);
-        const [removed] = result.splice(index, 1);
-        console.log("removed task", removed);
+    // const removeFromList = (items, index) => {
+    //     const result = Array.from(items);
+    //     const [removed] = result.splice(index, 1);
+    //     console.log("removed task", removed);
 
-        return [removed, result];
-    };
+    //     return [removed, result];
+    // };
 
-    const addToList = (items, index, element) => {
-        const result = Array.from(items);
-        console.log("element", element);
-        result.splice(index, 0, element);
-        console.log("task added list", result);
-        return result;
-    };
+    // const addToList = (items, index, element) => {
+    //     const result = Array.from(items);
+    //     console.log("element", element);
+    //     result.splice(index, 0, element);
+    //     console.log("task added list", result);
+    //     return result;
+    // };
 
     const onDragEnd = (result) => {
         console.log("RESULT");
@@ -81,35 +81,45 @@ let Board = ({ content, setContent, clickCard, addCard, setDragItem }) => {
         };
         editTask().then(() => {
             console.log("Edited task");
-            setDragItem(null);
+            // setDragItem(null);
         });
+
+        let c = JSON.parse(JSON.stringify(content));
+        // console.log(c);
+        for (let i = 0; i < c.length; i++) {
+            if (c[i].id == result.draggableId) {
+                c[i].status = result.destination.droppableId;
+                break;
+            }
+        }
+        setContent(c);
 
         // console.log("DRAGGED");
         // console.log("tasks list", items);
 
-        const copy = { ...tasks };
+        // const copy = { ...tasks };
         // console.log("copy list", copy);
 
-        const startStatusList = copy[result.source.droppableId];
+        // const startStatusList = copy[result.source.droppableId];
         // console.log("start status list", startStatusList);
 
-        const [removedElement, newStartStatusList] = removeFromList(
-            startStatusList,
-            result.source.index
-        );
-        copy[result.source.droppableId] = newStartStatusList;
+        // const [removedElement, newStartStatusList] = removeFromList(
+        //     startStatusList,
+        //     result.source.index
+        // );
+        // copy[result.source.droppableId] = newStartStatusList;
         // console.log("new start status", newStartStatusList);
 
-        const endStatusList = copy[result.destination.droppableId];
-        copy[result.destination.droppableId] = addToList(
-            endStatusList,
-            result.destination.index,
-            removedElement
-        );
+        // const endStatusList = copy[result.destination.droppableId];
+        // copy[result.destination.droppableId] = addToList(
+        //     endStatusList,
+        //     result.destination.index,
+        //     removedElement
+        // );
 
-        console.log("end status list", copy[result.destination.droppableId]);
-        console.log("FINAL LISTS", copy);
-        updateTasks(copy);
+        // console.log("end status list", copy[result.destination.droppableId]);
+        // console.log("FINAL LISTS", copy);
+        // updateTasks(copy);
     };
 
     return (
