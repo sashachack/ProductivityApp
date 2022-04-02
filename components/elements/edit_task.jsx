@@ -30,8 +30,6 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
         // setLocalContent(localContent);
         console.log(localContent);
 
-        
-
         let sendNewTask = async () => {
             let data = localContent;
 
@@ -87,7 +85,7 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
                             { value: "Doing", label: "Doing" },
                             { value: "Done", label: "Done" },
                         ]}
-                        value={content.status}
+                        value={localContent.status}
                     ></Select>
                     <Space h="sm" />
                     <Text size="sm" style={{ fontWeight: "bold" }}>
