@@ -37,15 +37,24 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
             // localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
             localContent["email"] = session.user.email; //need to pass in the email to link to the account
 
-            await fetch("/api/post_tasks", {
+            data = {
+                id: localContent._id,
+                update: {
+                    title: localContent.title,
+                    label: localContent.label,
+                    status: localContent.status,
+                    // dueDate: localContent.dueDate,
+                },
+            };
+
+            await fetch("/api/edit_task", {
                 method: "POST",
-                body: JSON.stringify({
-                    data,
-                }),
+                body: JSON.stringify(data),
             });
         };
-        sendNewTask();
-        setOpened(false);
+        sendNewTask().then(() => {
+            setOpened(false);
+        });
     };
 
     let today = new Date();

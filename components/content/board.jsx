@@ -1,14 +1,9 @@
 import BoardCard from "../elements/board_card";
 import { Space, SimpleGrid, Title, Card } from "@mantine/core";
-import {
-    DragDropContext,
-    Droppable,
-    Draggable,
-    DragItem,
-} from "react-beautiful-dnd";
-import { useState, useEffect } from "react";
+import { DragDropContext, Droppable, Draggable , DragItem} from 'react-beautiful-dnd';
+import { useState, useEffect } from 'react';
 
-let Board = ({ content, setContent, clickCard, addCard, setDragItem }) => {
+let Board = ({ content, setContent, clickCard, addCard }) => {
     // console.log(content);
     let statuses = ["To Do", "Doing", "Done"];
     let items = {};
@@ -137,15 +132,11 @@ let Board = ({ content, setContent, clickCard, addCard, setDragItem }) => {
             </SimpleGrid>
             <Space h="md"></Space>
             <DragDropContext onDragEnd={onDragEnd}>
-                <SimpleGrid cols={statuses.length}>
-                    {statuses.map((s, i) => (
-                        <Droppable key={i} droppableId={s}>
-                            {(provided, snapshot) => (
-                                <div
-                                    key={i}
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}
-                                >
+            <SimpleGrid cols={statuses.length}>
+                {statuses.map((s, i) => (
+                        <Droppable key={i} droppableId ={s}>
+                            {(provided, snapshot) => ( 
+                                <div key={i} {...provided.droppableProps} ref={provided.innerRef}>
                                     {items[s].map((c, j) => (
                                         <>
                                             <Draggable
@@ -179,9 +170,9 @@ let Board = ({ content, setContent, clickCard, addCard, setDragItem }) => {
                                     {provided.placeholder}
                                 </div>
                             )}
-                        </Droppable>
+                        </Droppable>  
                     ))}
-                </SimpleGrid>
+            </SimpleGrid>
             </DragDropContext>
         </div>
     );
