@@ -56,7 +56,7 @@ const MainNavbar = ({ collection, setCollection }) => {
         console.log(collections);
         setCurCollections(collections);
         // }
-    }, []);
+    }, [setModalOpen]);
 
     // useEffect(() => {
     //     return () => {
