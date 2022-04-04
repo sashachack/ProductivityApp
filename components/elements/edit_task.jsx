@@ -135,6 +135,14 @@ const EditTask = ({ content, setContent, opened, setOpened }) => {
                             { value: "Done", label: "Done" },
                         ]}
                         value={localContent.status}
+                        onChange={(e) => {
+                            // console.log(e);
+                            const c_copy = JSON.parse(
+                                JSON.stringify(localContent)
+                            );
+                            c_copy.status = e;
+                            setLocalContent(c_copy);
+                        }}
                     ></Select>
                     <Space h="sm" />
                     <Text size="sm" style={{ fontWeight: "bold" }}>
