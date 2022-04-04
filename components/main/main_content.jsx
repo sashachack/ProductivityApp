@@ -17,12 +17,6 @@ import { useSession } from "next-auth/react";
 
 const MainContent = ({ collection, collectionID }) => {
     const { data: session, status } = useSession();
-    // const [newContent, setNewContent] = useState
-    // console.log(empty_content);
-    // const [newContent, setNewContent] = useState(empty_content);
-
-    //let user_id = 7; // * THIS NEEDS TO CHANGE
-
     const pages = [
         { label: "Board", value: "board" },
         { label: "Table", value: "table" },
@@ -34,6 +28,8 @@ const MainContent = ({ collection, collectionID }) => {
     const [existingContent, setExistingContent] = useState([]);
     // * This declares what page we're on (Board/Table/Calendar)
     const [value, setValue] = useState(pages[0].value);
+    // * This decides whether the newTaskPopup is open
+    const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
     // * This defines if editing an existing task modal is open
     const [modalOpened, setModalOpened] = useState(false);
     // * This is the ID of the currently selected existing task
@@ -41,10 +37,6 @@ const MainContent = ({ collection, collectionID }) => {
     // * This is the status of a new task, used for the board view when a new task
     // * is added. Outside the board view, tasks are defaulted to "To Do"
     const [newTaskStatus, setNewTaskStatus] = useState("To Do");
-    // * This decides whether the newTaskPopup is open
-    const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
-    // * This is for when an item is dragged and dropped
-    const [dragItem, setDragItem] = useState(null);
 
     // * This is run to fetch the tasks from the API
     useEffect(async () => {
@@ -71,6 +63,11 @@ const MainContent = ({ collection, collectionID }) => {
         // dragItem,
     ]);
 
+    // * If collection changes, then setExistingContent to empty
+    useEffect(() => {
+        setExistingContent([]);
+    }, [collection]);
+
     let clickCard = (id) => {
         // console.log()
         console.log(`Click card of ID ${id}`);
@@ -80,8 +77,8 @@ const MainContent = ({ collection, collectionID }) => {
 
     let addCard = (status = "To Do") => {
         // console.log(status);
-        console.log(`Add a card of type: ${status}`);
-        console.log(`Status!!!! : ${status}`);
+        // console.log(`Add a card of type: ${status}`);
+        // console.log(`Status!!!! : ${status}`);
         setNewTaskStatus(status);
         setNewTaskModalOpened(true);
         // console.log("add a new task");
@@ -103,7 +100,6 @@ const MainContent = ({ collection, collectionID }) => {
                     setContent={setExistingContent}
                     clickCard={(i) => clickCard(i)}
                     addCard={(l) => addCard(l)}
-                    setDragItem={(d) => setDragItem(d)}
                 />
             )}
             {value == "table" && (
@@ -126,7 +122,7 @@ const MainContent = ({ collection, collectionID }) => {
                               )
                             : existingContent[0])
                     }
-                    editContent={setExistingContent} // ! This will probably not work
+                    setContent={setExistingContent} // ! This will probably not work
                     opened={modalOpened}
                     setOpened={setModalOpened}
                 />

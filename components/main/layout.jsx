@@ -23,13 +23,11 @@ let Layout = () => {
         });
 
         let json = await res.json();
-        console.log(json)
-        setCurCollectionID(json.data[0]._id)
-        console.log(curCollectionID)
+        console.log(json);
+        setCurCollectionID(json.data[0]._id);
+        console.log(curCollectionID);
         // console.log(tasks);
-    }, [
-        curCollection
-    ]);
+    }, [curCollection]);
 
     return (
         <AppShell
@@ -55,7 +53,12 @@ let Layout = () => {
         >
             <Title order={1}>{curCollection}</Title>
             <Space h="sm" />
-            {session && <MainContent collection={curCollection} collectionID = {curCollectionID} />}
+            {session && (
+                <MainContent
+                    collection={curCollection}
+                    collectionID={curCollectionID}
+                />
+            )}
         </AppShell>
     );
 };

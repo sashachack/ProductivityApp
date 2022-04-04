@@ -13,7 +13,7 @@ import { DatePicker } from "@mantine/dates";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
-const EditTask = ({ content, editContent, opened, setOpened }) => {
+const EditTask = ({ content, setContent, opened, setOpened }) => {
     const { data: session, status } = useSession();
     // const [opened, setOpened] = useState(false);
     // console.log(content);
@@ -24,6 +24,12 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
     // let user_id = 7; // ! CHANGE THIS
 
     const [localContent, setLocalContent] = useState(content);
+    useEffect(() => {
+        setLocalContent(content);
+    }, [content]);
+
+    console.log(content);
+    console.log(localContent);
     // TODO - make sure to also edit global content
 
     let close = () => {
@@ -31,14 +37,14 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
         console.log(localContent);
 
         let sendNewTask = async () => {
-            let data = localContent;
+            // let data = localContent;
 
             //localContent["user_id"] = user_id;
             // localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
             localContent["email"] = session.user.email; //need to pass in the email to link to the account
 
-            data = {
-                id: localContent._id,
+            let data = {
+                id: localContent["_id"],
                 update: {
                     title: localContent.title,
                     label: localContent.label,
@@ -52,9 +58,10 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
                 body: JSON.stringify(data),
             });
         };
-        sendNewTask().then(() => {
-            setOpened(false);
-        });
+        sendNewTask();
+        // sendNewTask().then(() => {
+        setOpened(false);
+        // });
     };
 
     let today = new Date();
@@ -100,6 +107,7 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
                     <Text size="sm" style={{ fontWeight: "bold" }}>
                         Label
                     </Text>
+                    <Space h="5px" />
                     <Input
                         placeholder="Untitled"
                         value={localContent.label}
@@ -164,13 +172,13 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
                             c_copy["dueDate"] = date;
                             setLocalContent(c_copy);
                         }}
-                        // value={
-                        //     new Date(
-                        //         content.dueDate.year,
-                        //         content.dueDate.month - 1,
-                        //         content.dueDate.day
-                        //     )
-                        // }
+                        value={
+                            new Date(
+                                localContent.dueDate.year,
+                                localContent.dueDate.month,
+                                localContent.dueDate.day
+                            )
+                        }
                     ></DatePicker>
                     {/* <Text color="white">{JSON.stringify(content.dueDate)}</Text> */}
                     {/* <Space h="sm" /> */}
