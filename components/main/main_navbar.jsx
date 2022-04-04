@@ -90,7 +90,7 @@ const MainNavbar = ({ collection, setCollection }) => {
         >
             <div>
                 {curCollections.map((n, i) => (
-                    <>
+                    <div key={`${n.collection}-${i}`}>
                         {n.collection == collection ? (
                             <Card
                                 sx={(theme) => ({
@@ -99,7 +99,7 @@ const MainNavbar = ({ collection, setCollection }) => {
                                     boxShadow: "0px 0px 5px rgba(0,0,0, 0.5)",
                                     overflow: "visible",
                                 })}
-                                key={i}
+
                                 // onClick={() => addCollection()}
                             >
                                 {n.collection}
@@ -125,14 +125,14 @@ const MainNavbar = ({ collection, setCollection }) => {
                                         cursor: "pointer",
                                     },
                                 })}
-                                key={i}
+                                // key={`${n.collection}-${i}`}
                                 onClick={() => clickCollection(n.collection)}
                             >
                                 {n.collection}
                             </Card>
                         )}
                         <Space h="sm" />
-                    </>
+                    </div>
                 ))}
                 <Card
                     sx={(theme) => ({
