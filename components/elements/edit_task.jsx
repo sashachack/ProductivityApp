@@ -23,9 +23,42 @@ const EditTask = ({ content, setContent, opened, setOpened }) => {
 
     // let user_id = 7; // ! CHANGE THIS
 
+    console.log(`AND NOW CONTENT IS ${JSON.stringify(content)}`);
+
     const [localContent, setLocalContent] = useState(content);
+    if (localContent === undefined) {
+        setLocalContent({
+            title: "",
+            label: "",
+            status: "",
+            dueDate: { year: 0, month: 0, day: 0 },
+        });
+    }
+
+    // if (content === undefined) {
+    //     console.log("UNDEFINED");
+    //     setLocalContent({
+    //         title: "",
+    //         label: "",
+    //         status: "",
+    //         dueDate: { year: 0, month: 0, day: 0 },
+    //     });
+    // } else {
+    //     setLocalContent(content);
+    // }
     useEffect(() => {
-        setLocalContent(content);
+        // * if content is undefined
+        if (content === undefined) {
+            console.log("UNDEFINED");
+            setLocalContent({
+                title: "",
+                label: "",
+                status: "",
+                dueDate: { year: 0, month: 0, day: 0 },
+            });
+        } else {
+            setLocalContent(content);
+        }
     }, [content]);
 
     console.log(content);

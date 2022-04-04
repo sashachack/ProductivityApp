@@ -8,6 +8,7 @@ import {
     Modal,
     Menu,
     Space,
+    Input,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -17,26 +18,27 @@ const MainNavbar = ({ collection, setCollection }) => {
     // let names = ["Nash", "Skylar", "Sasha"];
     let [curCollections, setCurCollections] = useState([]);
     let [modalOpen, setModalOpen] = useState(false);
+    let [newCollectionName, setNewCollectionName] = useState("Untitled");
     const { data: session, status } = useSession();
     console.log(session);
 
     // let [isMounted, setIsMounted] = useState(false);
 
     let close = () => {
-        // let data = JSON.parse(JSON.stringify(localContent));
-        // console.log(data)
-        // data['email'] = session.user.email;
-        // console.log(data)
-        // let sendNewCollection = async () => {
-        //     await fetch("/api/post_collection", {
-        //         method: "POST",
-        //         body: JSON.stringify({
-        //             data,
-        //         }),
-        //     });
-        //     setLocalContent({collection_name: ""});
-        // };
-        // sendNewCollection();
+        let data = {
+            email: session.user.email,
+            collection: newCollectionName,
+        };
+        // data["email"] = session.user.email;
+        // console.log(data);
+        let sendNewCollection = async () => {
+            await fetch("/api/post_collection", {
+                method: "POST",
+                body: JSON.stringify(data),
+            });
+            setNewCollectionName("Untitled");
+        };
+        sendNewCollection();
         setModalOpen(false);
     };
 
@@ -149,7 +151,21 @@ const MainNavbar = ({ collection, setCollection }) => {
                     opened={modalOpen}
                     onClose={close}
                     hideCloseButton
-                ></Modal>
+                >
+                    <Input
+                        size="xl"
+                        variant="unstyled"
+                        placeholder="Untitled"
+                        value={newCollectionName}
+                        onChange={(e) => {
+                            // const c_copy = JSON.parse(
+                            //     JSON.stringify(localContent)
+                            // );
+                            // c_copy.title = e.target.value;
+                            setNewCollectionName(e.target.value);
+                        }}
+                    ></Input>
+                </Modal>
             </div>
             <Menu
                 trigger="hover"
