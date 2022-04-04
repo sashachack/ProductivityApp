@@ -21,9 +21,9 @@ const TableCard = ({
     };
 
     let del = (e) => {
-        // console.log(e);
+        console.log(e);
         try {
-            e.stopPropogation();
+            e.stopPropagation();
         } catch (error) {
             console.log(error);
         }
