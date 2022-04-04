@@ -10,5 +10,6 @@ export default async(req, res) => {
     // console.log()
     console.log(bodyObject)
     let col = await db.collection("collections").insertOne(bodyObject);
+    console.log(col)
     res.json(col.ops[0]);
 }

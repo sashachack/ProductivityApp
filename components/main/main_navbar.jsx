@@ -14,9 +14,14 @@ import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 
-const MainNavbar = ({ collection, setCollection }) => {
+const MainNavbar = ({
+    collection,
+    setCollection,
+    collectionID,
+    curCollections,
+    getCollections,
+}) => {
     // let names = ["Nash", "Skylar", "Sasha"];
-    let [curCollections, setCurCollections] = useState([]);
     let [modalOpen, setModalOpen] = useState(false);
     let [newCollectionName, setNewCollectionName] = useState("");
     const { data: session, status } = useSession();
@@ -42,25 +47,11 @@ const MainNavbar = ({ collection, setCollection }) => {
             });
             setNewCollectionName("");
         };
-        sendNewCollection();
+        sendNewCollection().then(() => {
+            getCollections();
+        });
         setModalOpen(false);
     };
-
-    useEffect(async () => {
-        // if(isMounted){
-        let res1 = await fetch("/api/get_collections", {
-            method: "POST",
-            body: JSON.stringify({
-                email: session.user.email, //grab the tasks by email
-            }),
-        });
-
-        let json1 = await res1.json();
-        let collections = json1.data;
-        console.log(collections);
-        setCurCollections(collections);
-        // }
-    }, [setModalOpen]);
 
     // useEffect(() => {
     //     return () => {
@@ -70,7 +61,7 @@ const MainNavbar = ({ collection, setCollection }) => {
     // }, []);
 
     let addCollection = () => {
-        console.log("add colllection");
+        console.log("add collection");
         setModalOpen(true);
     };
 

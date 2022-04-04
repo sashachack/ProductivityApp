@@ -69,9 +69,9 @@ const MainContent = ({ collection, collectionID }) => {
     ]);
 
     // * If collection changes, then setExistingContent to empty
-    // useEffect(() => {
-    //     setExistingContent([]);
-    // }, [collection]);
+    useEffect(() => {
+        setExistingContent([]);
+    }, [collection]);
 
     let clickCard = (id) => {
         // console.log()

@@ -122,7 +122,11 @@ const EditTask = ({ content, setContent, opened, setOpened, pullTasks }) => {
                         size="xl"
                         variant="unstyled"
                         placeholder="Untitled"
-                        value={localContent.title}
+                        value={
+                            localContent && localContent.title
+                                ? localContent.title
+                                : ""
+                        }
                         onChange={(e) => {
                             const c_copy = JSON.parse(
                                 JSON.stringify(localContent)
@@ -138,7 +142,11 @@ const EditTask = ({ content, setContent, opened, setOpened, pullTasks }) => {
                             { value: "Doing", label: "Doing" },
                             { value: "Done", label: "Done" },
                         ]}
-                        value={localContent.status}
+                        value={
+                            localContent && localContent.status
+                                ? localContent.status
+                                : ""
+                        }
                         onChange={(e) => {
                             // console.log(e);
                             const c_copy = JSON.parse(
@@ -155,7 +163,11 @@ const EditTask = ({ content, setContent, opened, setOpened, pullTasks }) => {
                     <Space h="5px" />
                     <Input
                         placeholder="Untitled"
-                        value={localContent.label}
+                        value={
+                            localContent && localContent.label
+                                ? localContent.label
+                                : ""
+                        }
                         onChange={(e) => {
                             const c_copy = JSON.parse(
                                 JSON.stringify(localContent)
@@ -218,11 +230,13 @@ const EditTask = ({ content, setContent, opened, setOpened, pullTasks }) => {
                             setLocalContent(c_copy);
                         }}
                         value={
-                            new Date(
-                                localContent.dueDate.year,
-                                localContent.dueDate.month,
-                                localContent.dueDate.day
-                            )
+                            localContent && localContent.dueDate
+                                ? new Date(
+                                      localContent.dueDate.year,
+                                      localContent.dueDate.month,
+                                      localContent.dueDate.day
+                                  )
+                                : new Date(0, 0, 0)
                         }
                     ></DatePicker>
                     {/* <Text color="white">{JSON.stringify(content.dueDate)}</Text> */}
