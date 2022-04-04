@@ -28,8 +28,8 @@ const TableCard = ({
             console.log(error);
         }
         e.preventDefault();
-        console.log("delete this task, id: " + id);
-        console.log("hey");
+        // console.log("delete this task, id: " + id);
+        // console.log("hey");
         let delTask = async () => {
             // data["email"] = session.user.email; //need to pass in the email to link to the account
 

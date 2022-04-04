@@ -13,7 +13,7 @@ import { DatePicker } from "@mantine/dates";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
-const EditTask = ({ content, setContent, opened, setOpened }) => {
+const EditTask = ({ content, setContent, opened, setOpened, pullTasks }) => {
     const { data: session, status } = useSession();
     // const [opened, setOpened] = useState(false);
     // console.log(content);
@@ -46,6 +46,7 @@ const EditTask = ({ content, setContent, opened, setOpened }) => {
     // } else {
     //     setLocalContent(content);
     // }
+    // * Modify localContent if content is changed
     useEffect(() => {
         // * if content is undefined
         if (content === undefined) {
@@ -91,7 +92,10 @@ const EditTask = ({ content, setContent, opened, setOpened }) => {
                 body: JSON.stringify(data),
             });
         };
-        sendNewTask();
+        sendNewTask().then(() => {
+            console.log(`Successfully edited task`);
+            pullTasks();
+        });
         // sendNewTask().then(() => {
         setOpened(false);
         // });

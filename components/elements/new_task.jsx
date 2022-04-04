@@ -34,7 +34,7 @@ export default function NewTask({
     setContent,
     taskStatus,
     collectionID,
-    setNewTaskinDB,
+    pullTasks,
 }) {
     const { data: session, status } = useSession();
 
@@ -79,12 +79,11 @@ export default function NewTask({
             });
             setLocalContent(empty_content(taskStatus));
         };
-        sendNewTask()
-            .then(setOpened(false))
-            .then(() => {
-                console.log("got here");
-            });
-        // setOpened(false);
+        sendNewTask().then(() => {
+            console.log(`Successfully added new task`);
+            pullTasks();
+        });
+        setOpened(false);
     };
 
     return (

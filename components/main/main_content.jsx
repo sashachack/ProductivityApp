@@ -38,8 +38,8 @@ const MainContent = ({ collection, collectionID }) => {
     // * is added. Outside the board view, tasks are defaulted to "To Do"
     const [newTaskStatus, setNewTaskStatus] = useState("To Do");
 
-    // * This is run to fetch the tasks from the API
-    useEffect(async () => {
+    // * pullTasks is a function that will pull the tasks from the database
+    const pullTasks = async () => {
         console.log("pulling tasks");
         let res = await fetch("/api/get_tasks", {
             method: "POST",
@@ -51,9 +51,14 @@ const MainContent = ({ collection, collectionID }) => {
 
         let json = await res.json();
         let tasks = json.data;
-        console.log("UPDATE EVERYTHING");
+        // console.log("UPDATE EVERYTHING");
         setExistingContent(tasks);
+    };
+
+    // * This is run to fetch the tasks from the API
+    useEffect(async () => {
         // console.log(tasks);
+        pullTasks();
     }, [
         // existingContent,
         newTaskModalOpened,
@@ -125,6 +130,7 @@ const MainContent = ({ collection, collectionID }) => {
                     setContent={setExistingContent} // ! This will probably not work
                     opened={modalOpened}
                     setOpened={setModalOpened}
+                    pullTasks={pullTasks}
                 />
             )}
             {/* // * This is our `EditTask` for editing a newly created task */}
@@ -137,6 +143,7 @@ const MainContent = ({ collection, collectionID }) => {
                 setContent={setExistingContent}
                 taskStatus={newTaskStatus}
                 collectionID={collectionID}
+                pullTasks={pullTasks}
             ></NewTask>
         </div>
     );
