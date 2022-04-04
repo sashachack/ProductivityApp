@@ -20,7 +20,14 @@ const TableCard = ({
         return months[date.month] + " " + date.day + ", " + date.year;
     };
 
-    let del = () => {
+    let del = (e) => {
+        // console.log(e);
+        try {
+            e.stopPropogation();
+        } catch (error) {
+            console.log(error);
+        }
+        e.preventDefault();
         console.log("delete this task, id: " + id);
         console.log("hey");
         let delTask = async () => {
@@ -50,7 +57,7 @@ const TableCard = ({
                 {/* <div> */}
                 <ActionIcon
                     style={{ position: "absolute", right: "15px" }}
-                    onClick={() => del()}
+                    onClick={(e) => del(e)}
                 >
                     <FontAwesomeIcon
                         icon={faTrashCan}

@@ -23,7 +23,7 @@ const EditTask = ({ content, setContent, opened, setOpened }) => {
 
     // let user_id = 7; // ! CHANGE THIS
 
-    console.log(`AND NOW CONTENT IS ${JSON.stringify(content)}`);
+    // console.log(`AND NOW CONTENT IS ${JSON.stringify(content)}`);
 
     const [localContent, setLocalContent] = useState(content);
     if (localContent === undefined) {
@@ -49,7 +49,7 @@ const EditTask = ({ content, setContent, opened, setOpened }) => {
     useEffect(() => {
         // * if content is undefined
         if (content === undefined) {
-            console.log("UNDEFINED");
+            // console.log("UNDEFINED");
             setLocalContent({
                 title: "",
                 label: "",
@@ -61,13 +61,13 @@ const EditTask = ({ content, setContent, opened, setOpened }) => {
         }
     }, [content]);
 
-    console.log(content);
-    console.log(localContent);
+    // console.log(content);
+    // console.log(localContent);
     // TODO - make sure to also edit global content
 
     let close = () => {
         // setLocalContent(localContent);
-        console.log(localContent);
+        // console.log(localContent);
 
         let sendNewTask = async () => {
             // let data = localContent;

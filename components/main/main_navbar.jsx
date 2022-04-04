@@ -18,13 +18,17 @@ const MainNavbar = ({ collection, setCollection }) => {
     // let names = ["Nash", "Skylar", "Sasha"];
     let [curCollections, setCurCollections] = useState([]);
     let [modalOpen, setModalOpen] = useState(false);
-    let [newCollectionName, setNewCollectionName] = useState("Untitled");
+    let [newCollectionName, setNewCollectionName] = useState("");
     const { data: session, status } = useSession();
     console.log(session);
 
     // let [isMounted, setIsMounted] = useState(false);
 
     let close = () => {
+        if (newCollectionName === "") {
+            setModalOpen(false);
+            return;
+        }
         let data = {
             email: session.user.email,
             collection: newCollectionName,
@@ -36,7 +40,7 @@ const MainNavbar = ({ collection, setCollection }) => {
                 method: "POST",
                 body: JSON.stringify(data),
             });
-            setNewCollectionName("Untitled");
+            setNewCollectionName("");
         };
         sendNewCollection();
         setModalOpen(false);
