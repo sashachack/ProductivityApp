@@ -37,16 +37,27 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
             // localContent["dueDate"] = { year: 2022, month: 4, day: 8 };
             localContent["email"] = session.user.email; //need to pass in the email to link to the account
 
-            await fetch("/api/post_tasks", {
+            data = {
+                id: localContent._id,
+                update: {
+                    title: localContent.title,
+                    label: localContent.label,
+                    status: localContent.status,
+                    // dueDate: localContent.dueDate,
+                },
+            };
+
+            await fetch("/api/edit_task", {
                 method: "POST",
-                body: JSON.stringify({
-                    data,
-                }),
+                body: JSON.stringify(data),
             });
         };
-        sendNewTask();
-        setOpened(false);
+        sendNewTask().then(() => {
+            setOpened(false);
+        });
     };
+
+    let today = new Date();
 
     return (
         <>
@@ -83,7 +94,7 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
                             { value: "Doing", label: "Doing" },
                             { value: "Done", label: "Done" },
                         ]}
-                        value={content.status}
+                        value={localContent.status}
                     ></Select>
                     <Space h="sm" />
                     <Text size="sm" style={{ fontWeight: "bold" }}>
@@ -114,6 +125,28 @@ const EditTask = ({ content, editContent, opened, setOpened }) => {
                     <DatePicker
                         placeholder="Pick date"
                         label="Event date"
+                        firstDayOfWeek="sunday"
+                        dayStyle={(date) => {
+                            if (
+                                date.getDate() === today.getDate() &&
+                                date.getMonth() === today.getMonth() &&
+                                date.getFullYear() === today.getFullYear()
+                            ) {
+                                return {
+                                    backgroundColor: "#88bbff",
+                                    color: "#000000",
+                                };
+                            } else if (
+                                date.getDay() === 0 ||
+                                date.getDay() === 6
+                            ) {
+                                return {
+                                    color: "#88bbff",
+                                };
+                            } else {
+                                null;
+                            }
+                        }}
                         onChange={(e) => {
                             // console.log(e);
                             // console.log(typeof e.getMonth());

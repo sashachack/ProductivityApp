@@ -15,7 +15,7 @@ import { useSession } from "next-auth/react";
 // TODO - if there's already one there; otherwise you need to refresh
 // TODO - FIX THIS
 
-const MainContent = ({ collection }) => {
+const MainContent = ({ collection, collectionID }) => {
     const { data: session, status } = useSession();
     // const [newContent, setNewContent] = useState
     // console.log(empty_content);
@@ -43,29 +43,37 @@ const MainContent = ({ collection }) => {
     const [newTaskStatus, setNewTaskStatus] = useState("To Do");
     // * This decides whether the newTaskPopup is open
     const [newTaskModalOpened, setNewTaskModalOpened] = useState(false);
+    // * This is for when an item is dragged and dropped
+    const [dragItem, setDragItem] = useState(null);
 
     // * This is run to fetch the tasks from the API
     useEffect(async () => {
+        console.log("pulling tasks");
         let res = await fetch("/api/get_tasks", {
             method: "POST",
             body: JSON.stringify({
                 email: session.user.email, //grab the tasks by email
+                collectionID: collectionID,
             }),
         });
 
         let json = await res.json();
         let tasks = json.data;
+        console.log("UPDATE EVERYTHING");
         setExistingContent(tasks);
         // console.log(tasks);
     }, [
-        existingContent,
-        setExistingContent,
+        // existingContent,
         newTaskModalOpened,
         setNewTaskModalOpened,
+        collectionID,
+        // existingContent,
+        // dragItem,
     ]);
 
     let clickCard = (id) => {
-        console.log(id);
+        // console.log()
+        console.log(`Click card of ID ${id}`);
         setSelectedID(id);
         setModalOpened(true);
     };
@@ -95,6 +103,7 @@ const MainContent = ({ collection }) => {
                     setContent={setExistingContent}
                     clickCard={(i) => clickCard(i)}
                     addCard={(l) => addCard(l)}
+                    setDragItem={(d) => setDragItem(d)}
                 />
             )}
             {value == "table" && (
@@ -107,7 +116,7 @@ const MainContent = ({ collection }) => {
             )}
             {/* {value == "calendar" && <Calendar content={content} />} */}
             {/* // * This is our `EditTask` for editing existing tasks */}
-            {/* {existingContent.length > 0 && (
+            {existingContent.length > 0 && (
                 <EditTask
                     content={
                         existingContent.length > 0 &&
@@ -121,7 +130,7 @@ const MainContent = ({ collection }) => {
                     opened={modalOpened}
                     setOpened={setModalOpened}
                 />
-            )} */}
+            )}
             {/* // * This is our `EditTask` for editing a newly created task */}
             <NewTask
                 // content={newContent}
@@ -131,6 +140,7 @@ const MainContent = ({ collection }) => {
                 content={existingContent}
                 setContent={setExistingContent}
                 taskStatus={newTaskStatus}
+                collectionID={collectionID}
             ></NewTask>
         </div>
     );

@@ -34,7 +34,9 @@ const SignIn = ({ opened, setOpened }) => {
                     <Button
                         variant="gradient"
                         gradient={{ from: "teal", to: "blue", deg: 60 }}
-                        onClick={() => { signIn(); }}
+                        onClick={() => {
+                            signIn("google");
+                        }}
                         // onClick={() => storeInfo(session)}
                     >
                         Sign In
