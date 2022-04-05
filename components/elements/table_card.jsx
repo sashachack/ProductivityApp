@@ -28,8 +28,6 @@ const TableCard = ({
             console.log(error);
         }
         e.preventDefault();
-        // console.log("delete this task, id: " + id);
-        // console.log("hey");
         let delTask = async () => {
             // data["email"] = session.user.email; //need to pass in the email to link to the account
 
@@ -39,13 +37,10 @@ const TableCard = ({
                     id: id,
                 }),
             });
-
-            // setLocalContent(empty_content);
         };
         delTask();
         let filteredContent = content.filter((c) => c["_id"] != id);
         setContent(filteredContent);
-        // setOpened(false);
     };
 
     return (

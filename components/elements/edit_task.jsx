@@ -83,7 +83,7 @@ const EditTask = ({ content, setContent, opened, setOpened, pullTasks }) => {
                     title: localContent.title,
                     label: localContent.label,
                     status: localContent.status,
-                    // dueDate: localContent.dueDate,
+                    dueDate: localContent.dueDate,
                 },
             };
 
