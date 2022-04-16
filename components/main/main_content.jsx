@@ -20,7 +20,7 @@ const MainContent = ({ collection, collectionID }) => {
     const pages = [
         { label: "Board", value: "board" },
         { label: "Table", value: "table" },
-        // { label: "Calendar", value: "calendar" },
+        { label: "Calendar", value: "calendar" },
     ];
     // console.log(content);
 
@@ -55,17 +55,17 @@ const MainContent = ({ collection, collectionID }) => {
         setExistingContent(tasks);
     };
 
+    // TODO - useSwr() 
+
     // * This is run to fetch the tasks from the API
-    useEffect(async () => {
+    useEffect(() => {
         // console.log(tasks);
         pullTasks();
     }, [
-        // existingContent,
         newTaskModalOpened,
         setNewTaskModalOpened,
         collectionID,
-        // existingContent,
-        // dragItem,
+        // pullTasks
     ]);
 
     // * If collection changes, then setExistingContent to empty
@@ -115,7 +115,7 @@ const MainContent = ({ collection, collectionID }) => {
                     addCard={() => addCard()}
                 />
             )}
-            {/* {value == "calendar" && <Calendar content={content} />} */}
+            {value == "calendar" && <Calendar content={existingContent} />}
             {/* // * This is our `EditTask` for editing existing tasks */}
             {existingContent.length > 0 && (
                 <EditTask
