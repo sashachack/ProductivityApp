@@ -1,11 +1,20 @@
-import { AppShell, Navbar, Header, Title, Text } from "@mantine/core";
 import { useState } from "react";
 import Board from "../content/board";
 import Table from "../content/table";
 import Calendar from "../content/calendar";
 import EditTask from "../elements/edit_task";
 import NewTask from "../elements/new_task";
-import { SegmentedControl, Divider, Space } from "@mantine/core";
+import {
+    AppShell,
+    Navbar,
+    Header,
+    Title,
+    Text,
+    Menu,
+    SegmentedControl,
+    Divider,
+    Space,
+} from "@mantine/core";
 // import { content } from "../../constants/items_constants";
 import { empty_content } from "../../constants/new_task";
 import { useEffect } from "react";
@@ -105,13 +114,29 @@ const MainContent = ({ collection, collectionID }) => {
                 />
                 <div className="absolute top-3 right-0 flex text-white space-x-4">
                     {value !== "calendar" && (
-                        <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
-                            <FontAwesomeIcon icon={faSort} />
-                        </div>
+                        <Menu
+                            control={
+                                <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
+                                    <FontAwesomeIcon icon={faSort} />
+                                </div>
+                            }
+                        >
+                            <Menu.Label>Sort By</Menu.Label>
+                            <Menu.Item>Date Created</Menu.Item>
+                            <Menu.Item>Due Date</Menu.Item>
+                        </Menu>
                     )}
-                    <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
-                        <FontAwesomeIcon icon={faFilter} />
-                    </div>
+                    <Menu
+                        control={
+                            <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
+                                <FontAwesomeIcon icon={faFilter} />
+                            </div>
+                        }
+                    >
+                        <Menu.Label>Filter By</Menu.Label>
+                        {value !== "board" && <Menu.Item>Status</Menu.Item>}
+                        <Menu.Item>Label</Menu.Item>
+                    </Menu>
                 </div>
             </div>
             <Space h="sm" />
