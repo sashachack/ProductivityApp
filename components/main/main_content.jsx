@@ -37,6 +37,8 @@ const MainContent = ({ collection, collectionID }) => {
     // * This is the status of a new task, used for the board view when a new task
     // * is added. Outside the board view, tasks are defaulted to "To Do"
     const [newTaskStatus, setNewTaskStatus] = useState("To Do");
+    // * The date, for the calendar
+    const [newTaskDate, setNewTaskDate] = useState(null);
 
     // * pullTasks is a function that will pull the tasks from the database
     const pullTasks = async () => {
@@ -80,10 +82,11 @@ const MainContent = ({ collection, collectionID }) => {
         setModalOpened(true);
     };
 
-    let addCard = (status = "To Do") => {
-        // console.log(status);
-        // console.log(`Add a card of type: ${status}`);
-        // console.log(`Status!!!! : ${status}`);
+    let addCard = (status = "To Do", date = null) => {
+        console.log(
+            `Adding card with status ${status} and date ${JSON.stringify(date)}`
+        );
+        if (date !== null) setNewTaskDate(date);
         setNewTaskStatus(status);
         setNewTaskModalOpened(true);
         // console.log("add a new task");
@@ -119,6 +122,7 @@ const MainContent = ({ collection, collectionID }) => {
                 <Calendar
                     content={existingContent}
                     clickCard={(i) => clickCard(i)}
+                    addCard={(d) => addCard("To Do", d)}
                 />
             )}
             {/* // * This is our `EditTask` for editing existing tasks */}
@@ -147,6 +151,7 @@ const MainContent = ({ collection, collectionID }) => {
                 content={existingContent}
                 setContent={setExistingContent}
                 taskStatus={newTaskStatus}
+                taskDate={newTaskDate}
                 collectionID={collectionID}
                 pullTasks={pullTasks}
             ></NewTask>

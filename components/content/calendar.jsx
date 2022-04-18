@@ -23,7 +23,7 @@ const days = [
     "Saturday",
 ];
 
-let Calendar = ({ content, clickCard }) => {
+let Calendar = ({ content, clickCard, addCard }) => {
     console.log(content);
 
     const today = new Date();
@@ -51,7 +51,7 @@ let Calendar = ({ content, clickCard }) => {
             i++
         ) {
             if (selected.month === 0) {
-                days.push({ day: i, month: 11, year: selected.year - 1 });
+                days.push({ date: i, month: 11, year: selected.year - 1 });
             } else {
                 days.push({
                     date: i,
@@ -63,6 +63,20 @@ let Calendar = ({ content, clickCard }) => {
         for (let i = 1; i <= lastDayofMonthDate; i++) {
             days.push({ date: i, month: selected.month, year: selected.year });
         }
+        let i = 1;
+        while (days.length % 7 !== 0) {
+            if (selected.month === 11) {
+                days.push({ date: i, month: 0, year: selected.year + 1 });
+            } else {
+                days.push({
+                    date: i,
+                    month: selected.month + 1,
+                    year: selected.year,
+                });
+            }
+            i++;
+        }
+        console.log(days);
         return days;
     };
     const switchMonth = (direction) => {
@@ -77,6 +91,10 @@ let Calendar = ({ content, clickCard }) => {
         }
 
         setSelected({ day: selected.day, month: newMonth, year: newYear });
+    };
+    const clickDay = (date, month, year) => {
+        console.log(date, month, year);
+        addCard({ year: year, month: month, day: date });
     };
     return (
         <>
@@ -109,17 +127,12 @@ let Calendar = ({ content, clickCard }) => {
             <Space h="sm" />
             <SimpleGrid cols={7}>
                 {days.map((d) => (
-                    <Card
-                        style={{
-                            color: "#cccccc",
-                            fontWeight: "bold",
-                            textAlign: "center",
-                            backgroundColor: "#aaddff34",
-                        }}
+                    <div
+                        className="text-white font-bold text-center bg-day-grey rounded-md p-2 overflow-hidden"
                         key={d}
                     >
                         {d.toUpperCase()}
-                    </Card>
+                    </div>
                 ))}
             </SimpleGrid>
             <Space h="sm" />
@@ -148,6 +161,7 @@ let Calendar = ({ content, clickCard }) => {
                         <div
                             className={`relative rounded-md bg-card-grey text-white flex h-14 ${opacity}`}
                             key={`${date}-${month}-${year}`}
+                            onClick={() => clickDay(date, month, year)}
                         >
                             <div className="p-1">
                                 <div

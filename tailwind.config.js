@@ -8,7 +8,8 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                'card-grey': '#25262B'
+                'card-grey': '#25262B',
+                'day-grey': '#212225',
             }
         },
     },

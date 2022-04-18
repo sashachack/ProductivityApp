@@ -14,14 +14,19 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 // import { empty_content } from "../../constants/new_task";
 
-const empty_content = (s = "To Do") => {
-    const obj = {
+const empty_content = (s = "To Do", d = null) => {
+    let obj = {
         title: "",
         label: "",
         status: s,
         dueDate: {},
         collectionID: "",
     };
+
+    if (d !== null) {
+        obj.dueDate = d;
+    }
+
     // console.log("RIGHT HERE");
     // console.log(obj);
     return obj;
@@ -33,6 +38,7 @@ export default function NewTask({
     content,
     setContent,
     taskStatus,
+    taskDate,
     collectionID,
     pullTasks,
 }) {
@@ -42,8 +48,8 @@ export default function NewTask({
     // console.log(empty_content(taskStatus));
     const [localContent, setLocalContent] = useState(empty_content(taskStatus));
     useEffect(() => {
-        setLocalContent(empty_content(taskStatus));
-    }, [taskStatus]);
+        setLocalContent(empty_content(taskStatus, taskDate));
+    }, [taskStatus, taskDate]);
 
     let today = new Date();
 
@@ -157,6 +163,13 @@ export default function NewTask({
                     <DatePicker
                         placeholder="Pick date"
                         label="Event date"
+                        value={
+                            new Date(
+                                localContent.dueDate.year,
+                                localContent.dueDate.month,
+                                localContent.dueDate.day
+                            )
+                        }
                         firstDayOfWeek="sunday"
                         dayStyle={(date) => {
                             if (
