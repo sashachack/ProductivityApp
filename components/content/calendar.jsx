@@ -76,8 +76,59 @@ let Calendar = ({ content, clickCard, addCard }) => {
             }
             i++;
         }
-        console.log(days);
+        // console.log(days);
         return days;
+    };
+    const renderDays = () => {
+        let allDays = genDays();
+        console.log(allDays.length);
+        return allDays.map(({ date, month, year }) => {
+            let isToday = false;
+            let isThisMonth = true;
+            if (month != selected.month) {
+                isThisMonth = false;
+            } else if (
+                date === today.getDate() &&
+                month === today.getMonth() &&
+                year === today.getFullYear()
+            ) {
+                isToday = true;
+            }
+            let todaysTasks = content.filter(
+                (task) =>
+                    task.dueDate.day === date &&
+                    task.dueDate.month === month &&
+                    task.dueDate.year === year
+            );
+            let circle = isToday ? "bg-blue-300 rounded-full" : "";
+            let opacity = isThisMonth ? "opacity-100" : "opacity-30";
+            let height = allDays.length === 42 ? "h-16" : "h-20";
+            return (
+                <div
+                    className={`relative rounded-md bg-card-grey text-white flex ${height} ${opacity}`}
+                    key={`${date}-${month}-${year}`}
+                    onClick={() => clickDay(date, month, year)}
+                >
+                    <div className="p-1">
+                        <div
+                            className={`w-6 h-6 flex justify-around items-center ${circle}`}
+                        >
+                            {date}
+                        </div>
+                    </div>
+                    <div className="w-full overflow-scroll no-scrollbar space-y-2 p-2">
+                        {todaysTasks.map((task) => (
+                            <CalendarCard
+                                key={task._id}
+                                name={task.title}
+                                id={task._id}
+                                click={(i) => clickCard(i)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            );
+        });
     };
     const switchMonth = (direction) => {
         let newMonth = selected.month + direction;
@@ -97,7 +148,7 @@ let Calendar = ({ content, clickCard, addCard }) => {
         addCard({ year: year, month: month, day: date });
     };
     return (
-        <>
+        <div className="overflow-hidden h-full">
             <Center>
                 <SimpleGrid className="w-full" cols={3}>
                     <div className="font-bold text-white flex justify-end">
@@ -136,55 +187,8 @@ let Calendar = ({ content, clickCard, addCard }) => {
                 ))}
             </SimpleGrid>
             <Space h="sm" />
-            <SimpleGrid cols={7}>
-                {genDays().map(({ date, month, year }) => {
-                    let isToday = false;
-                    let isThisMonth = true;
-                    if (month != selected.month) {
-                        isThisMonth = false;
-                    } else if (
-                        date === today.getDate() &&
-                        month === today.getMonth() &&
-                        year === today.getFullYear()
-                    ) {
-                        isToday = true;
-                    }
-                    let todaysTasks = content.filter(
-                        (task) =>
-                            task.dueDate.day === date &&
-                            task.dueDate.month === month &&
-                            task.dueDate.year === year
-                    );
-                    let circle = isToday ? "bg-blue-300 rounded-full" : "";
-                    let opacity = isThisMonth ? "opacity-100" : "opacity-30";
-                    return (
-                        <div
-                            className={`relative rounded-md bg-card-grey text-white flex h-14 ${opacity}`}
-                            key={`${date}-${month}-${year}`}
-                            onClick={() => clickDay(date, month, year)}
-                        >
-                            <div className="p-1">
-                                <div
-                                    className={`w-6 h-6 flex justify-around items-center ${circle}`}
-                                >
-                                    {date}
-                                </div>
-                            </div>
-                            <div className="w-full overflow-scroll no-scrollbar space-y-2 p-2">
-                                {todaysTasks.map((task) => (
-                                    <CalendarCard
-                                        key={task._id}
-                                        name={task.title}
-                                        id={task._id}
-                                        click={(i) => clickCard(i)}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    );
-                })}
-            </SimpleGrid>
-        </>
+            <SimpleGrid cols={7}>{renderDays()}</SimpleGrid>
+        </div>
     );
 };
 export default Calendar;
