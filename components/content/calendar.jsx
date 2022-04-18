@@ -173,6 +173,23 @@ let Calendar = ({ content, clickCard, addCard }) => {
                             <FontAwesomeIcon icon={faCaretRight} />
                         </div>
                     </div>
+                    <div
+                        className={` absolute border-blue-400 border-2 p-1 rounded-md ${
+                            selected.month === today.getMonth() &&
+                            selected.year === today.getFullYear()
+                                ? "bg-blue-400 text-white"
+                                : "text-blue-400 hover:bg-blue-400 hover:text-white cursor-pointer"
+                        }`}
+                        onClick={() =>
+                            setSelected({
+                                day: today.getDate(),
+                                month: today.getMonth(),
+                                year: today.getFullYear(),
+                            })
+                        }
+                    >
+                        TODAY
+                    </div>
                 </SimpleGrid>
             </Center>
             <Space h="sm" />
