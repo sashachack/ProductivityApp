@@ -55,7 +55,7 @@ const MainContent = ({ collection, collectionID }) => {
         setExistingContent(tasks);
     };
 
-    // TODO - useSwr() 
+    // TODO - useSwr()
 
     // * This is run to fetch the tasks from the API
     useEffect(() => {
@@ -115,7 +115,12 @@ const MainContent = ({ collection, collectionID }) => {
                     addCard={() => addCard()}
                 />
             )}
-            {value == "calendar" && <Calendar content={existingContent} />}
+            {value == "calendar" && (
+                <Calendar
+                    content={existingContent}
+                    clickCard={(i) => clickCard(i)}
+                />
+            )}
             {/* // * This is our `EditTask` for editing existing tasks */}
             {existingContent.length > 0 && (
                 <EditTask
