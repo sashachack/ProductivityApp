@@ -10,6 +10,8 @@ import { SegmentedControl, Divider, Space } from "@mantine/core";
 import { empty_content } from "../../constants/new_task";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSort, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 // TODO - the DOM only updates with new tasks
 // TODO - if there's already one there; otherwise you need to refresh
@@ -94,12 +96,24 @@ const MainContent = ({ collection, collectionID }) => {
 
     return (
         <div>
-            <SegmentedControl
-                value={value}
-                onChange={setValue}
-                data={pages}
-                size="lg"
-            />
+            <div className="relative">
+                <SegmentedControl
+                    value={value}
+                    onChange={setValue}
+                    data={pages}
+                    size="lg"
+                />
+                <div className="absolute top-3 right-0 flex text-white space-x-4">
+                    {value !== "calendar" && (
+                        <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
+                            <FontAwesomeIcon icon={faSort} />
+                        </div>
+                    )}
+                    <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
+                        <FontAwesomeIcon icon={faFilter} />
+                    </div>
+                </div>
+            </div>
             <Space h="sm" />
             {/* <Divider /> */}
             {value == "board" && (

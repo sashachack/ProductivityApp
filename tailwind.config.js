@@ -10,6 +10,7 @@ module.exports = {
             colors: {
                 'card-grey': '#25262B',
                 'day-grey': '#212225',
+                'light-grey': '#2F2F36'
             }
         },
     },

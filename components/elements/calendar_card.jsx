@@ -7,7 +7,7 @@ export default function CalendarCard({ name, id, click }) {
     };
     return (
         <div
-            className="rounded bg-slate-500 w-full overflow-hidden p-1 cursor-pointer"
+            className="rounded bg-light-grey w-full overflow-hidden p-1 cursor-pointer shadow-md"
             onClick={(e) => handleClick(e)}
         >
             <Text>{name}</Text>
