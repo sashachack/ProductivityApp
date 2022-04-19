@@ -1,8 +1,11 @@
-import { Card, Text, SimpleGrid } from "@mantine/core";
+import { Card, Text, SimpleGrid, Badge } from "@mantine/core";
 import { months } from "../../constants/months";
 import { ActionIcon } from "@mantine/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+    faBuildingCircleExclamation,
+    faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 
 const TableCard = ({
     taskName,
@@ -43,6 +46,17 @@ const TableCard = ({
         setContent(filteredContent);
     };
 
+    let statusColor = (currStatus) => {
+        if (currStatus == "To Do") {
+            return "pink";
+            // return "#ff5447"
+        } else if (currStatus == "Doing") {
+            return "yellow";
+            // return "#fdff8a"
+        } else return "green";
+        // else return "#afff91"
+    };
+
     return (
         <div>
             <Card
@@ -59,13 +73,21 @@ const TableCard = ({
                         style={{ fontSize: 20, color: "#aaaaaa" }}
                     ></FontAwesomeIcon>
                 </ActionIcon>
-                <SimpleGrid cols={4}>
+                <SimpleGrid cols={4} className="items-center">
                     <Text weight="500" size="lg" color="white">
                         {taskName}
                     </Text>
                     <Text size="sm">{label}</Text>
                     <Text size="sm">{printDate(dueDate)}</Text>
-                    <Text size="sm">{status}</Text>
+                    <div className="">
+                        <Badge
+                            radius="sm"
+                            size="sm"
+                            color={statusColor(status)}
+                        >
+                            {status}
+                        </Badge>
+                    </div>
                 </SimpleGrid>
                 {/* </div> */}
             </Card>

@@ -33,6 +33,7 @@ let Board = ({ content, setContent, clickCard, addCard }) => {
             </Card>
         );
     };
+
     const onDragEnd = (result) => {
         if (!result.destination) {
             return;

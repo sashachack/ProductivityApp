@@ -169,10 +169,7 @@ const MainNavbar = ({
                     <Card
                         style={{
                             backgroundColor: "#333333",
-                            // position: "absolute",
-                            // bottom: "0",
                             display: "flex",
-                            // justifyContent: "center",
                             alignItems: "center",
                         }}
                     >
@@ -184,9 +181,6 @@ const MainNavbar = ({
                                 width: "60px",
                                 height: "60px",
                                 boxShadow: "0 0 5px rgba(0,0,0,0.4)",
-                                // top: "50%",
-                                // left: "50%",
-                                // transform: "translate(-50%, -50%)",
                             }}
                         >
                             <Image

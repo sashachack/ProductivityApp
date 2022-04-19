@@ -1,15 +1,26 @@
-import { AppShell, Navbar, Header, Title, Text } from "@mantine/core";
 import { useState } from "react";
 import Board from "../content/board";
 import Table from "../content/table";
 import Calendar from "../content/calendar";
 import EditTask from "../elements/edit_task";
 import NewTask from "../elements/new_task";
-import { SegmentedControl, Divider, Space } from "@mantine/core";
+import {
+    AppShell,
+    Navbar,
+    Header,
+    Title,
+    Text,
+    Menu,
+    SegmentedControl,
+    Divider,
+    Space,
+} from "@mantine/core";
 // import { content } from "../../constants/items_constants";
 import { empty_content } from "../../constants/new_task";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSort, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 // TODO - the DOM only updates with new tasks
 // TODO - if there's already one there; otherwise you need to refresh
@@ -20,7 +31,7 @@ const MainContent = ({ collection, collectionID }) => {
     const pages = [
         { label: "Board", value: "board" },
         { label: "Table", value: "table" },
-        // { label: "Calendar", value: "calendar" },
+        { label: "Calendar", value: "calendar" },
     ];
     // console.log(content);
 
@@ -37,6 +48,8 @@ const MainContent = ({ collection, collectionID }) => {
     // * This is the status of a new task, used for the board view when a new task
     // * is added. Outside the board view, tasks are defaulted to "To Do"
     const [newTaskStatus, setNewTaskStatus] = useState("To Do");
+    // * The date, for the calendar
+    const [newTaskDate, setNewTaskDate] = useState(null);
 
     // * pullTasks is a function that will pull the tasks from the database
     const pullTasks = async () => {
@@ -55,17 +68,17 @@ const MainContent = ({ collection, collectionID }) => {
         setExistingContent(tasks);
     };
 
+    // TODO - useSwr()
+
     // * This is run to fetch the tasks from the API
-    useEffect(async () => {
+    useEffect(() => {
         // console.log(tasks);
         pullTasks();
     }, [
-        // existingContent,
         newTaskModalOpened,
         setNewTaskModalOpened,
         collectionID,
-        // existingContent,
-        // dragItem,
+        // pullTasks
     ]);
 
     // * If collection changes, then setExistingContent to empty
@@ -80,10 +93,11 @@ const MainContent = ({ collection, collectionID }) => {
         setModalOpened(true);
     };
 
-    let addCard = (status = "To Do") => {
-        // console.log(status);
-        // console.log(`Add a card of type: ${status}`);
-        // console.log(`Status!!!! : ${status}`);
+    let addCard = (status = "To Do", date = null) => {
+        console.log(
+            `Adding card with status ${status} and date ${JSON.stringify(date)}`
+        );
+        if (date !== null) setNewTaskDate(date);
         setNewTaskStatus(status);
         setNewTaskModalOpened(true);
         // console.log("add a new task");
@@ -91,12 +105,40 @@ const MainContent = ({ collection, collectionID }) => {
 
     return (
         <div>
-            <SegmentedControl
-                value={value}
-                onChange={setValue}
-                data={pages}
-                size="lg"
-            />
+            <div className="relative">
+                <SegmentedControl
+                    value={value}
+                    onChange={setValue}
+                    data={pages}
+                    size="lg"
+                />
+                <div className="absolute top-3 right-0 flex text-white space-x-4">
+                    {value !== "calendar" && (
+                        <Menu
+                            control={
+                                <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
+                                    <FontAwesomeIcon icon={faSort} />
+                                </div>
+                            }
+                        >
+                            <Menu.Label>Sort By</Menu.Label>
+                            <Menu.Item>Date Created</Menu.Item>
+                            <Menu.Item>Due Date</Menu.Item>
+                        </Menu>
+                    )}
+                    <Menu
+                        control={
+                            <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
+                                <FontAwesomeIcon icon={faFilter} />
+                            </div>
+                        }
+                    >
+                        <Menu.Label>Filter By</Menu.Label>
+                        {value !== "board" && <Menu.Item>Status</Menu.Item>}
+                        <Menu.Item>Label</Menu.Item>
+                    </Menu>
+                </div>
+            </div>
             <Space h="sm" />
             {/* <Divider /> */}
             {value == "board" && (
@@ -115,7 +157,13 @@ const MainContent = ({ collection, collectionID }) => {
                     addCard={() => addCard()}
                 />
             )}
-            {/* {value == "calendar" && <Calendar content={content} />} */}
+            {value == "calendar" && (
+                <Calendar
+                    content={existingContent}
+                    clickCard={(i) => clickCard(i)}
+                    addCard={(d) => addCard("To Do", d)}
+                />
+            )}
             {/* // * This is our `EditTask` for editing existing tasks */}
             {existingContent.length > 0 && (
                 <EditTask
@@ -142,6 +190,7 @@ const MainContent = ({ collection, collectionID }) => {
                 content={existingContent}
                 setContent={setExistingContent}
                 taskStatus={newTaskStatus}
+                taskDate={newTaskDate}
                 collectionID={collectionID}
                 pullTasks={pullTasks}
             ></NewTask>
