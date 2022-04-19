@@ -35,6 +35,7 @@ let Table = ({ content, setContent, clickCard, addCard }) => {
 
     // let addTaskBg = ;
 
+
     return (
         <div>
             <Card
