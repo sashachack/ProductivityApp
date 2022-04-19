@@ -14,6 +14,7 @@ import {
     SegmentedControl,
     Divider,
     Space,
+    Select,
 } from "@mantine/core";
 // import { content } from "../../constants/items_constants";
 import { empty_content } from "../../constants/new_task";
@@ -50,6 +51,8 @@ const MainContent = ({ collection, collectionID }) => {
     const [newTaskStatus, setNewTaskStatus] = useState("To Do");
     // * The date, for the calendar
     const [newTaskDate, setNewTaskDate] = useState(null);
+    // * Defines what we sort by
+    const [sortBy, setSortBy] = useState("dateCreated");
 
     // * pullTasks is a function that will pull the tasks from the database
     const pullTasks = async () => {
@@ -64,9 +67,40 @@ const MainContent = ({ collection, collectionID }) => {
 
         let json = await res.json();
         let tasks = json.data;
+
         // console.log("UPDATE EVERYTHING");
         setExistingContent(tasks);
     };
+
+    useEffect(() => {
+        if (sortBy === "dueDate") {
+            let t = existingContent.sort((a, b) => {
+                // console.log(a, b);
+                if (a.dueDate.year < b.dueDate.year) {
+                    return -1;
+                } else if (a.dueDate.year > b.dueDate.year) {
+                    return 1;
+                }
+                if (a.dueDate.month < b.dueDate.month) {
+                    return -1;
+                } else if (a.dueDate.month > b.dueDate.month) {
+                    return 1;
+                }
+                if (a.dueDate.day < b.dueDate.day) {
+                    return -1;
+                } else if (a.dueDate.day > b.dueDate.day) {
+                    return 1;
+                }
+                return 0;
+            });
+            setExistingContent(t);
+        } else if (sortBy === "dateCreated") {
+            let t = existingContent.sort((a, b) => {
+                return parseInt(a._id, 16) - parseInt(b._id, 16);
+            });
+            setExistingContent(t);
+        }
+    }, [existingContent, sortBy]);
 
     // TODO - useSwr()
 
@@ -113,7 +147,15 @@ const MainContent = ({ collection, collectionID }) => {
                     size="lg"
                 />
                 <div className="absolute top-3 right-0 flex text-white space-x-4">
-                    {value !== "calendar" && (
+                    {/* <Select
+                        data={[
+                            { label: "Date Created", value: "dateCreated" },
+                            { label: "Due Date", value: "dueDate" },
+                        ]}
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e)}
+                    /> */}
+                    {/* {value !== "calendar" && (
                         <Menu
                             control={
                                 <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
@@ -122,8 +164,12 @@ const MainContent = ({ collection, collectionID }) => {
                             }
                         >
                             <Menu.Label>Sort By</Menu.Label>
-                            <Menu.Item>Date Created</Menu.Item>
-                            <Menu.Item>Due Date</Menu.Item>
+                            <Menu.Item onClick={() => setSortBy("dateCreated")}>
+                                Date Created
+                            </Menu.Item>
+                            <Menu.Item onClick={() => setSortBy("dueDate")}>
+                                Due Date
+                            </Menu.Item>
                         </Menu>
                     )}
                     <Menu
@@ -136,7 +182,7 @@ const MainContent = ({ collection, collectionID }) => {
                         <Menu.Label>Filter By</Menu.Label>
                         {value !== "board" && <Menu.Item>Status</Menu.Item>}
                         <Menu.Item>Label</Menu.Item>
-                    </Menu>
+                    </Menu> */}
                 </div>
             </div>
             <Space h="sm" />
@@ -193,6 +239,7 @@ const MainContent = ({ collection, collectionID }) => {
                 taskDate={newTaskDate}
                 collectionID={collectionID}
                 pullTasks={pullTasks}
+                curPage={value}
             ></NewTask>
         </div>
     );

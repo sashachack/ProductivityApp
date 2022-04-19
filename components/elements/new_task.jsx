@@ -41,6 +41,7 @@ export default function NewTask({
     taskDate,
     collectionID,
     pullTasks,
+    curPage,
 }) {
     const { data: session, status } = useSession();
 
@@ -164,11 +165,13 @@ export default function NewTask({
                         placeholder="Pick date"
                         label="Event date"
                         value={
-                            new Date(
-                                localContent.dueDate.year,
-                                localContent.dueDate.month,
-                                localContent.dueDate.day
-                            )
+                            curPage !== "calendar"
+                                ? null
+                                : new Date(
+                                      localContent.dueDate.year,
+                                      localContent.dueDate.month,
+                                      localContent.dueDate.day
+                                  )
                         }
                         firstDayOfWeek="sunday"
                         dayStyle={(date) => {
