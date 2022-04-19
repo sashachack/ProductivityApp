@@ -72,35 +72,35 @@ const MainContent = ({ collection, collectionID }) => {
         setExistingContent(tasks);
     };
 
-    useEffect(() => {
-        if (sortBy === "dueDate") {
-            let t = existingContent.sort((a, b) => {
-                // console.log(a, b);
-                if (a.dueDate.year < b.dueDate.year) {
-                    return -1;
-                } else if (a.dueDate.year > b.dueDate.year) {
-                    return 1;
-                }
-                if (a.dueDate.month < b.dueDate.month) {
-                    return -1;
-                } else if (a.dueDate.month > b.dueDate.month) {
-                    return 1;
-                }
-                if (a.dueDate.day < b.dueDate.day) {
-                    return -1;
-                } else if (a.dueDate.day > b.dueDate.day) {
-                    return 1;
-                }
-                return 0;
-            });
-            setExistingContent(t);
-        } else if (sortBy === "dateCreated") {
-            let t = existingContent.sort((a, b) => {
-                return parseInt(a._id, 16) - parseInt(b._id, 16);
-            });
-            setExistingContent(t);
-        }
-    }, [existingContent, sortBy]);
+    // useEffect(() => {
+    //     if (sortBy === "dueDate") {
+    //         let t = existingContent.sort((a, b) => {
+    //             // console.log(a, b);
+    //             if (a.dueDate.year < b.dueDate.year) {
+    //                 return -1;
+    //             } else if (a.dueDate.year > b.dueDate.year) {
+    //                 return 1;
+    //             }
+    //             if (a.dueDate.month < b.dueDate.month) {
+    //                 return -1;
+    //             } else if (a.dueDate.month > b.dueDate.month) {
+    //                 return 1;
+    //             }
+    //             if (a.dueDate.day < b.dueDate.day) {
+    //                 return -1;
+    //             } else if (a.dueDate.day > b.dueDate.day) {
+    //                 return 1;
+    //             }
+    //             return 0;
+    //         });
+    //         setExistingContent(t);
+    //     } else if (sortBy === "dateCreated") {
+    //         let t = existingContent.sort((a, b) => {
+    //             return parseInt(a._id, 16) - parseInt(b._id, 16);
+    //         });
+    //         setExistingContent(t);
+    //     }
+    // }, [existingContent, sortBy]);
 
     // TODO - useSwr()
 
