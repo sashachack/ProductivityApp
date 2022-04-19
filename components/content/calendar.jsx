@@ -116,7 +116,7 @@ let Calendar = ({ content, clickCard, addCard }) => {
                             {date}
                         </div>
                     </div>
-                    <div className="w-full overflow-scroll no-scrollbar space-y-2 p-2">
+                    <div className="w-full overflow-scroll no-scrollbar space-y-2 pr-2 py-2">
                         {todaysTasks.map((task) => (
                             <CalendarCard
                                 key={task._id}
