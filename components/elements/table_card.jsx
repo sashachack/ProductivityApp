@@ -45,7 +45,7 @@ const TableCard = ({
 
     let statusColor = (currStatus) => {
         if (currStatus == "To Do") {
-            return "red"
+            return "pink"
             // return "#ff5447"
         }
         else if (currStatus == "Doing") {
