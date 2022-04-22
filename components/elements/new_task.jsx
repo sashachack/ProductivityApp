@@ -8,6 +8,7 @@ import {
     Select,
     Textarea,
     Text,
+    JsonInput,
 } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useEffect, useState } from "react";
@@ -44,15 +45,56 @@ export default function NewTask({
     curPage,
 }) {
     const { data: session, status } = useSession();
+     
+    const[labels, setLabels] = useState([
+        { value: "SEW", label: "SEW" },
+        { value: "332", label: "332" },
+        { value: "330", label: "330" },
+        { value: "457", label: "457" },
+    ])
 
     // * This represents the temporary task, not yet sent to the back-end
     // console.log(empty_content(taskStatus));
     const [localContent, setLocalContent] = useState(empty_content(taskStatus));
-    useEffect(() => {
+    useEffect(async () => {
         setLocalContent(empty_content(taskStatus, taskDate));
+       
+        let res = await fetch("/api/get_labels", {
+            method: "POST",
+            body: JSON.stringify({
+                email: session.user.email, //grab the tasks by email
+        
+            }),
+        });
+
+        let data = await res.json()
+        
+        let labels = data.data[0].labels
+        setLabels(labels)
     }, [taskStatus, taskDate]);
 
     let today = new Date();
+
+    let addLabel = async (new_labels) => {
+        console.log(new_labels)
+        
+        let data = {email: session.user.email, labels: new_labels}
+
+        console.log(data)
+
+        let res = await fetch("/api/update_labels", {
+            method: "POST",
+            body: JSON.stringify(data),
+        });
+
+        
+
+
+    
+    
+
+        
+    }
 
     // * This method will be run upon the closing of the `new task` element, and
     // * will send the data to the backend and reset the `new task` element
@@ -92,6 +134,8 @@ export default function NewTask({
         });
         setOpened(false);
     };
+
+  
 
     return (
         <>
@@ -139,7 +183,7 @@ export default function NewTask({
                         Label
                     </Text>
                     <Space h="5px" />
-                    <Input
+                    {/* <Input
                         placeholder="Untitled"
                         value={localContent.label}
                         onChange={(e) => {
@@ -149,7 +193,28 @@ export default function NewTask({
                             c_copy.label = e.target.value;
                             setLocalContent(c_copy);
                         }}
-                    ></Input>
+                    ></Input> */}
+                    <Select
+                    
+                    placeholder="Select Label"
+                    searchable
+                    creatable
+                    getCreateLabel={(query) => `+ Create ${query}`}
+                    onCreate={(query) => {
+                        setLabels((current) => [...current, query])
+                        console.log(query)
+                        // console.log(labels)
+                        labels.push({label: query})
+                        setLabels(labels)
+                        console.log(labels)
+
+                        addLabel(labels)
+                        
+
+                        
+                        }}
+                    data={labels}
+                    />
                     {/* <Select
                         label="Label"
                         data={[
