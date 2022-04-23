@@ -6,7 +6,7 @@ import {
     Input,
     Space,
     Select,
-    Textarea,
+    Textarea, 
     Text,
     JsonInput,
 } from "@mantine/core";
@@ -43,35 +43,37 @@ export default function NewTask({
     collectionID,
     pullTasks,
     curPage,
+    labels,
+    setLabels
 }) {
     const { data: session, status } = useSession();
      
-    const[labels, setLabels] = useState([
-        { value: "SEW", label: "SEW" },
-        { value: "332", label: "332" },
-        { value: "330", label: "330" },
-        { value: "457", label: "457" },
-    ])
+    // const[labels, setLabels] = useState([
+    //     { value: "SEW", label: "SEW" },
+    //     { value: "332", label: "332" },
+    //     { value: "330", label: "330" },
+    //     { value: "457", label: "457" },
+    // ])
 
     // * This represents the temporary task, not yet sent to the back-end
     // console.log(empty_content(taskStatus));
     const [localContent, setLocalContent] = useState(empty_content(taskStatus));
-    useEffect(async () => {
-        setLocalContent(empty_content(taskStatus, taskDate));
+    // useEffect(async () => {
+    //     setLocalContent(empty_content(taskStatus, taskDate));
        
-        let res = await fetch("/api/get_labels", {
-            method: "POST",
-            body: JSON.stringify({
-                email: session.user.email, //grab the tasks by email
+    //     let res = await fetch("/api/get_labels", {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //             email: session.user.email, //grab the tasks by email
         
-            }),
-        });
+    //         }),
+    //     });
 
-        let data = await res.json()
+    //     let data = await res.json()
         
-        let labels = data.data[0].labels
-        setLabels(labels)
-    }, [taskStatus, taskDate]);
+    //     let labels = data.data[0].labels
+    //     setLabels(labels)
+    // }, [taskStatus, taskDate]);
 
     let today = new Date();
 
@@ -86,13 +88,6 @@ export default function NewTask({
             method: "POST",
             body: JSON.stringify(data),
         });
-
-        
-
-
-    
-    
-
         
     }
 
@@ -200,6 +195,14 @@ export default function NewTask({
                     searchable
                     creatable
                     getCreateLabel={(query) => `+ Create ${query}`}
+                    onSelect={(e) => {
+                        // console.log(e)
+                        const c_copy = JSON.parse(
+                            JSON.stringify(localContent)
+                        );
+                        c_copy.label = e.target.value;
+                        setLocalContent(c_copy);
+                    }}
                     onCreate={(query) => {
                         setLabels((current) => [...current, query])
                         console.log(query)
@@ -207,13 +210,12 @@ export default function NewTask({
                         labels.push({label: query})
                         setLabels(labels)
                         console.log(labels)
-
                         addLabel(labels)
-                        
 
-                        
                         }}
+                    
                     data={labels}
+                    
                     />
                     {/* <Select
                         label="Label"

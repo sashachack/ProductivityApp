@@ -13,7 +13,7 @@ import { DatePicker } from "@mantine/dates";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
-const EditTask = ({ content, setContent, opened, setOpened, pullTasks }) => {
+const EditTask = ({ content, setContent, opened, setOpened, pullTasks, labels, setLabels }) => {
     const { data: session, status } = useSession();
     // const [opened, setOpened] = useState(false);
     // console.log(content);
@@ -53,7 +53,7 @@ const EditTask = ({ content, setContent, opened, setOpened, pullTasks }) => {
             // console.log("UNDEFINED");
             setLocalContent({
                 title: "",
-                label: "",
+                label: "", 
                 status: "",
                 dueDate: { year: 0, month: 0, day: 0 },
             });
@@ -161,21 +161,32 @@ const EditTask = ({ content, setContent, opened, setOpened, pullTasks }) => {
                         Label
                     </Text>
                     <Space h="5px" />
-                    <Input
-                        placeholder="Untitled"
-                        value={
-                            localContent && localContent.label
-                                ? localContent.label
-                                : ""
-                        }
-                        onChange={(e) => {
+                    
+                    <Select
+                        
+                        searchable
+                        creatable
+                        onSelect={(e) => {
+                            // console.log(e)
                             const c_copy = JSON.parse(
                                 JSON.stringify(localContent)
                             );
                             c_copy.label = e.target.value;
                             setLocalContent(c_copy);
-                        }}
-                    ></Input>
+                         }}
+                        getCreateLabel={(query) => `+ Create ${query}`}
+                        onCreate={(query) => {
+                            setLabels((current) => [...current, query])
+                            console.log(query)
+                            // console.log(labels)
+                            labels.push({label: query})
+                            setLabels(labels)
+                            console.log(labels)
+                            addLabel(labels)
+
+                            }}
+                        data={labels}
+                    />
                     {/* <Select
                         label="Label"
                         data={[
