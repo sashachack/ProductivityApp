@@ -72,8 +72,20 @@ const MainContent = ({ collection, collectionID }) => {
         });
 
         let data = await res.json()
-        
-        let labels = data.data[0].labels
+        let labels = [];
+        if(data.data[0] != undefined){
+            labels = data.data[0].labels
+        }
+        else{
+            let res = await fetch("/api/post_label_entry", {
+                method: "POST",
+                body: JSON.stringify({
+                    email: session.user.email, //grab the tasks by email
+                    labels: [],
+            
+                }),
+            });
+        }
         setLabels(labels)
     }, [newTaskModalOpened]);
 
