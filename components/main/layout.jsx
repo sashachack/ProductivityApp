@@ -53,9 +53,7 @@ let Layout = () => {
             setTaskAvailable(true);
         }
 
-        // setCurCollectionID(json.data[0]._id);
-        // console.log(curCollectionID);
-        // console.log(tasks);
+       
     }, [curCollection]);
 
     const getCollections = async () => {

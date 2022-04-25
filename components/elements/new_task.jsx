@@ -189,6 +189,44 @@ export default function NewTask({
                             setLocalContent(c_copy);
                         }}
                     ></Input> */}
+                    {/* <Select
+                    
+                    placeholder="Select Label"
+                    searchable
+                    creatable
+                    // value={localContent.label}
+                    getCreateLabel={(query) => `+ Create ${query}`}
+                    onSelect={(e) => {
+                        
+                        const c_copy = JSON.parse(
+                            JSON.stringify(localContent)
+                        );
+                        c_copy.label = e.target.value;
+                        console.log(e.target.value)
+                        setLocalContent(c_copy);
+                        
+                        
+                    }}
+                    onCreate={(query) => {
+                        setLabels((current) => [...current, query])
+                        console.log(query)
+                        // console.log(labels)
+                        labels.push({label: query})
+                        setLabels(labels)
+                        console.log(labels)
+                        addLabel(labels)
+                        // const c_copy = JSON.parse(
+                        //     JSON.stringify(localContent)
+                        // );
+                        // c_copy.label = query;
+                        // console.log(c_copy)
+                        // setLocalContent(c_copy);
+
+                        }}
+                    data={labels}
+                    value = {localContent.label}
+                    
+                    /> */}
                     <Select
                     
                     placeholder="Select Label"
@@ -201,7 +239,10 @@ export default function NewTask({
                             JSON.stringify(localContent)
                         );
                         c_copy.label = e.target.value;
+                        console.log(e.target.value)
+                        console.log(c_copy)
                         setLocalContent(c_copy);
+                        console.log(localContent)
                     }}
                     onCreate={(query) => {
                         setLabels((current) => [...current, query])
@@ -217,16 +258,7 @@ export default function NewTask({
                     data={labels}
                     
                     />
-                    {/* <Select
-                        label="Label"
-                        data={[
-                            { value: "SEW", label: "SEW" },
-                            { value: "332", label: "332" },
-                            { value: "330", label: "330" },
-                            { value: "457", label: "457" },
-                        ]}
-                        value={content.label}
-                    ></Select> */}
+                    
                     {/* <Space h="sm" /> */}
                     <DatePicker
                         placeholder="Pick date"
