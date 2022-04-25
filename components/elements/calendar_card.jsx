@@ -5,12 +5,13 @@ export default function CalendarCard({ name, id, click }) {
         e.stopPropagation();
         click(id);
     };
+
     return (
         <div
             className="rounded bg-light-grey w-full overflow-hidden p-1 cursor-pointer shadow-md"
             onClick={(e) => handleClick(e)}
         >
-            <Text>{name}</Text>
+        <Text>{name}</Text>
         </div>
     );
 }

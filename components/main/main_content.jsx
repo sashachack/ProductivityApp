@@ -63,7 +63,6 @@ const MainContent = ({ collection, collectionID }) => {
 
     useEffect(async () => {
      
-       
         let res = await fetch("/api/get_labels", {
             method: "POST",
             body: JSON.stringify({
