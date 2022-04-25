@@ -10,11 +10,10 @@ let Layout = () => {
     const { data: session, status } = useSession();
 
     // * A state to manage our current collection
-    const [curCollection, setCurCollection] = useState("Tasks"); 
+    const [curCollection, setCurCollection] = useState("Tasks");
     const [curCollectionID, setCurCollectionID] = useState(0);
     const [taskAvailable, setTaskAvailable] = useState(false);
     const [curCollections, setCurCollections] = useState([]);
-    
 
     useEffect(async () => {
         let res = await fetch("/api/get_collection_id", {
@@ -52,8 +51,6 @@ let Layout = () => {
             setCurCollectionID(info.data[0]._id);
             setTaskAvailable(true);
         }
-
-       
     }, [curCollection]);
 
     const getCollections = async () => {
@@ -102,6 +99,7 @@ let Layout = () => {
                         collectionID={curCollectionID}
                         curCollections={curCollections}
                         getCollections={getCollections}
+                        setCurCollections={setCurCollections}
                     />
                 </Navbar>
             }

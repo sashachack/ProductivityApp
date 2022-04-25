@@ -9,10 +9,14 @@ import {
     Menu,
     Space,
     Input,
+    Button,
+    ActionIcon,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const MainNavbar = ({
     collection,
@@ -20,18 +24,21 @@ const MainNavbar = ({
     collectionID,
     curCollections,
     getCollections,
+    setCurCollections,
+    // pull
 }) => {
     // let names = ["Nash", "Skylar", "Sasha"];
-    let [modalOpen, setModalOpen] = useState(false);
+    let [newModalOpen, setNewModalOpen] = useState(false);
+    let [delModalOpen, setDelModalOpen] = useState(false);
+    let [delId, setDelId] = useState(-1);
     let [newCollectionName, setNewCollectionName] = useState("");
     const { data: session, status } = useSession();
     console.log(session);
-
-    // let [isMounted, setIsMounted] = useState(false);
+    // console.log(curCollections);
 
     let close = () => {
         if (newCollectionName === "") {
-            setModalOpen(false);
+            setNewModalOpen(false);
             return;
         }
         let data = {
@@ -50,7 +57,7 @@ const MainNavbar = ({
         sendNewCollection().then(() => {
             getCollections();
         });
-        setModalOpen(false);
+        setNewModalOpen(false);
     };
 
     // useEffect(() => {
@@ -62,11 +69,44 @@ const MainNavbar = ({
 
     let addCollection = () => {
         console.log("add collection");
-        setModalOpen(true);
+        setNewModalOpen(true);
     };
 
     let clickCollection = (col) => {
         setCollection(col);
+    };
+
+    let clickDelCollection = (e, colId) => {
+        e.stopPropagation();
+        console.log(colId);
+        setDelId(colId);
+        setDelModalOpen(true);
+    };
+
+    let closeDelModal = () => {
+        setDelModalOpen(false);
+        setDelId(-1);
+    };
+
+    let delCollection = () => {
+        const id = delId;
+        let delCol = async () => {
+            // data["email"] = session.user.email; //need to pass in the email to link to the account
+
+            await fetch("/api/delete_collection", {
+                method: "POST",
+                body: JSON.stringify({
+                    id: id,
+                }),
+            });
+        };
+        delCol().then(() => {
+            getCollections();
+        });
+        // setDelModalOpen(f)
+        closeDelModal();
+        let filtered = curCollections.filter((c) => c["_id"] != id);
+        setCurCollections(filtered);
     };
 
     return (
@@ -90,8 +130,6 @@ const MainNavbar = ({
                                     boxShadow: "0px 0px 5px rgba(0,0,0, 0.5)",
                                     overflow: "visible",
                                 })}
-
-                                // onClick={() => addCollection()}
                             >
                                 {n.collection}
                                 <div
@@ -119,7 +157,24 @@ const MainNavbar = ({
                                 // key={`${n.collection}-${i}`}
                                 onClick={() => clickCollection(n.collection)}
                             >
-                                {n.collection}
+                                <ActionIcon
+                                    style={{
+                                        position: "absolute",
+                                        right: "15px",
+                                    }}
+                                    onClick={(e) =>
+                                        clickDelCollection(e, n._id)
+                                    }
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faTrashCan}
+                                        style={{
+                                            fontSize: 20,
+                                            color: "#aaaaaa",
+                                        }}
+                                    ></FontAwesomeIcon>
+                                </ActionIcon>
+                                <div>{n.collection}</div>
                             </Card>
                         )}
                         <Space h="sm" />
@@ -143,7 +198,7 @@ const MainNavbar = ({
                     transition="fade"
                     transitionDuration={600}
                     // transitionTimingFunction="ease"
-                    opened={modalOpen}
+                    opened={newModalOpen}
                     onClose={close}
                     hideCloseButton
                 >
@@ -153,13 +208,22 @@ const MainNavbar = ({
                         placeholder="Untitled"
                         value={newCollectionName}
                         onChange={(e) => {
-                            // const c_copy = JSON.parse(
-                            //     JSON.stringify(localContent)
-                            // );
-                            // c_copy.title = e.target.value;
                             setNewCollectionName(e.target.value);
                         }}
                     ></Input>
+                </Modal>
+                <Modal
+                    centered
+                    transition="fade"
+                    transitionDuration={600}
+                    opened={delModalOpen}
+                    onClose={() => closeDelModal()}
+                    title="Are you sure you want to delete this collection?"
+                >
+                    <div className="flex justify-evenly">
+                        <Button onClick={() => delCollection()}>Delete</Button>
+                        <Button onClick={() => closeDelModal()}>Cancel</Button>
+                    </div>
                 </Modal>
             </div>
             <Menu
