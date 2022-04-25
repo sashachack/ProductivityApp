@@ -122,6 +122,7 @@ let Calendar = ({ content, clickCard, addCard }) => {
                                 key={task._id}
                                 name={task.title}
                                 id={task._id}
+                                status={task.status}
                                 click={(i) => clickCard(i)}
                             />
                         ))}
