@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
     Modal,
     Button,
@@ -6,7 +7,7 @@ import {
     Input,
     Space,
     Select,
-    Textarea, 
+    Textarea,
     Text,
     JsonInput,
 } from "@mantine/core";
@@ -44,10 +45,10 @@ export default function NewTask({
     pullTasks,
     curPage,
     labels,
-    setLabels
+    setLabels,
 }) {
     const { data: session, status } = useSession();
-     
+
     // const[labels, setLabels] = useState([
     //     { value: "SEW", label: "SEW" },
     //     { value: "332", label: "332" },
@@ -58,19 +59,20 @@ export default function NewTask({
     // * This represents the temporary task, not yet sent to the back-end
     // console.log(empty_content(taskStatus));
     const [localContent, setLocalContent] = useState(empty_content(taskStatus));
-    // useEffect(async () => {
-    //     setLocalContent(empty_content(taskStatus, taskDate));
-       
+    useEffect(async () => {
+        setLocalContent(empty_content(taskStatus, taskDate));
+    }, [taskStatus, taskDate]);
+
     //     let res = await fetch("/api/get_labels", {
     //         method: "POST",
     //         body: JSON.stringify({
     //             email: session.user.email, //grab the tasks by email
-        
+
     //         }),
     //     });
 
     //     let data = await res.json()
-        
+
     //     let labels = data.data[0].labels
     //     setLabels(labels)
     // }, [taskStatus, taskDate]);
@@ -78,18 +80,17 @@ export default function NewTask({
     let today = new Date();
 
     let addLabel = async (new_labels) => {
-        console.log(new_labels)
-        
-        let data = {email: session.user.email, labels: new_labels}
+        console.log(new_labels);
 
-        console.log(data)
+        let data = { email: session.user.email, labels: new_labels };
+
+        console.log(data);
 
         let res = await fetch("/api/update_labels", {
             method: "POST",
             body: JSON.stringify(data),
         });
-        
-    }
+    };
 
     // * This method will be run upon the closing of the `new task` element, and
     // * will send the data to the backend and reset the `new task` element
@@ -129,8 +130,6 @@ export default function NewTask({
         });
         setOpened(false);
     };
-
-  
 
     return (
         <>
@@ -228,37 +227,33 @@ export default function NewTask({
                     
                     /> */}
                     <Select
-                    
-                    placeholder="Select Label"
-                    searchable
-                    creatable
-                    getCreateLabel={(query) => `+ Create ${query}`}
-                    onSelect={(e) => {
-                        // console.log(e)
-                        const c_copy = JSON.parse(
-                            JSON.stringify(localContent)
-                        );
-                        c_copy.label = e.target.value;
-                        console.log(e.target.value)
-                        console.log(c_copy)
-                        setLocalContent(c_copy);
-                        console.log(localContent)
-                    }}
-                    onCreate={(query) => {
-                        setLabels((current) => [...current, query])
-                        console.log(query)
-                        // console.log(labels)
-                        labels.push({label: query})
-                        setLabels(labels)
-                        console.log(labels)
-                        addLabel(labels)
-
+                        placeholder="Select Label"
+                        searchable
+                        creatable
+                        getCreateLabel={(query) => `+ Create ${query}`}
+                        onSelect={(e) => {
+                            // console.log(e)
+                            const c_copy = JSON.parse(
+                                JSON.stringify(localContent)
+                            );
+                            c_copy.label = e.target.value;
+                            console.log(e.target.value);
+                            console.log(c_copy);
+                            setLocalContent(c_copy);
+                            console.log(localContent);
                         }}
-                    
-                    data={labels}
-                    
+                        onCreate={(query) => {
+                            setLabels((current) => [...current, query]);
+                            console.log(query);
+                            // console.log(labels)
+                            labels.push({ label: query });
+                            setLabels(labels);
+                            console.log(labels);
+                            addLabel(labels);
+                        }}
+                        data={labels}
                     />
-                    
+
                     {/* <Space h="sm" /> */}
                     <DatePicker
                         placeholder="Pick date"

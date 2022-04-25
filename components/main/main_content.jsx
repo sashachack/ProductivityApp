@@ -54,39 +54,35 @@ const MainContent = ({ collection, collectionID }) => {
     // * Defines what we sort by
     const [sortBy, setSortBy] = useState("dateCreated");
 
-    const[labels, setLabels] = useState([
+    const [labels, setLabels] = useState([
         { value: "SEW", label: "SEW" },
         { value: "332", label: "332" },
         { value: "330", label: "330" },
         { value: "457", label: "457" },
-    ])
+    ]);
 
     useEffect(async () => {
-     
         let res = await fetch("/api/get_labels", {
             method: "POST",
             body: JSON.stringify({
                 email: session.user.email, //grab the tasks by email
-        
             }),
         });
 
-        let data = await res.json()
+        let data = await res.json();
         let labels = [];
-        if(data.data[0] != undefined){
-            labels = data.data[0].labels
-        }
-        else{
+        if (data.data[0] != undefined) {
+            labels = data.data[0].labels;
+        } else {
             let res = await fetch("/api/post_label_entry", {
                 method: "POST",
                 body: JSON.stringify({
                     email: session.user.email, //grab the tasks by email
                     labels: [],
-            
                 }),
             });
         }
-        setLabels(labels)
+        setLabels(labels);
     }, [newTaskModalOpened]);
 
     // * pullTasks is a function that will pull the tasks from the database
@@ -138,7 +134,7 @@ const MainContent = ({ collection, collectionID }) => {
     // }, [existingContent, sortBy]);
 
     // TODO - useSwr()
- 
+
     // * This is run to fetch the tasks from the API
     useEffect(() => {
         // console.log(tasks);
@@ -260,8 +256,8 @@ const MainContent = ({ collection, collectionID }) => {
                     opened={modalOpened}
                     setOpened={setModalOpened}
                     pullTasks={pullTasks}
-                    labels = {labels}
-                    setLabels = {setLabels}
+                    labels={labels}
+                    setLabels={setLabels}
                 />
             )}
             {/* // * This is our `EditTask` for editing a newly created task */}
@@ -277,8 +273,8 @@ const MainContent = ({ collection, collectionID }) => {
                 collectionID={collectionID}
                 pullTasks={pullTasks}
                 curPage={value}
-                labels = {labels}
-                setLabels = {setLabels}
+                labels={labels}
+                setLabels={setLabels}
             ></NewTask>
         </div>
     );
