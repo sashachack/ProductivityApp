@@ -63,20 +63,6 @@ export default function NewTask({
         setLocalContent(empty_content(taskStatus, taskDate));
     }, [taskStatus, taskDate]);
 
-    //     let res = await fetch("/api/get_labels", {
-    //         method: "POST",
-    //         body: JSON.stringify({
-    //             email: session.user.email, //grab the tasks by email
-
-    //         }),
-    //     });
-
-    //     let data = await res.json()
-
-    //     let labels = data.data[0].labels
-    //     setLabels(labels)
-    // }, [taskStatus, taskDate]);
-
     let today = new Date();
 
     let addLabel = async (new_labels) => {
@@ -177,81 +163,40 @@ export default function NewTask({
                         Label
                     </Text>
                     <Space h="5px" />
-                    {/* <Input
-                        placeholder="Untitled"
-                        value={localContent.label}
-                        onChange={(e) => {
-                            const c_copy = JSON.parse(
-                                JSON.stringify(localContent)
-                            );
-                            c_copy.label = e.target.value;
-                            setLocalContent(c_copy);
-                        }}
-                    ></Input> */}
-                    {/* <Select
-                    
-                    placeholder="Select Label"
-                    searchable
-                    creatable
-                    // value={localContent.label}
-                    getCreateLabel={(query) => `+ Create ${query}`}
-                    onSelect={(e) => {
-                        
-                        const c_copy = JSON.parse(
-                            JSON.stringify(localContent)
-                        );
-                        c_copy.label = e.target.value;
-                        console.log(e.target.value)
-                        setLocalContent(c_copy);
-                        
-                        
-                    }}
-                    onCreate={(query) => {
-                        setLabels((current) => [...current, query])
-                        console.log(query)
-                        // console.log(labels)
-                        labels.push({label: query})
-                        setLabels(labels)
-                        console.log(labels)
-                        addLabel(labels)
-                        // const c_copy = JSON.parse(
-                        //     JSON.stringify(localContent)
-                        // );
-                        // c_copy.label = query;
-                        // console.log(c_copy)
-                        // setLocalContent(c_copy);
 
-                        }}
-                    data={labels}
-                    value = {localContent.label}
-                    
-                    /> */}
                     <Select
                         placeholder="Select Label"
                         searchable
                         creatable
                         getCreateLabel={(query) => `+ Create ${query}`}
-                        onSelect={(e) => {
-                            // console.log(e)
+                        onChange={(e) => {
+                            // console.log(e.target.value);
                             const c_copy = JSON.parse(
                                 JSON.stringify(localContent)
                             );
-                            c_copy.label = e.target.value;
-                            console.log(e.target.value);
-                            console.log(c_copy);
+                            c_copy.label = e;
                             setLocalContent(c_copy);
-                            console.log(localContent);
                         }}
+                        // onChange={(e) => {
+                        //     console.log(e);
+                        // }}
                         onCreate={(query) => {
-                            setLabels((current) => [...current, query]);
-                            console.log(query);
-                            // console.log(labels)
-                            labels.push({ label: query });
-                            setLabels(labels);
-                            console.log(labels);
-                            addLabel(labels);
+                            const c_copy = JSON.parse(
+                                JSON.stringify(localContent)
+                            );
+                            c_copy.label = query;
+                            setLocalContent(c_copy);
+
+                            let temp = JSON.parse(JSON.stringify(labels));
+                            temp.push({ label: query });
+                            setLabels(temp);
+                            addLabel(temp);
                         }}
-                        data={labels}
+                        data={labels.map((l) => ({
+                            value: l.label,
+                            label: l.label,
+                        }))}
+                        value={localContent.label}
                     />
 
                     {/* <Space h="sm" /> */}

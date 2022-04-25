@@ -13,7 +13,15 @@ import { DatePicker } from "@mantine/dates";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
-const EditTask = ({ content, setContent, opened, setOpened, pullTasks, labels, setLabels }) => {
+const EditTask = ({
+    content,
+    setContent,
+    opened,
+    setOpened,
+    pullTasks,
+    labels,
+    setLabels,
+}) => {
     const { data: session, status } = useSession();
     // const [opened, setOpened] = useState(false);
     // console.log(content);
@@ -53,7 +61,7 @@ const EditTask = ({ content, setContent, opened, setOpened, pullTasks, labels, s
             // console.log("UNDEFINED");
             setLocalContent({
                 title: "",
-                label: "", 
+                label: "",
                 status: "",
                 dueDate: { year: 0, month: 0, day: 0 },
             });
@@ -161,31 +169,37 @@ const EditTask = ({ content, setContent, opened, setOpened, pullTasks, labels, s
                         Label
                     </Text>
                     <Space h="5px" />
-                    
+
                     <Select
-                        
+                        placeholder="Select Label"
                         searchable
                         creatable
-                        onSelect={(e) => {
+                        getCreateLabel={(query) => `+ Create ${query}`}
+                        onChange={(e) => {
                             // console.log(e)
                             const c_copy = JSON.parse(
                                 JSON.stringify(localContent)
                             );
-                            c_copy.label = e.target.value;
+                            c_copy.label = e;
                             setLocalContent(c_copy);
-                         }}
-                        getCreateLabel={(query) => `+ Create ${query}`}
+                        }}
                         onCreate={(query) => {
-                            setLabels((current) => [...current, query])
-                            console.log(query)
-                            // console.log(labels)
-                            labels.push({label: query})
-                            setLabels(labels)
-                            console.log(labels)
-                            addLabel(labels)
+                            const c_copy = JSON.parse(
+                                JSON.stringify(localContent)
+                            );
+                            c_copy.label = query;
+                            setLocalContent(c_copy);
 
-                            }}
-                        data={labels}
+                            let temp = JSON.parse(JSON.stringify(labels));
+                            temp.push({ label: query });
+                            setLabels(temp);
+                            addLabel(temp);
+                        }}
+                        data={labels.map((l) => ({
+                            value: l.label,
+                            label: l.label,
+                        }))}
+                        value={localContent.label}
                     />
                     {/* <Select
                         label="Label"
