@@ -23,7 +23,7 @@ const days = [
     "Saturday",
 ];
 
-let Calendar = ({ content, clickCard, addCard }) => {
+let Calendar = ({ content, clickCard, addCard, labels }) => {
     console.log(content);
 
     const today = new Date();
@@ -123,6 +123,8 @@ let Calendar = ({ content, clickCard, addCard }) => {
                                 name={task.title}
                                 id={task._id}
                                 status={task.status}
+                                label={task.label}
+                                labels={labels}
                                 click={(i) => clickCard(i)}
                             />
                         ))}

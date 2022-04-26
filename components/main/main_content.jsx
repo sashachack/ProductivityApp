@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 import Board from "../content/board";
 import Table from "../content/table";
@@ -54,12 +55,7 @@ const MainContent = ({ collection, collectionID }) => {
     // * Defines what we sort by
     const [sortBy, setSortBy] = useState("dateCreated");
 
-    const [labels, setLabels] = useState([
-        { value: "SEW", label: "SEW" },
-        { value: "332", label: "332" },
-        { value: "330", label: "330" },
-        { value: "457", label: "457" },
-    ]);
+    const [labels, setLabels] = useState([]);
 
     useEffect(async () => {
         let res = await fetch("/api/get_labels", {
@@ -82,6 +78,7 @@ const MainContent = ({ collection, collectionID }) => {
                 }),
             });
         }
+        console.log(labels);
         setLabels(labels);
     }, [newTaskModalOpened]);
 
@@ -224,6 +221,7 @@ const MainContent = ({ collection, collectionID }) => {
                     setContent={setExistingContent}
                     clickCard={(i) => clickCard(i)}
                     addCard={(l) => addCard(l)}
+                    labels={labels}
                 />
             )}
             {value == "table" && (
@@ -232,6 +230,7 @@ const MainContent = ({ collection, collectionID }) => {
                     setContent={setExistingContent}
                     clickCard={(i) => clickCard(i)}
                     addCard={() => addCard()}
+                    labels={labels}
                 />
             )}
             {value == "calendar" && (
@@ -239,6 +238,7 @@ const MainContent = ({ collection, collectionID }) => {
                     content={existingContent}
                     clickCard={(i) => clickCard(i)}
                     addCard={(d) => addCard("To Do", d)}
+                    labels={labels}
                 />
             )}
             {/* // * This is our `EditTask` for editing existing tasks */}

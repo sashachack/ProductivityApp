@@ -8,7 +8,7 @@ import {
 } from "react-beautiful-dnd";
 import { useState, useEffect } from "react";
 
-let Board = ({ content, setContent, clickCard, addCard }) => {
+let Board = ({ content, setContent, clickCard, addCard, labels }) => {
     // console.log(content);
     let statuses = ["To Do", "Doing", "Done"];
     let items = {};
@@ -112,6 +112,7 @@ let Board = ({ content, setContent, clickCard, addCard }) => {
                                                             click={(id) =>
                                                                 clickCard(id)
                                                             }
+                                                            labels={labels}
                                                             key={c["_id"]}
                                                         />
                                                         <Space h="md" />

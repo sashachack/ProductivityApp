@@ -6,6 +6,7 @@ import {
     faBuildingCircleExclamation,
     faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+import { colors } from "../../constants/colors";
 
 const TableCard = ({
     taskName,
@@ -16,8 +17,11 @@ const TableCard = ({
     click,
     content,
     setContent,
+    labels,
 }) => {
     // console.log(content);
+    let labelIndex = labels.findIndex((l) => l.label === label);
+    let labelColor = labelIndex != -1 ? colors[labelIndex] : "#2F2F36";
 
     let printDate = (date) => {
         return months[date.month] + " " + date.day + ", " + date.year;
@@ -58,7 +62,7 @@ const TableCard = ({
         <div>
             <Card
                 onClick={() => click(id)}
-                style={{ "&:hover": { backgroundColor: "#333333" } }}
+                // style={{ backgroundColor: labelColor }}
             >
                 {/* <div> */}
                 <ActionIcon
@@ -74,7 +78,9 @@ const TableCard = ({
                     <Text weight="500" size="lg" color="white">
                         {taskName}
                     </Text>
-                    <Text size="sm">{label}</Text>
+                    <Text size="sm" color={labelColor}>
+                        {label}
+                    </Text>
                     <Text size="sm">{printDate(dueDate)}</Text>
                     <div className="">
                         <Badge

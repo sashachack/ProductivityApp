@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 // import { useHover } from "@mantine/hooks";
 
-let Table = ({ content, setContent, clickCard, addCard }) => {
+let Table = ({ content, setContent, clickCard, addCard, labels }) => {
     let cards =
         content.length > 0 &&
         content.map((c, i) => (
@@ -23,6 +23,7 @@ let Table = ({ content, setContent, clickCard, addCard }) => {
                     click={(id) => clickCard(id)}
                     content={content}
                     setContent={setContent}
+                    labels={labels}
                 />
                 <Space h="md" />
             </div>
@@ -34,7 +35,6 @@ let Table = ({ content, setContent, clickCard, addCard }) => {
     // const { hovered, ref } = useHover();
 
     // let addTaskBg = ;
-
 
     return (
         <div>

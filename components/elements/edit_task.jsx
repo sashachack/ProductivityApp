@@ -199,19 +199,13 @@ const EditTask = ({
                             value: l.label,
                             label: l.label,
                         }))}
-                        value={localContent.label}
+                        value={
+                            localContent &&
+                            Object.keys(localContent).includes("label")
+                                ? localContent.label
+                                : ""
+                        }
                     />
-                    {/* <Select
-                        label="Label"
-                        data={[
-                            { value: "SEW", label: "SEW" },
-                            { value: "332", label: "332" },
-                            { value: "330", label: "330" },
-                            { value: "457", label: "457" },
-                        ]}
-                        value={content.label}
-                    ></Select> */}
-                    {/* <Space h="sm" /> */}
                     <DatePicker
                         placeholder="Pick date"
                         label="Event date"
