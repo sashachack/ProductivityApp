@@ -91,6 +91,7 @@ let Layout = () => {
     return (
         <AppShell
             padding="xl"
+            fixed
             navbar={
                 <Navbar width={{ base: 300 }} padding="md">
                     <MainNavbar
