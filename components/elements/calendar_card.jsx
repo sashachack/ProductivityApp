@@ -30,7 +30,7 @@ export default function CalendarCard({
             onClick={(e) => handleClick(e)}
         >
             <Text>{name}</Text>
-            <div className="pr-1">
+            <div className="pr-1" >
                 <div
                     className={`${statusColors[status]} w-[8px] h-[8px] rounded-full shadow-md`}
                 ></div>
