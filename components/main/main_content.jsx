@@ -82,6 +82,36 @@ const MainContent = ({ collection, collectionID }) => {
         setLabels(labels);
     }, [newTaskModalOpened]);
 
+    const sort = (content) => {
+        console.log("Sort by: " + sortBy);
+        if (sortBy === "dueDate") {
+            let t = content.sort((a, b) => {
+                if (a.dueDate.year < b.dueDate.year) {
+                    return -1;
+                } else if (a.dueDate.year > b.dueDate.year) {
+                    return 1;
+                }
+                if (a.dueDate.month < b.dueDate.month) {
+                    return -1;
+                } else if (a.dueDate.month > b.dueDate.month) {
+                    return 1;
+                }
+                if (a.dueDate.day < b.dueDate.day) {
+                    return -1;
+                } else if (a.dueDate.day > b.dueDate.day) {
+                    return 1;
+                }
+                return 0;
+            });
+            return t;
+        } else if (sortBy === "dateCreated") {
+            let t = content.sort((a, b) => {
+                return parseInt(a._id, 16) - parseInt(b._id, 16);
+            });
+            return t;
+        }
+    };
+
     // * pullTasks is a function that will pull the tasks from the database
     const pullTasks = async () => {
         console.log("pulling tasks");
@@ -97,38 +127,15 @@ const MainContent = ({ collection, collectionID }) => {
         let tasks = json.data;
 
         // console.log("UPDATE EVERYTHING");
-        setExistingContent(tasks);
+        let sorted = sort(tasks);
+        setExistingContent(sorted);
     };
 
-    // useEffect(() => {
-    //     if (sortBy === "dueDate") {
-    //         let t = existingContent.sort((a, b) => {
-    //             // console.log(a, b);
-    //             if (a.dueDate.year < b.dueDate.year) {
-    //                 return -1;
-    //             } else if (a.dueDate.year > b.dueDate.year) {
-    //                 return 1;
-    //             }
-    //             if (a.dueDate.month < b.dueDate.month) {
-    //                 return -1;
-    //             } else if (a.dueDate.month > b.dueDate.month) {
-    //                 return 1;
-    //             }
-    //             if (a.dueDate.day < b.dueDate.day) {
-    //                 return -1;
-    //             } else if (a.dueDate.day > b.dueDate.day) {
-    //                 return 1;
-    //             }
-    //             return 0;
-    //         });
-    //         setExistingContent(t);
-    //     } else if (sortBy === "dateCreated") {
-    //         let t = existingContent.sort((a, b) => {
-    //             return parseInt(a._id, 16) - parseInt(b._id, 16);
-    //         });
-    //         setExistingContent(t);
-    //     }
-    // }, [existingContent, sortBy]);
+    useEffect(() => {
+        let temp = JSON.parse(JSON.stringify(existingContent));
+        let sorted = sort(temp);
+        setExistingContent(sorted);
+    }, [sortBy]);
 
     // TODO - useSwr()
 
@@ -174,15 +181,26 @@ const MainContent = ({ collection, collectionID }) => {
                     data={pages}
                     size="lg"
                 />
-                <div className="absolute top-3 right-0 flex text-white space-x-4">
-                    {/* <Select
-                        data={[
-                            { label: "Date Created", value: "dateCreated" },
-                            { label: "Due Date", value: "dueDate" },
-                        ]}
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e)}
-                    /> */}
+                <div className="absolute top-3 right-0 flex text-white space-x-4 items-center">
+                    {value !== "calendar" && (
+                        <>
+                            <span className="font-bold text-[#888888] text-sm">
+                                SORT BY
+                            </span>
+                            <Select
+                                data={[
+                                    {
+                                        label: "Date Created",
+                                        value: "dateCreated",
+                                    },
+                                    { label: "Due Date", value: "dueDate" },
+                                ]}
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e)}
+                                className="w-32"
+                            />
+                        </>
+                    )}
                     {/* {value !== "calendar" && (
                         <Menu
                             control={
@@ -199,8 +217,8 @@ const MainContent = ({ collection, collectionID }) => {
                                 Due Date
                             </Menu.Item>
                         </Menu>
-                    )}
-                    <Menu
+                    )} */}
+                    {/* <Menu
                         control={
                             <div className="bg-card-grey w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-100 hover:text-black cursor-pointer">
                                 <FontAwesomeIcon icon={faFilter} />
