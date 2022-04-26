@@ -125,6 +125,11 @@ export default function NewTask({
                 transitionDuration={600}
                 opened={opened}
                 onClose={close}
+                onKeyUp={(e) => {
+                    if (e.keyCode === 13) {
+                        close();
+                    }
+                }}
                 hideCloseButton
             >
                 <div>

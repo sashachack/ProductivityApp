@@ -200,6 +200,11 @@ const MainNavbar = ({
                     // transitionTimingFunction="ease"
                     opened={newModalOpen}
                     onClose={close}
+                    onKeyUp={(e) => {
+                        if (e.keyCode === 13) {
+                            close();
+                        }
+                    }}
                     hideCloseButton
                 >
                     <Input

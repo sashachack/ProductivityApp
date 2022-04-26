@@ -120,6 +120,11 @@ const EditTask = ({
                 // transitionTimingFunction="ease"
                 opened={opened}
                 onClose={close}
+                onKeyUp={(e) => {
+                    if (e.keyCode === 13) {
+                        close();
+                    }
+                }}
                 hideCloseButton
             >
                 {/* <Input variant="unstyled" placeholder="Untitled">
